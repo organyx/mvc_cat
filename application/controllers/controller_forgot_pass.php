@@ -1,5 +1,5 @@
 <?php
-
+define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 class Controller_Forgot_pass extends Controller
 {
 	function __construct()
@@ -13,4 +13,10 @@ class Controller_Forgot_pass extends Controller
 		$data = $this->model->forgot_pass();
 		$this->view->generate('forgot_pass_view.php', 'template_view.php',$data);
 	}
+
+	// function action_newpass()
+	// {	
+	// 	$data = $this->model->forgot_pass();
+	// 	$this->view->regenerate('forgot_pass_view.php',$data);
+	// }
 }

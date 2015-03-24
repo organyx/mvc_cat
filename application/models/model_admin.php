@@ -72,6 +72,7 @@ Class Model_Admin extends Model
 	{
 		Global $WebCatalogue;
 		//$currentPage = $_SERVER["PHP_SELF"];
+		//****Pagination Setup*****
 		$currentPage = "/index/";
 		$maxRows = 10;
 		$pageNum = 0;
@@ -79,7 +80,7 @@ Class Model_Admin extends Model
 		  $pageNum = $_GET['pageNum'];
 		}
 		$startRow = $pageNum * $maxRows;
-
+			//***Get values***
 			$sql="SELECT * FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
 			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, $startRow, $maxRows);
  
@@ -122,6 +123,7 @@ Class Model_Admin extends Model
 				$queryString = sprintf("&totalRows=%d%s", $totalRows, $queryString);
 			}
 			//echo $result->num_rows;
+			//****Saving Values*****
 			$pages = array(
 				'pageNum' => $pageNum, 
 				'maxRows' => $maxRows, 
@@ -131,6 +133,9 @@ Class Model_Admin extends Model
 				'currentPage' => $currentPage,
 				'queryString' => $queryString
 				);
+
+			//******Pagination END*******
+
 			$result->data_seek(0);
 			// while($row = $result->fetch_assoc()){
 			//     echo $row['email'] . '<br>';

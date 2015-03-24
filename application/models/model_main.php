@@ -7,22 +7,22 @@ class Model_Main extends Model
 	{	
 			Global $WebCatalogue;
 
-			$maxRows_ManageUsers = 10;
+			//****Pagination Setup*****
 			$currentPage = "/main/index/";
-			$maxRows = 10;
+			$maxRows = 20;
 			$pageNum = 0;
 			if (isset($_GET['pageNum'])) {
 			  $pageNum = $_GET['pageNum'];
 			}
 			$startRow = $pageNum * $maxRows;		
-
+			//***Get values***
 			$sql="SELECT * FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
 			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, $startRow, $maxRows);
  
 			$result=$WebCatalogue->query($sql_limit);
 			 
 			if($result === false) {
-			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $conn->error, E_USER_ERROR);
+			  trigger_error('Wrong SQL: ' . $sql_limit . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
 			} else {
 			  //$totalRows = $result->num_rows;
 				if (isset($_GET['totalRows'])) {
@@ -57,7 +57,7 @@ class Model_Main extends Model
 				}
 				$queryString = sprintf("&totalRows=%d%s", $totalRows, $queryString);
 			}
-
+			//****Saving Values*****
 			$pages = array(
 				'pageNum' => $pageNum, 
 				'maxRows' => $maxRows, 
@@ -67,6 +67,7 @@ class Model_Main extends Model
 				'currentPage' => $currentPage,
 				'queryString' => $queryString
 				);
+			//******Pagination END*******
 
 			$result->data_seek(0);
 			// while($row = $result->fetch_assoc()){

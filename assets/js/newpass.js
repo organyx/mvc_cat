@@ -6,7 +6,7 @@ $(document).ready(function ()
         $.ajax(
         {
             type: 'POST',
-            url: 'Helpers/EMPW-Script.php',
+            url: '/forgot_pass/index/',
             data: msg,
             success: function (data)
             {
@@ -18,10 +18,18 @@ $(document).ready(function ()
             }
         });
     }
-    $("#sendPass").click(function (e)
+    $("#sendPass").click(function ()
     {
         sendPass();
     });
+
+    $("#sendPass").submit(function (e)
+    {
+        e.preventDefault();
+        sendPass();
+        return false;
+    });
+
     $("#reset").click(function (e)
     {
         $('#returnmessage').empty();
