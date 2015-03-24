@@ -1,12 +1,22 @@
 <div id="PageHeading">
-    	  <h1><?php echo $data['first_name'][0]; ?> <?php echo $data['last_name'][0]; ?></h1>
+        <?php  
+        $user = $data[0]->fetch_assoc();
+        $result = $data[1]->fetch_assoc();
+        //echo $result['registration'] . "++++";
+        ?>
+
+    	  <h1><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></h1>
       </div>
       <?php if(isset($_SESSION['MM_Username'])) { ?>
     	<div id="contentLeft">        
     	  <h2><a href="Account.php">Account</a></h2><br>
     	  <br>
     	</div>
-      <?php } ?>
+      <?php } 
+      
+      //echo "<pre>".print_r($result['title'])."</pre>";
+      
+      ?>
     <div id="contentRight">
       <table  class="width-670 center WidthAuto">
         <tr>
@@ -19,24 +29,24 @@
               <td align="right" valign="top">Registration date : </td>
             </tr>
             <tr>
-              <td>Title: <?php echo $data['title']; ?></td>
-              <td><?php echo $data['registration']; ?></td>
+              <td>Title: <?php echo $result['title']; ?></td>
+              <td><?php echo $result['registration']; ?></td>
             </tr>
             <tr>
-              <td>URL: <a target="_blank" href="<?php echo $data['url']; ?>"> <?php echo $data['url']; ?></a></td>
+              <td>URL: <a target="_blank" href="<?php echo $result['url']; ?>"> <?php echo $result['url']; ?></a></td>
               <td width="140" height="140" rowspan="3" class="TableStyleBorderLeft">
-			  <a class="fancybox"  href="<?php echo $data['preview_thumb']; ?>">
-			  <img src="<?php echo $data['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
+			  <a class="fancybox"  href="../../<?php echo $result['preview_thumb']; ?>">
+			  <img src="../../<?php echo $result['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
               </td>
             </tr>
             <tr>
-              <td>Languages: <?php echo $data['language']; ?></td>
+              <td>Languages: <?php echo $result['language']; ?></td>
               </tr>
             <tr>
               <td align="left" valign="bottom">Description:</td>
               </tr>
             <tr>
-              <td colspan="2" align="center"><?php echo $data['description']; ?></td>
+              <td colspan="2" align="center"><?php echo $result['description']; ?></td>
             </tr>
           </table></td>
         </tr>

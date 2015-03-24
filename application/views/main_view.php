@@ -2,7 +2,7 @@
       <h1>Main</h1>
 </div>
     <?php 
-    if(!isset($_SESSION['MM_Username'])) { ?>
+    if(isset($_SESSION['MM_Username'])) { ?>
     
 <div id="contentLeft">
     <h2><a href="/account">Account</a></h2>
@@ -21,7 +21,7 @@
                 <table border="1" class="width-630 TableStyle center WidthAuto">
                     <tr>
                         <td></td>
-                        <td width="400" height="50" align="center" ><h2><a href="/webitem/<?php echo urlencode($row['userID']); ?>"><?php echo $row['title']; ?></a></h2></td>
+                        <td width="400" height="50" align="center" ><h2><a href="/webitem/item/?site=<?php echo urlencode($row['userID']);?>"><?php echo $row['title']; ?></a></h2></td>
                         <td width="200" rowspan="2" align="center" ><a class="fancybox"  href="<?php echo $row['preview_thumb']; ?>"> <img src="<?php echo $row['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail"/></a></td>
                     </tr>
                     <tr>

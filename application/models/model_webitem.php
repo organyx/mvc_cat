@@ -1,8 +1,7 @@
 <?php
 class Model_Webitem extends Model
 {
-	
-	public function get_user_data()
+	public function get_user_data($email)
 	{	
 			Global $WebCatalogue;
 
@@ -10,6 +9,10 @@ class Model_Webitem extends Model
 			if (isset($_SESSION['MM_Username'])) 
 			{
 			  $colname_User = $_SESSION['MM_Username'];
+			}
+			else
+			{
+				$colname_User = $email;
 			}
 
 			$sql=sprintf("SELECT * FROM users WHERE email = %s", GetSQLValueString($colname_User, "text"));
@@ -55,6 +58,7 @@ class Model_Webitem extends Model
 			// while($row = $result->fetch_assoc()){
 			//     echo $row['email'] . '<br>';
 			// }
+
 			return $result;
 	}
 
