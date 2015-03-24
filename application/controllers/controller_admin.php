@@ -2,6 +2,11 @@
 
 class Controller_Admin extends Controller
 {
+	function __construct()
+	{
+		$this->model = new Model_Admin();
+		$this->view = new View();
+	}
 	
 	function action_index()
 	{
@@ -14,14 +19,16 @@ class Controller_Admin extends Controller
 		*/
 		if ( $_SESSION['admin'] == "12345" )
 		{
-			$this->view->generate('admin_view.php', 'template_view.php');
+			$user = $this->model->get_user_data($user = "jeez@jeez.lv");
+			$users = $this->model->manage_users();
+			$data = array($user, $users);
+			$this->view->generate('admin_view.php', 'template_view.php',$data);
 		}
 		else
 		{
 			session_destroy();
 			Route::ErrorPage404();
 		}
-
 	}
 	
 	// Действие для разлогинивания администратора
