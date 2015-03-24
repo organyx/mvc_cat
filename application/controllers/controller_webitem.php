@@ -8,7 +8,7 @@ class Controller_Webitem extends Controller
 		$this->view = new View();
 	}
 
-	function action_item()
+	function action_index()
 	{	
 		$id = $_GET['site'];
 		$email = "flirts@flirts.lv";

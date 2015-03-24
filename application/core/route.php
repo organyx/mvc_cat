@@ -76,8 +76,8 @@ class Route
 		else
 		{
 			// здесь также разумнее было бы кинуть исключение
-			//Route::ErrorPage404();
-			 echo "Function doesn't exist " . $controller->$action();
+			Route::ErrorPage404();
+			 //echo "Function doesn't exist " . $controller->$action();
 		}
 	
 	}

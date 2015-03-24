@@ -40,6 +40,15 @@
 		                
 		            </ul>
 		        </nav>
+		        <div id="log">
+		        	<table id="login">
+				        <tr>
+				          	<td>
+		        				<a href="/login">Login</a>
+		        			</td>
+		        		</tr>
+		        	</table>
+		        </div>
 		  </div>
 		  <div id="Content">
 		  <?php include 'application/views/'.$content_view; ?>
