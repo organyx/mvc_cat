@@ -94,11 +94,11 @@
         <tr>
           <td align="right" valign="top">
            	<?php if ($data[1][1]['pageNum'] < $data[1][1]['totalPages']) { // Show if not last page ?>
-              <a href="<?php printf("/admin%s?pageNum_ManageUsers=%d%s", $data[1][1]['currentPage'], min($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>">Next</a>
+              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], min($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>">Next</a>
               <?php } // Show if not last page ?>
               |
               <?php if ($data[1][1]['pageNum'] > 0) { // Show if not first page ?>
-                <a href="<?php printf("/admin%s?pageNum_ManageUsers=%d%s", $data[1][1]['currentPage'], max(0, $data[1][1]['pageNum'] - 1), $data[1][1]['queryString']); ?>">Previous</a>
+                <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max(0, $data[1][1]['pageNum'] - 1), $data[1][1]['queryString']); ?>">Previous</a>
               <?php } // Show if not first page ?>
           </td>
         </tr>

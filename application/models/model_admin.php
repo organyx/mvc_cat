@@ -73,15 +73,15 @@ Class Model_Admin extends Model
 		Global $WebCatalogue;
 		//$currentPage = $_SERVER["PHP_SELF"];
 		$currentPage = "/index/";
-		$maxRows_ManageUsers = 10;
-		$pageNum_ManageUsers = 0;
-		if (isset($_GET['pageNum_ManageUsers'])) {
-		  $pageNum_ManageUsers = $_GET['pageNum_ManageUsers'];
+		$maxRows = 10;
+		$pageNum = 0;
+		if (isset($_GET['pageNum'])) {
+		  $pageNum = $_GET['pageNum'];
 		}
-		$startRow_ManageUsers = $pageNum_ManageUsers * $maxRows_ManageUsers;
+		$startRow = $pageNum * $maxRows;
 
 			$sql="SELECT * FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
-			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, $startRow_ManageUsers, $maxRows_ManageUsers);
+			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, $startRow, $maxRows);
  
 			$result=$WebCatalogue->query($sql_limit);
 			 
@@ -102,34 +102,34 @@ Class Model_Admin extends Model
 				  	$totalRows = $all_ManageUsers->num_rows;
 				  }
 				}
-				$totalPages_ManageUsers = ceil($totalRows/$maxRows_ManageUsers)-1;
+				$totalPages = ceil($totalRows/$maxRows)-1;
 			  //$totalRows = $result->num_rows;
 
-				$queryString_ManageUsers = "";
+				$queryString = "";
 				if (!empty($_SERVER['QUERY_STRING'])) {
 				  $params = explode("&", $_SERVER['QUERY_STRING']);
 				  $newParams = array();
 				  foreach ($params as $param) {
-				    if (stristr($param, "pageNum_ManageUsers") == false && 
+				    if (stristr($param, "pageNum") == false && 
 				        stristr($param, "totalRows") == false) {
 				      array_push($newParams, $param);
 				    }
 				  }
 				  if (count($newParams) != 0) {
-				    $queryString_ManageUsers = "&" . htmlentities(implode("&", $newParams));
+				    $queryString = "&" . htmlentities(implode("&", $newParams));
 				  }
 				}
-				$queryString_ManageUsers = sprintf("&totalRows=%d%s", $totalRows, $queryString_ManageUsers);
+				$queryString = sprintf("&totalRows=%d%s", $totalRows, $queryString);
 			}
 			//echo $result->num_rows;
 			$pages = array(
-				'pageNum' => $pageNum_ManageUsers, 
-				'maxRows' => $maxRows_ManageUsers, 
-				'startRow' => $startRow_ManageUsers, 
+				'pageNum' => $pageNum, 
+				'maxRows' => $maxRows, 
+				'startRow' => $startRow, 
 				'totalRows' => $totalRows, 
-				'totalPages' => $totalPages_ManageUsers, 
+				'totalPages' => $totalPages, 
 				'currentPage' => $currentPage,
-				'queryString' => $queryString_ManageUsers
+				'queryString' => $queryString
 				);
 			$result->data_seek(0);
 			// while($row = $result->fetch_assoc()){
