@@ -1,0 +1,340 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#Holder {
+  width: 980px;
+  height: auto;
+  margin: 21px auto;
+  min-width: 320px;
+}
+
+#Header {
+  height: 70px;
+  background: url(../Assets/img/logo.png) no-repeat;
+  margin-bottom: 11px;
+}
+
+#Content {
+  height: auto;
+  clear: both;
+  overflow: auto;
+  font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#contentLeft {
+  width: 100%;
+  min-width: 280px;
+  padding-top: 11px;
+  text-align: center;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 15px;
+}
+
+#contentLeft a {
+  text-decoration: none;
+  color: #000000;
+}
+
+#contentRight {
+  min-width: 680px;
+  width: 100%;
+  min-height: 200px;
+}
+
+#contentRight a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.required {
+  color: #F8080C;
+}
+
+#PageHeading {
+  height: auto;
+  padding: 11px;
+  border-bottom: 1px solid #000000;
+}
+
+#Footer {
+  border-top: 1px solid #000000;
+  height: 100px;
+}
+
+#Footer a {
+  text-decoration: none;
+  color: #000000;
+  float: left;
+  display: block;
+}
+
+#Footer a:hover {
+  background-color: #F3E9E9;
+  color: #433E3E;
+}
+
+.social {
+  float: right;
+  display: block;
+}
+
+.social a {
+  margin: 5px;
+}
+
+.search {
+  padding: 5px;
+  height: 80px;
+  text-align: center;
+}
+
+.ret {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#list {
+  text-align: center;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-weight: lighter;
+}
+
+h1 {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #666;
+}
+
+h2 {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #999;
+  font-weight: lighter;
+}
+
+h6 {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  font-weight: lighter;
+  font-size: 14px;
+}
+
+#selectedUser {
+  border: hidden;
+  width: 500px;
+}
+
+.styletxtfield {
+  border: 1px solid #666;
+  border-radius: 6px;
+  width: 200px;
+  height: 35px;
+  font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-left: 6px;
+}
+
+.styletxtarea {
+  border: 1px solid #666;
+  border-radius: 6px;
+  width: 350px;
+  height: 100px;
+  font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-left: 6px;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.width-50 {
+  width: 50px;
+}
+
+.width-300 {
+  width: 300px;
+}
+
+.width-400 {
+  width: 400px;
+}
+
+.width-500 {
+  width: 500px;
+}
+
+.width-630 {
+  width: 630px;
+}
+
+.width-670 {
+  width: 670px;
+}
+
+.TableStyle {
+  border-spacing: 0;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.TableStyle tr {
+  border: 1px solid #000;
+}
+
+.TableStyleBorderLeft {
+  border-left: 1px solid #000;
+}
+
+.img-thumbnail {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.ui-100 {
+  height: 100px;
+}
+
+.ui-200 {
+  height: 200px;
+}
+
+.ui-400 {
+  height: 400px;
+}
+
+.ui-500 {
+  height: 500px;
+}
+
+.ui-600 {
+  height: 600px;
+}
+
+.ui-form {
+  position: relative;
+  color: #000000;
+  border-radius: 3px;
+  padding: 0;
+  overflow: hidden !important;
+  min-height: 100px;
+  text-align: center;
+}
+
+.ui-form .ui-buttons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  border-top: 1px solid #d5d8d8;
+  border-bottom: 0 solid #d5d8d8;
+  background-color: #fafafa;
+  padding: 15px 0 !important;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.ui-form .ui-page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  padding: 10px;
+  border-left: 1px solid inherit;
+  border-right: 1px solid inherit;
+  background-color: inherit;
+  border-radius: 3px;
+}
+
+.ui-form .ui-buttons input[type="submit"],
+.ui-form .ui-buttons input[type="button"],
+.ui-form .ui-buttons button {
+  min-width: 80px;
+  margin-right: 5px;
+}
+
+.ui-form .ui-field input[type="text"],
+.ui-form .ui-field input[type="email"],
+.ui-form .ui-field input[type="password"],
+.ui-form .ui-field input[type="file"],
+.ui-form .ui-field textarea {
+  width: 385px;
+  float: right;
+}
+
+.ui-table {
+  width: 680px;
+  margin: 0 auto;
+}
+
+.ui-field > label {
+  display: block;
+  float: left;
+  margin-top: 7px;
+  margin-bottom: 3px;
+  width: 140px;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  min-height: 20px;
+  color: #666;
+}
+
+.ui-field > div {
+  font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 3px;
+  padding: 3px;
+  min-height: 28px;
+  float: none;
+  clear: both;
+}
+
+.ui-field .up_pic {
+  margin-left: 0;
+  text-align: center;
+}
+
+.off {
+  display: none;
+}
+
+@media screen and (max-width:980px) {
+  #Holder {
+    width: auto;
+  }
+
+  #PageHeading {
+    padding: 9px;
+  }
+
+  #Footer {
+    height: 50px;
+  }
+
+  .WidthAuto {
+    width: auto;
+  }
+}
+
+@media screen and (max-width:478px) {
+  .updateLayout td {
+    display: block;
+  }
+}
