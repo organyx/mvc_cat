@@ -71,7 +71,8 @@ Class Model_Admin extends Model
 	public function manage_users()
 	{
 		Global $WebCatalogue;
-		$currentPage = $_SERVER["PHP_SELF"];
+		//$currentPage = $_SERVER["PHP_SELF"];
+		$currentPage = "/index/";
 		$maxRows_ManageUsers = 10;
 		$pageNum_ManageUsers = 0;
 		if (isset($_GET['pageNum_ManageUsers'])) {
