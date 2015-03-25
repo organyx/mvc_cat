@@ -10,7 +10,7 @@
           <h2><a href="/admin">Manage Users</a></h2><br>
           <?php } ?>
     	  <h2><a href="/update">Update Account</a></h2><br>
-    	  <h2><a href="/admin/logout">Log Out</a></h2>
+    	  <h2><a href="/account/logout">Log Out</a></h2>
     	</div>
 
     <div id="contentRight">
@@ -31,8 +31,8 @@
             <tr>
               <td>URL: <a target="_blank" href="<?php echo $user['url']; ?>"> <?php echo $user['url']; ?></a></td>
               <td width="145" height="145" rowspan="3" class="TableStyleBorderLeft">
-        			  <a class="fancybox"  href="<?php echo $user['preview_thumb']; ?>">
-        			  <img src="<?php echo $user['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
+        			  <a class="fancybox"  href="../../<?php echo $user['preview_thumb']; ?>">
+        			  <img src="../../<?php echo $user['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
               </td>
             </tr>
             <tr>

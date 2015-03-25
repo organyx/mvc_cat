@@ -21,6 +21,5 @@ require_once 'core/controller.php';
 require_once 'helpers/preventsql.php';
 require_once 'db/db_connect.php';
 require_once 'helpers/random.php';
-//require_once 'helpers/mail.php';
 require_once 'core/route.php';
 Route::start(); // запускаем маршрутизатор

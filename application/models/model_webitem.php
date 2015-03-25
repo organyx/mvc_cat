@@ -21,7 +21,7 @@ class Model_Webitem extends Model
 			 
 			if($result === false) 
 			{
-			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $conn->error, E_USER_ERROR);
+			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
 			} 
 			else 
 			{
@@ -47,7 +47,7 @@ class Model_Webitem extends Model
 			 
 			if($result === false) 
 			{
-			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $conn->error, E_USER_ERROR);
+			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
 			} 
 			else 
 			{

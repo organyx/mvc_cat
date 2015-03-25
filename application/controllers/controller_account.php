@@ -9,7 +9,19 @@ class Controller_Account extends Controller
 
 	function action_index()
 	{	
-		$data = $this->model->get_user_data($user = "jeez@jeez.lv");
+		session_start();
+		if(isset($_SESSION['Username']))
+		{
+			$user = $_SESSION['Username'];
+		}
+		$data = $this->model->get_user_data($user);
 		$this->view->generate('account_view.php', 'template_view.php', $data);
+	}
+
+	function action_logout()
+	{
+		session_start();
+		session_destroy();
+		header('Location:/');
 	}
 }

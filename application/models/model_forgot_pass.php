@@ -44,21 +44,26 @@ class Model_Forgot_Pass extends Model
 				mail($email, $subject,$message, "From: ".$from);
 
 			  echo "Check your email. " . $new_password;
+			  $email_number->free();
+			  return true;
 			}
-
 			else
 			{
+				$email_number->free();
 				if(filter_var($email, FILTER_VALIDATE_EMAIL))
 			  {
 			    echo "Email not Found.";
+			    return false;
 			  }
 			  elseif (empty($email)) 
 			  {
 			    echo "Email field is empty.";
+			    return false;
 			  }
 			  else
 			  {
 			    echo "Invalid email format.";
+			    return false;
 			  }
 			}
 	}
