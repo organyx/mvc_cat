@@ -7,6 +7,24 @@
 class Model_Register extends Model
 {
 
+	public function min_max_pass($password)
+	{
+		$min = 8;
+		$max = 32;
+		 if (strlen($password) > $max)
+		 {
+		   return 1;
+		 } 
+		 elseif (strlen($password) < $min)
+		 {
+		   return -1;
+		 }
+		 else
+		 {
+		   return 0;
+		 }
+	}
+
 	public function check_user_input()
 	{
 		Global $WebCatalogue;
@@ -61,6 +79,17 @@ class Model_Register extends Model
 		    echo "Password field cannot be empty.";
 		    return false;
 	  	}
+
+	  	switch ($this->min_max_pass($_POST['password'])) {
+		    	case '-1':
+		    		echo "Password is too short.";
+		    		return false;
+		    		break;
+		    	case '1':
+		    		echo "Password is too long.";
+		    		return false;
+		    		break;
+		    }
 
 	  	if(empty($_POST['passwordwc']))
 	  	{
