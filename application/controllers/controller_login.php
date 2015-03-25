@@ -22,7 +22,7 @@ class Controller_Login extends Controller
 
 			  	$userinfo = $this->model->get_user($loginUsername);
 			  	
-				echo "<pre>".print_r($userinfo)."</pre>";
+				//echo "<pre>".print_r($userinfo)."</pre>";
 
 			  	if(password_verify($password, $userinfo['password']))
 				{

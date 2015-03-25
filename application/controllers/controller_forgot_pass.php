@@ -10,6 +10,7 @@ class Controller_Forgot_pass extends Controller
 
 	function action_index()
 	{	
+		session_start();
 		if(IS_AJAX)
 		{
 			//echo "<pre>".print_r($_POST)."</pre>";

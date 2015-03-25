@@ -1,5 +1,5 @@
 <?php
-
+define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 class Controller_Admin extends Controller
 {
 	function __construct()
@@ -12,11 +12,6 @@ class Controller_Admin extends Controller
 	{
 		session_start();
 		
-		/*
-		Для простоты, в нашем случае, проверяется равенство сессионной переменной admin прописанному
-		в коде значению — паролю. Такое решение не правильно с точки зрения безопасности.
-		Пароль должен храниться в базе данных в захешированном виде, но пока оставим как есть.
-		*/
 		if ( $_SESSION['lvl'] == 2 )
 		{
 			if(isset($_SESSION['Username']))
@@ -35,7 +30,6 @@ class Controller_Admin extends Controller
 		}
 	}
 	
-	// Действие для разлогинивания администратора
 	function action_logout()
 	{
 		session_start();

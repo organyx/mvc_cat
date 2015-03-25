@@ -23,6 +23,27 @@ body {
   font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#log {
+  float: right;
+}
+
+#login a{
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+
+#something {
+  float: right;
+  text-decoration: none;
+  position: relative;
+}
+
+#login input[type="text"],
+#login input[type="password"] {
+  width: 180px;
+}
+
 #contentLeft {
   width: 100%;
   min-width: 280px;

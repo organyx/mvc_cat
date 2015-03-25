@@ -10,12 +10,24 @@ class Controller_Webitem extends Controller
 
 	function action_index()
 	{	
+		session_start();
 		$id = $_GET['site'];
-		$email = "flirts@flirts.lv";
+		if(isset($_SESSION['Username']))
+		{
+			$username = $_SESSION['Username'];
+			$user_data = $this->model->get_user_data($username);
+			$selected_web_data = $this->model->item($id);
+			$data = array($user_data, $selected_web_data);
+		}
+		else
+		{
+			//$user_data = $this->model->get_user_data($username);
+			$selected_web_data = $this->model->item($id);
+			$data = array($user_data = "", $selected_web_data);
+		}
+		//$email = "flirts@flirts.lv";
 		//echo "<pre>".print_r($_GET)."</pre>";
-		$user_data = $this->model->get_user_data($email);
-		$selected_web_data = $this->model->item($id);
-		$data = array($user_data, $selected_web_data);
+		
 		$this->view->generate('webitem_view.php', 'template_view.php',$data);
 	}
 }

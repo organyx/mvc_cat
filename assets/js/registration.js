@@ -8,7 +8,7 @@ $(document).ready(function ()
         $.ajax(
         {
             type: 'POST',
-            url: 'PHP/RegisterFromAction.php',
+            url: '/register/index/',
             data: formData,
             async: false,
             success: function (data)
@@ -27,6 +27,12 @@ $(document).ready(function ()
         return false;
     }
 
+    function reset_input()
+    {
+        $('#returnmessage').empty();
+        $('#registrationForm').closest('form').find("input[type=text],input[type=email],input[type=password],input[type=file], textarea").val("");
+    }
+
     $("#register").click(function (e)
     {
         register();
@@ -34,8 +40,7 @@ $(document).ready(function ()
 
     $("#reset").click(function (e)
     {
-        $('#returnmessage').empty();
-        $('#registrationForm').closest('form').find("input[type=text],input[type=email],input[type=password],input[type=file], textarea").val("");
+        reset_input();
     });
 
 });

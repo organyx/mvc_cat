@@ -9,7 +9,7 @@ class Model_Main extends Model
 
 			//****Pagination Setup*****
 			$currentPage = "/main/index/";
-			$maxRows = 20;
+			$maxRows = 10;
 			$pageNum = 0;
 			if (isset($_GET['pageNum'])) {
 			  $pageNum = $_GET['pageNum'];

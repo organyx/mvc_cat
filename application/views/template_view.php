@@ -42,11 +42,19 @@
 		        </nav>
 		        <div id="log">
 		        	<table id="login">
+		        		<?php if(!isset($_SESSION['Username'])) { ?>
 				        <tr>
 				          	<td>
 		        				<a href="/login">Login</a>
 		        			</td>
 		        		</tr>
+		        		<?php } else { ?>
+		        		<tr>
+		        			<td>
+		        				<a href="/account/logout/">Logout</a>
+		        			</td>
+		        		</tr>
+		        		<?php } ?>
 		        	</table>
 		        </div>
 		  </div>

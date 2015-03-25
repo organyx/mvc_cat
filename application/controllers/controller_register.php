@@ -1,5 +1,5 @@
 <?php
-
+define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 class Controller_Register extends Controller
 {
 	function __construct()
@@ -10,7 +10,16 @@ class Controller_Register extends Controller
 
 	function action_index()
 	{	
-		$data = $this->model->register();
-		$this->view->generate('register_view.php', 'template_view.php',$data);
+		session_start();
+		if(IS_AJAX)
+		{
+			$data = $this->model->register();
+			$this->view->regenerate('register_view.php',$data);
+		}
+		else
+		{
+			$this->view->generate('register_view.php', 'template_view.php');
+		}
+		
 	}
 }

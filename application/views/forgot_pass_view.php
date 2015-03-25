@@ -1,13 +1,6 @@
 <div id="PageHeading">
       <h1>Forgot Password</h1>
 </div>
-    <?php if(isset($_SESSION['MM_Username'])) { ?>
-    
-<div id="contentLeft">
-    <h2><a href="Account.php">Account</a></h2>
-</div>
-     <?php }; ?>
-
      
 <div id="contentRight">
 	<form method="POST" id="sendPassForm" action="javascript:void(null);" >

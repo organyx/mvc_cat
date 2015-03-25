@@ -2,7 +2,7 @@
       <h1>Main</h1>
 </div>
     <?php 
-    if(isset($_SESSION['MM_Username'])) { ?>
+    if(isset($_SESSION['Username'])) { ?>
     
 <div id="contentLeft">
     <h2><a href="/account">Account</a></h2>

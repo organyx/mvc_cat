@@ -20,7 +20,7 @@ $(document).ready(function ()
     {
         $.ajax(
         {
-            url: 'PHP/AdminSearchAccAction.php',
+            url: '/admin/index/',
             type: 'post',
             data: {
                 name: $('input#email').val()
@@ -56,7 +56,7 @@ $(document).ready(function ()
 
     function update()
     {
-        $('#list').load('PHP/AdminUsers_Include.php');
+        $('#list').load('/admin/index/');
 
         setTimeout(function(){
         //Reload
@@ -79,7 +79,7 @@ $(document).ready(function ()
         $.ajax(
         {
             type: 'post',
-            url: 'PHP/AdminSearchAccAction.php',
+            url: '/admin/index/',
             data: del,
             success: function (data)
             {
@@ -94,7 +94,7 @@ $(document).ready(function ()
         $.ajax(
         {
             type: 'post',
-            url: 'PHP/AdminSearchAccAction.php',
+            url: '/admin/index/',
             data: app,
             success: function (data)
             {

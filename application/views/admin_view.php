@@ -1,8 +1,12 @@
-<?php 	$user = $data[0]->fetch_assoc();
+<?php 	
+    $user = $data[0]->fetch_assoc();
 		$manage_users = $data[1][0]->fetch_assoc(); 
 		$totalRows_users = $data[1][0]->num_rows; 
 		//echo "<pre>".print_r($manage_users)."</pre>";
-
+    $editFormAction = "/admin/index/";
+    if (isset($_SERVER['QUERY_STRING'])) {
+      $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+    }
 		?>
 <div id="PageHeading">
 	<h1><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></h1>
@@ -19,7 +23,7 @@
 <div id="contentRight">
 	<div id="user_search">
 		<div id="grid" class="search">
-			<form id="searchForm" class="searchForm" method="post">  
+			<form id="searchForm" class="searchForm" method="post" action="javascript:void(null);">  
 		    <label for="email">Find User: </label>
 		    <input type="text" id="email" class="emal" name="email" placeholder="Email..." />
 		    <button type="submit" id="btnSearch" class="btnSearch">Search</button>  
@@ -62,28 +66,24 @@
                   	<td>Status: <?php echo ($manage_users['approval'] !== "0000-00-00 00:00:00" ? "Approved" : "Awaiting Approval"); ?></td>     
                   </tr>
                   <tr>
-                    <td><table class="center">
-                      <tr>
-                        <td><form id="DeleteUserForm" name="DeleteUserForm" method="POST">
-                          <input name="DeleteUserHiddenField" type="hidden" id="DeleteUserHiddenField" value="<?php echo $manage_users['userID']; ?>">
-                          <input type="submit" name="DeleteUserButton" id="DeleteUserButton" value="Delete User">
-                        </form></td>
-                        <td><form action="<?php echo $editFormAction; ?>" id="ApproveUserForm" name="ApproveUserForm" method="POST">
-                          <input name="ApproveUserHiddenField" type="hidden" id="ApproveUserHiddenField" value="<?php echo "CURRENT_TIMESTAMP()"; ?>">
-                          <input name="ApproveIDhiddenField" type="hidden" id="ApproveIDhiddenField" value="<?php echo $manage_users['userID']; ?>">
-                          <input type="submit" name="ApproveUserButton" id="ApproveUserButton" value="Approve User">
-                          <input type="hidden" name="MM_update" value="ApproveUserForm">
-                        </form></td>
-                        <!--
-                        <td><form action="<?php echo $editFormAction; ?>" id="MakeAdminForm" name="MakeAdminForm" method="POST">
-                        <input name="MakeUserAdminHiddenField" type="hidden" id="ApproveUserHiddenField" value="<?php echo "2"; ?>">
-                          <input type="submit" name="MakeAdminButton" id="MakeAdminButton" value="Give Admin Rights">
-                          <input name="MakeUserAdminIDhiddenField" type="hidden" id="ApproveIDhiddenField" value="<?php echo $row['userID']; ?>">
-                          <input type="hidden" name="MM_update" value="MakeAdminForm">
-                        </form></td>
-                        -->
-                      </tr>
-                    </table></td>
+                    <td>
+                      <div class="list">
+                        <table class="center">
+                          <tr>
+                            <td><form id="DeleteUserForm" name="DeleteUserForm" method="POST">
+                              <input name="DeleteUserHiddenField" type="hidden" id="DeleteUserHiddenField" value="<?php echo $manage_users['userID']; ?>">
+                              <input type="submit" name="DeleteUserButton" id="DeleteUserButton" value="Delete User">
+                            </form></td>
+                            <td><form action="<?php echo $editFormAction; ?>" id="ApproveUserForm" name="ApproveUserForm" method="POST">
+                              <input name="ApproveUserHiddenField" type="hidden" id="ApproveUserHiddenField" value="<?php echo "CURRENT_TIMESTAMP()"; ?>">
+                              <input name="ApproveIDhiddenField" type="hidden" id="ApproveIDhiddenField" value="<?php echo $manage_users['userID']; ?>">
+                              <input type="submit" name="ApproveUserButton" id="ApproveUserButton" value="Approve User">
+                              <input type="hidden" name="MM_update" value="ApproveUserForm">
+                            </form></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
                   </tr>
                   
                 </table>
@@ -105,3 +105,6 @@
       </table>	
 	</div>
 </div>
+<!--
+<script type="text/javascript" src="assets/js/admin.js"></script>
+-->

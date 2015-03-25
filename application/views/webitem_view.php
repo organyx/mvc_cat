@@ -1,11 +1,16 @@
 <div id="PageHeading">
         <?php  
-        $user = $data[0]->fetch_assoc();
+        if(!is_string($data[0]))
+        {
+          $user = $data[0]->fetch_assoc();
+        }
         $result = $data[1]->fetch_assoc();
         //echo $result['registration'] . "++++";
         ?>
 
-    	  <h1><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></h1>
+    	  <h1><?php if (!is_string($data[0])) {
+         echo $user['first_name']."&nbsp";  echo $user['last_name'];
+        } ?></h1>
       </div>
       <?php if(isset($_SESSION['MM_Username'])) { ?>
     	<div id="contentLeft">        

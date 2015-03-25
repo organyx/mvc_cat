@@ -89,3 +89,5 @@
     </div>
 </form>
 </div>
+
+<script type="text/javascript" src="assets/js/registration.js"></script>
