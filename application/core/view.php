@@ -29,10 +29,10 @@ class View
 		include 'application/views/'.$template_view;
 	}
 
-	// function regenerate($content_view, $data = null)
-	// {
-	// 	if(is_array($data)) {
-	// 		extract($data);
-	// 	}
-	// }
+	function regenerate($content_view, $data = null)
+	{
+		if(is_array($data)) {
+			extract($data);
+		}
+	}
 }

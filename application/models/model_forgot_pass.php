@@ -7,76 +7,60 @@ class Model_Forgot_Pass extends Model
 	{	
 			Global $WebCatalogue;
 
-			$sql="SELECT * FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
- 
-			$result=$WebCatalogue->query($sql);
-			 
-			if($result === false) {
-			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
-			} else {
-			  $totalRows = $result->num_rows;
+			$email = "";
+
+			if(isset($_POST['email']))
+			  {
+			    $email = $_POST['email'];
+			  }
+
+			$colname_EmailPassword = "-1";
+			if (isset($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			  $colname_EmailPassword = $email;
 			}
 
-			$result->data_seek(0);
-			// while($row = $result->fetch_assoc()){
-			//     echo $row['email'] . '<br>';
-			// }
-			return $result;
+			$new_password = randomPassword();
+			$new_hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
 
-			// $email = "";
+			$query_EmailPassword = sprintf(
+			  "UPDATE users SET password=%s WHERE email=%s",
+			                       GetSQLValueString($new_hashed_password, "text"),
+			                       GetSQLValueString($email, "text")
+			  );
+			$email_found = $WebCatalogue->query($query_EmailPassword);
 
-			// 	if(isset($_POST['email']))
-			//   {
-			//     $email = $_POST['email'];
-			//   }
+			$query_EmailPassword2 = sprintf("SELECT * FROM `users` WHERE email = %s", GetSQLValueString($colname_EmailPassword, "text"));
+			$email_number = $WebCatalogue->query($query_EmailPassword2);
+			$row_EmailPassword2 = $email_number->fetch_assoc();
+			$totalRows_EmailPassword2 = $email_number->num_rows;
 
-			// $colname_EmailPassword = "-1";
-			// if (isset($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			//   $colname_EmailPassword = $email;
-			// }
-
-			// $new_password = randomPassword();
-			// $new_hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
-
-			// $query_EmailPassword = sprintf(
-			//   "UPDATE users SET password=%s WHERE email=%s",
-			//                        GetSQLValueString($new_hashed_password, "text"),
-			//                        GetSQLValueString($email, "text")
-			//   );
-			// $email_found = $WebCatalogue->query($query_EmailPassword);
-
-			// $query_EmailPassword2 = sprintf("SELECT * FROM `users` WHERE email = %s", GetSQLValueString($colname_EmailPassword, "text"));
-			// $email_number = $WebCatalogue->query($query_EmailPassword2);
-			// $row_EmailPassword2 = $email_number->fetch_assoc();
-			// $totalRows_EmailPassword2 = $email_number->num_rows;
-
-			// if($totalRows_EmailPassword2 > 0)
-			// {
-			// 	$from = "noreply@domain.com";
-			// 	$email = $email;
-			// 	$subject = "Domain - Email Password";
-			// 	$message = "Your password is: " .$new_password;
+			if($totalRows_EmailPassword2 > 0)
+			{
+				$from = "noreply@domain.com";
+				$email = $email;
+				$subject = "Domain - Email Password";
+				$message = "Your password is: " .$new_password;
 				
-			// 	mail($email, $subject,$message, "From: ".$from);
+				mail($email, $subject,$message, "From: ".$from);
 
-			//   return "Check your email. " . $new_password;
-			// }
+			  echo "Check your email. " . $new_password;
+			}
 
-			// else
-			// {
-			// 	if(filter_var($email, FILTER_VALIDATE_EMAIL))
-			//   {
-			//     return "Email not Found.";
-			//   }
-			//   elseif (empty($email)) 
-			//   {
-			//     return "Email field is empty.";
-			//   }
-			//   else
-			//   {
-			//     return "Invalid email format.";
-			//   }
-			// }
+			else
+			{
+				if(filter_var($email, FILTER_VALIDATE_EMAIL))
+			  {
+			    echo "Email not Found.";
+			  }
+			  elseif (empty($email)) 
+			  {
+			    echo "Email field is empty.";
+			  }
+			  else
+			  {
+			    echo "Invalid email format.";
+			  }
+			}
 	}
 
 }

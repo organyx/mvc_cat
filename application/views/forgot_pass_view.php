@@ -12,7 +12,7 @@
 <div id="contentRight">
 	<form method="POST" id="sendPassForm" action="javascript:void(null);" >
        
-        <div class="ui-form ui-600">
+        <div class="ui-form ui-200">
           <div class="ui-page">
                <div class="ui-field">
                   <div>

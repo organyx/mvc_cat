@@ -10,13 +10,16 @@ class Controller_Forgot_pass extends Controller
 
 	function action_index()
 	{	
-		$data = $this->model->forgot_pass();
-		$this->view->generate('forgot_pass_view.php', 'template_view.php',$data);
+		if(IS_AJAX)
+		{
+			//echo "<pre>".print_r($_POST)."</pre>";
+			$data = $this->model->forgot_pass();
+			$this->view->regenerate('forgot_pass_view.php',$data);
+		}
+		else
+		{
+			//$data = $this->model->forgot_pass();
+			$this->view->generate('forgot_pass_view.php', 'template_view.php');
+		}
 	}
-
-	// function action_newpass()
-	// {	
-	// 	$data = $this->model->forgot_pass();
-	// 	$this->view->regenerate('forgot_pass_view.php',$data);
-	// }
 }
