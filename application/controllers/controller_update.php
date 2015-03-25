@@ -1,5 +1,5 @@
 <?php
-
+define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 class Controller_Update extends Controller
 {
 
@@ -17,9 +17,19 @@ class Controller_Update extends Controller
 		{
 			$username = $_SESSION['Username'];
 		}
-		$user = $this->model->get_user_data($username);
-		$update = $this->model->update_user();
-		$data = array($user, $update);
-		$this->view->generate('update_view.php', 'template_view.php', $data);
+		if(IS_AJAX)
+		{
+			$user = $this->model->get_user_data($username);
+			$update = $this->model->update_user();
+			$data = array($user, $update);
+			$this->view->regenerate('update_view.php', $data);
+		}
+		else
+		{
+			$user = $this->model->get_user_data($username);
+			$update = $this->model->update_user();
+			$data = array($user, $update);
+			$this->view->generate('update_view.php', 'template_view.php', $data);
+		}
 	}
 }

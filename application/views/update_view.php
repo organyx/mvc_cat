@@ -77,3 +77,5 @@
         </div>
     </form>
   </div>
+
+  <script type="text/javascript" src="assets/js/update.js"></script>

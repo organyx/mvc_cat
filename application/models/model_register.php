@@ -235,7 +235,7 @@ class Model_Register extends Model
 		} 
 		else
 		{
-			echo "Registration Failed.";
+			//echo "Registration Failed.";
 			return "Registration Failed.";
 		}
 	}

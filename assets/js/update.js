@@ -3,7 +3,7 @@ $(document).ready(function ()
     $("#update").click(function ()
     {
         update();
-        refresh();
+        //refresh();
     });
 
 
@@ -14,7 +14,7 @@ $(document).ready(function ()
         $.ajax(
         {
             type: 'POST',
-            url: 'PHP/UpdateUserAction.php',
+            url: '/update/index/',
             data: formData,
             async: false,
             success: function (data)
@@ -37,7 +37,7 @@ $(document).ready(function ()
     {
         e.preventDefault();
         update();
-        refresh();
+        //refresh();
         return false;
     });
 
