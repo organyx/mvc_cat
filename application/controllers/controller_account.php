@@ -14,8 +14,16 @@ class Controller_Account extends Controller
 		{
 			$user = $_SESSION['Username'];
 		}
-		$data = $this->model->get_user_data($user);
-		$this->view->generate('account_view.php', 'template_view.php', $data);
+		if(isset($user))
+		{
+			$data = $this->model->get_user_data($user);
+			$this->view->generate('account_view.php', 'template_view.php', $data);
+		}
+		else
+		{
+			Route::ErrorPage403();
+		}
+		
 	}
 
 	function action_logout()

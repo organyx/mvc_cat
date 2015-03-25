@@ -52,11 +52,11 @@ class Controller_Login extends Controller
 			  		$data["login_status"] = "access_granted";
 			  		$_SESSION['Username'] = $loginUsername;
 	    			$_SESSION['UserGroup'] = $loginStrGroup;
-	    			if($loginStrGroup == 2)
+	    			if($_SESSION['lvl'] == 2)
 	    			{
 	    				header('Location:'.$redirectLoginSuccessAdmin);	
 	    			}  
-	    			else
+	    			else if($_SESSION['lvl'] == 1)
 	    			{
 	    				header('Location:'.$redirectLoginSuccess);
 	    			}

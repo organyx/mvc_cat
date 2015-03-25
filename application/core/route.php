@@ -89,5 +89,13 @@ class Route
 		header("Status: 404 Not Found");
 		header('Location:'.$host.'404');
     }
+
+    function ErrorPage403()
+    {
+    	$host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+        header('HTTP/1.1 403 Not Authorised');
+		header("Status: 403 Not Authorised");
+		header('Location:'.$host.'403');
+    }
     
 }

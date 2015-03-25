@@ -17,9 +17,13 @@ class Controller_Admin extends Controller
 		в коде значению — паролю. Такое решение не правильно с точки зрения безопасности.
 		Пароль должен храниться в базе данных в захешированном виде, но пока оставим как есть.
 		*/
-		if ( $_SESSION['admin'] == "12345" )
+		if ( $_SESSION['lvl'] == 2 )
 		{
-			$user = $this->model->get_user_data($user = "jeez@jeez.lv");
+			if(isset($_SESSION['Username']))
+			{
+				$username = $_SESSION['Username'];
+			}
+			$user = $this->model->get_user_data($username);
 			$users = $this->model->manage_users();
 			$data = array($user, $users);
 			$this->view->generate('admin_view.php', 'template_view.php',$data);
