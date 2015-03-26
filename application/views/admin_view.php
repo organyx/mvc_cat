@@ -14,10 +14,10 @@
 
 <div id="contentLeft">
           <?php if ($_SESSION['lvl'] == 2) { ?>
-          <h2><a href="/admin">Manage Users</a></h2><br>
+          <h2><a href="/admin/">Manage Users</a></h2><br>
           <?php } ?>
-    	  <h2><a href="/update">Update Account</a></h2><br>
-    	  <h2><a href="/admin/logout">Log Out</a></h2>
+    	  <h2><a href="/update/">Update Account</a></h2><br>
+    	  <h2><a href="/admin/logout/">Log Out</a></h2>
 </div>
 
 <div id="contentRight">
@@ -25,7 +25,7 @@
 		<div id="grid" class="search">
 			<form id="searchForm" class="searchForm" method="post" action="javascript:void(null);">  
 		    <label for="email">Find User: </label>
-		    <input type="text" id="email" class="emal" name="email" placeholder="Email..." />
+		    <input type="text" id="email" class="email" name="email" placeholder="Email..." />
 		    <button type="submit" id="btnSearch" class="btnSearch">Search</button>  
 		    <button type="button" id="reset" class="reset">Reset</button>  
 		</form>
@@ -33,8 +33,10 @@
 
 		<div class="ret">
 			<div id="result" class="result"></div>
-			<div id="returnmessage" class="returnmessage"></div>
+			<div id="returnmessage" class="returnmessage">   
+      </div>
 		</div>
+
 	</div>
 	<div id="user_list">
 		<table class="width-670 center WidthAuto">
@@ -70,14 +72,14 @@
                       <div class="list">
                         <table class="center">
                           <tr>
-                            <td><form id="DeleteUserForm" name="DeleteUserForm" method="POST">
-                              <input name="DeleteUserHiddenField" type="hidden" id="DeleteUserHiddenField" value="<?php echo $manage_users['userID']; ?>">
-                              <input type="submit" name="DeleteUserButton" id="DeleteUserButton" value="Delete User">
+                            <td><form id="DeleteUserForm"  name="DeleteUserForm" method="POST">
+                              <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="<?php echo $manage_users['userID']; ?>">
+                              <input type="submit" name="DeleteUserButton"  class="DeleteUserButton" value="Delete User">
                             </form></td>
-                            <td><form action="<?php echo $editFormAction; ?>" id="ApproveUserForm" name="ApproveUserForm" method="POST">
-                              <input name="ApproveUserHiddenField" type="hidden" id="ApproveUserHiddenField" value="<?php echo "CURRENT_TIMESTAMP()"; ?>">
-                              <input name="ApproveIDhiddenField" type="hidden" id="ApproveIDhiddenField" value="<?php echo $manage_users['userID']; ?>">
-                              <input type="submit" name="ApproveUserButton" id="ApproveUserButton" value="Approve User">
+                            <td><form action="<?php echo $editFormAction; ?>"  class="ApproveUserForm" name="ApproveUserForm" method="POST">
+                              <input name="ApproveUserHiddenField" type="hidden"  class="ApproveUserHiddenField" value="<?php echo "CURRENT_TIMESTAMP()"; ?>">
+                              <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="<?php echo $manage_users['userID']; ?>">
+                              <input type="submit" name="ApproveUserButton"  class="ApproveUserButton" value="Approve User">
                               <input type="hidden" name="MM_update" value="ApproveUserForm">
                             </form></td>
                           </tr>
@@ -105,6 +107,5 @@
       </table>	
 	</div>
 </div>
-<!--
-<script type="text/javascript" src="assets/js/admin.js"></script>
--->
+
+<script type="text/javascript" src="../../assets/js/admin.js"></script>

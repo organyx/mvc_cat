@@ -17,19 +17,27 @@ class Controller_Update extends Controller
 		{
 			$username = $_SESSION['Username'];
 		}
-		if(IS_AJAX)
+		if(isset($username))
 		{
-			$user = $this->model->get_user_data($username);
-			$update = $this->model->update_user();
-			$data = array($user, $update);
-			$this->view->regenerate('update_view.php', $data);
+			if(IS_AJAX)
+			{
+				if ($this->model->update_user()) 
+				{
+					$user = $this->model->get_user_data($username);
+					$data = array($user);
+					$this->view->regenerate('update_view.php', $data);
+				}
+			}
+			else
+			{
+				$user = $this->model->get_user_data($username);
+				$data = array($user);
+				$this->view->generate('update_view.php', 'template_view.php', $data);
+			}
 		}
 		else
 		{
-			$user = $this->model->get_user_data($username);
-			$update = $this->model->update_user();
-			$data = array($user, $update);
-			$this->view->generate('update_view.php', 'template_view.php', $data);
+			Route::ErrorPage403();
 		}
 	}
 }

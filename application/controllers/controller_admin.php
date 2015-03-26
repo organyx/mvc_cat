@@ -18,16 +18,61 @@ class Controller_Admin extends Controller
 			{
 				$username = $_SESSION['Username'];
 			}
-			$user = $this->model->get_user_data($username);
-			$users = $this->model->manage_users();
-			$data = array($user, $users);
-			$this->view->generate('admin_view.php', 'template_view.php',$data);
+			if (IS_AJAX)
+			{
+				if(isset($_POST['action']) && !empty($_POST['action'])) 
+				{
+				    $action = $_POST['action'];
+				    switch($action) {
+				        case 'approve' : 
+					        	$this->approve_web();
+					        	break;
+				        case 'delete' : 
+				        		$this->delete_web();
+					        	break; 
+				    }
+				    exit;
+				}
+				else
+				{
+					$user = $this->model->get_user_data($username);
+					$users = $this->model->manage_users();
+					$found_user = $this->model->find_user($_POST['name']);
+					$data = array($user, $users, $found_user);
+					$this->view->regenerate('admin_view.php', $data);
+				}
+			}
+			else
+			{
+				$user = $this->model->get_user_data($username);
+				$users = $this->model->manage_users();
+				$data = array($user, $users);
+				$this->view->generate('admin_view.php', 'template_view.php',$data);
+			}
 		}
 		else
 		{
 			session_destroy();
 			Route::ErrorPage404();
 		}
+	}
+
+	function approve_web()
+	{
+		$id = $_POST['id'];
+		$approved = $this->model->approve_web($id);
+		$users = $this->model->manage_users();
+		$data = array($approved, $users);
+		$this->view->regenerate('admin_view.php', $data);
+	}
+
+	function delete_web()
+	{
+		$id = $_POST['id'];
+		$deleted = $this->model->delete_web($id);
+		$users = $this->model->manage_users();
+		$data = array($deleted, $users);
+		$this->view->regenerate('admin_view.php', $data);
 	}
 	
 	function action_logout()

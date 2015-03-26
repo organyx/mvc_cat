@@ -9,17 +9,18 @@ $(document).ready(function ()
 
     function update()
     {
-        //var msg   = $('#registrationForm').serialize();
         var formData = new FormData($('#updateForm')[0]);
         $.ajax(
         {
             type: 'POST',
             url: '/update/index/',
+            dataType: 'html',
             data: formData,
             async: false,
             success: function (data)
             {
                 $('#returnmessage').html(data);
+                $('#updateForm').closest('form').find("input[type=file]").val("");
             },
             error: function (xhr, str)
             {
@@ -33,27 +34,28 @@ $(document).ready(function ()
         return false;
     }
 
-    $('#updateForm').submit(function (e)
-    {
-        e.preventDefault();
-        update();
-        //refresh();
-        return false;
-    });
+    // $('#updateForm').submit(function (e)
+    // {
+    //     e.preventDefault();
+    //     update();
+    //     //refresh();
+    //     return false;
+    // });
 
 
     function refresh()
     {
-        //$('#Content').load('PHP/Update_include.php');
+        //$('#Content').load('/update/index/');
         setTimeout(function(){
         //Reload
         $.ajax(
         {
-            url: "",
+            type: 'POST',
+            url: "/update/index/",
             context: document.body,
             success: function (s, x)
             {
-                $(this).html(s);
+                $('#Content').html(s);
             }
         });
         }, 5000 ); // 5 seconds

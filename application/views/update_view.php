@@ -1,5 +1,5 @@
        
-        <?php $user = $data[0]->fetch_assoc() ?>
+        <?php $user = $data[0]->fetch_assoc(); ?>
 
         <div id="PageHeading">
     	  <h1>Welcome,  <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?>!</h1>
@@ -11,7 +11,7 @@
     	</div>
 
     <div id="contentRight">
-      <form method="POST" id="updateForm" action="javascript:void(null);" >
+      <form method="POST" id="updateForm" action="javascript:void(null);" accept-charset="utf-8" >
       <div class="ui-form ui-600">
         <div class="ui-page">
           <div class="ui-field">

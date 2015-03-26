@@ -1,19 +1,19 @@
 $(document).ready(function ()
 {
-    $('#btnSearch').click(function ()
+    $('.btnSearch').click(function ()
     {
         makeAjaxRequest();
     });
-    $('#searchForm').submit(function (e)
+    $('.searchForm').submit(function (e)
     {
         e.preventDefault();
         makeAjaxRequest();
         return false;
     });
-    $("#reset").click(function (e)
+    $(".reset").click(function (e)
     {
-        $('#result').empty();
-        $('#searchForm').closest('#searchForm').find("input[type=text]").val("");
+        $('.result').empty();
+        $('.searchForm').closest('.searchForm').find("input[type=text]").val("");
     });
 
     function makeAjaxRequest()
@@ -23,84 +23,64 @@ $(document).ready(function ()
             url: '/admin/index/',
             type: 'post',
             data: {
-                name: $('input#email').val()
+                name: $('input.email').val()
             },
             success: function (response)
             {
-                $('div#result').html(response);
-                $('#DeleteUserButton2').click(function ()
-                {
-                    deleteUser();
-                });
-                $('#ApproveUserButton2').click(function ()
-                {
-                    approveUser();
-                });
-                $('#DeleteUserForm2').submit(function (e)
-                {
-                    e.preventDefault();
-                    deleteUser();
-                    update();
-                    return false;
-                });
-                $('#ApproveUserForm2').submit(function (e)
-                {
-                    e.preventDefault();
-                    approveUser();
-                    update();
-                    return false;
-                });
+                $('div.result').html(response);
             }
         });
     }
 
-    function update()
+
+    $('.DeleteUserButton').click(function ()
     {
-        $('#list').load('/admin/index/');
-
-        setTimeout(function(){
-        //Reload
-        $.ajax(
-        {
-            url: "",
-            context: document.body,
-            success: function (s, x)
-            {
-                $(this).html(s);
-            }
-        });
-
-        }, 5000 ); // 5 seconds
-    }
+        deleteUser();
+    });
+    $('.ApproveUserButton').click(function ()
+    {
+        approveUser();
+    });
 
     function deleteUser()
     {
-        var del = $('#DeleteUserForm2').serialize();
+        var del = $('.DeleteUserForm').serialize();
+        //alert(del);
+        var formID = $('.DeleteUserHiddenField').val();
         $.ajax(
         {
             type: 'post',
             url: '/admin/index/',
-            data: del,
+            data: {
+                action: 'delete', 
+                id: formID,
+            },
             success: function (data)
             {
-                $('div#result').html(data);
+                $('div.result').html(data);
             }
         });
+        return false;
     }
 
     function approveUser()
     {
-        var app = $('#ApproveUserForm2').serialize();
+        var app = $('.ApproveUserForm').serialize();
+        var formID = $('.ApproveIDhiddenField').val();
         $.ajax(
         {
             type: 'post',
             url: '/admin/index/',
-            data: app,
+            data: {
+                action: 'approve',
+                id: formID,
+            },
             success: function (data)
             {
-                $('div#result').html(data);
+                $('div.result').html(data);
             }
         });
+        
     }  
 });
 // JavaScript Document

@@ -9,6 +9,7 @@ class Model_Update extends model
 {
 	public function get_user_data($email)
 	{
+		//header("content-type:application/json");
 		Global $WebCatalogue;
 
 			$colname_User = "-1";
@@ -36,7 +37,7 @@ class Model_Update extends model
 
 			$result->data_seek(0);
 			// while($row = $result->fetch_assoc()){
-			//     echo $row['email'] . '<br>';
+			//     echo $row['preview'] . '<br>';
 			// }
 			return $result;
 	}
@@ -127,6 +128,7 @@ class Model_Update extends model
 	public function update_user()
 	{
 		Global $WebCatalogue;
+		$good = "Record Updated";
 
 		if($this->check_user_input())
 		{
@@ -142,7 +144,8 @@ class Model_Update extends model
 				                       GetSQLValueString($_POST['UserIDhiddenField'], "int"));
 
 				  $result = $WebCatalogue->query($updateSQL);
-				  echo "Record Updated";
+				  echo $good;
+				  return true;
 				}
 				elseif (($GLOBALS['passCheck'] == true) && ($GLOBALS['flag'] == true) && (($_POST['password'] != "") && ($_POST['passwordwc'] != ""))  ) {
 				  $updateSQL = sprintf("UPDATE users SET password=%s, language=%s, url=%s, title=%s, `description`=%s, `preview`=%s, `preview_thumb`=%s  WHERE userID=%s",
@@ -156,7 +159,8 @@ class Model_Update extends model
 				                       GetSQLValueString($_POST['UserIDhiddenField'], "int"));
 
 				  $result = $WebCatalogue->query($updateSQL);
-				  echo "Record Updated";
+				  echo $good;
+				  return true;
 				}
 				elseif (($GLOBALS['passCheck'] == true) && ($GLOBALS['flag'] == false) && (($_POST['password'] == "") && ($_POST['passwordwc'] == "")) ) {
 				  $updateSQL = sprintf("UPDATE users SET language=%s, url=%s, title=%s, `description`=%s  WHERE userID=%s",
@@ -167,7 +171,9 @@ class Model_Update extends model
 				                       GetSQLValueString($_POST['UserIDhiddenField'], "int"));
 
 				  $result = $WebCatalogue->query($updateSQL);
-				  echo "Record Updated";
+				  json_encode($good);
+				  echo $good;
+				  return true;
 				}
 				elseif (($GLOBALS['passCheck'] == true) && ($GLOBALS['flag'] == true) && (($_POST['password'] == "") && ($_POST['passwordwc'] == ""))  ) {
 				  $updateSQL = sprintf("UPDATE users SET language=%s, url=%s, title=%s, `description`=%s, `preview`=%s, `preview_thumb`=%s  WHERE userID=%s",
@@ -180,12 +186,12 @@ class Model_Update extends model
 				                       GetSQLValueString($_POST['UserIDhiddenField'], "int"));
 
 				  $result = $WebCatalogue->query($updateSQL);
-				  echo "Record Updated";
-				  return "Record Updated";
+				  echo $good;
+				  return true;
 				}
 				else {
-				  //echo "Update Failed";
-				  return "Update Failed";
+				  echo "Update Failed";
+				  return false;
 				}
 			}
 		}

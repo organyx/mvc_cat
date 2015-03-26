@@ -36,6 +36,70 @@ Class Model_Admin extends Model
 			return $result;
 	}
 
+	public function find_user($email)
+	{
+		Global $WebCatalogue;
+
+		if (isset($email)) 
+		{
+			if(!empty($email))
+			{
+				$find_query = sprintf("SELECT * FROM users WHERE email = %s", GetSQLValueString($email, "text"));
+				$found = $WebCatalogue->query($find_query);
+				$user = $found->fetch_assoc();
+				$total = $found->num_rows;
+				if($total > 0)
+				{
+					echo 
+					'<table class="width-670 center WidthAuto">
+				        <tr>
+				          <td align="center">Account: '.$user['email'].'</td>
+				        </tr>
+				        <tr>
+				          <td><table class="width-500 TableStyle center WidthAuto">
+				            <tr>
+				              <td valign="top">&nbsp;</td>
+				              <td align="right" valign="top">Registration date : </td>
+				            </tr>
+				            <tr>
+				              <td>Title: ' . $user['title'] . '</td>
+				              <td>'.$user['registration'].'</td>
+				            </tr>
+				            <tr>
+				              <td>URL: <a target="_blank" href="'.$user['url'].'"> '.$user['url'].'</a></td>
+				              <td width="145" height="145" rowspan="3" class="TableStyleBorderLeft">
+				        <a class="fancybox"  href="../../'.$user['preview_thumb'].'">
+				        <img src="../../'.$user['preview_thumb'].'" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
+				              </td>
+				            </tr>
+				            <tr>
+				              <td>Languages: '.$user['language'].'</td>
+				              </tr>
+				            <tr>
+				              <td>Description:</td>
+				              </tr>
+				            <tr>
+				              <td colspan="2">'.$user['description'].'</td>
+				            </tr>
+				          </table></td>
+				        </tr>
+				        <tr>
+				          <td>&nbsp;</td>
+				        </tr>
+				      </table>';
+				}
+				else
+				{
+					echo "User Not Found.";
+				}
+			}
+			else
+			{
+				echo "User not specified.";
+			}
+		}
+	}
+
 	public function get_user_by_id($id)
 	{
 	    Global $WebCatalogue;
@@ -54,7 +118,8 @@ Class Model_Admin extends Model
                        GetSQLValueString($approve_user_id, "int"));
 		$approved = $WebCatalogue->query($approve_query);
 
-		return "User " . get_user_by_id($approve_user_id) . " is Approved";
+		echo "User " . $this->get_user_by_id($approve_user_id) . " is Approved";
+		return true;
 	}
 
 	public function delete_web($delete_user_id)
@@ -65,7 +130,8 @@ Class Model_Admin extends Model
                        GetSQLValueString($delete_user_id, "int"));
 		$deleted = $WebCatalogue->query($delete_query);
 
-		return "User " . get_user_by_id($delete_user_id) . " has been Deleted";
+		echo "User " . $this->get_user_by_id($delete_user_id) . " has been Deleted";
+		return true;
 	}
 
 	public function manage_users()
