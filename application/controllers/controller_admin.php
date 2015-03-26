@@ -19,7 +19,8 @@ class Controller_Admin extends Controller
 				$username = $_SESSION['Username'];
 			}
 			if (IS_AJAX)
-			{
+			{	
+				//CHECK WHAT BUTTONS PRESSED
 				if(isset($_POST['action']) && !empty($_POST['action'])) 
 				{
 				    $action = $_POST['action'];
@@ -30,20 +31,15 @@ class Controller_Admin extends Controller
 				        case 'delete' : 
 				        		$this->delete_web();
 					        	break; 
+					    case 'search' :
+					    		$this->find_user($username);
+					    		break;
 				    }
-				    exit;
-				}
-				else
-				{
-					$user = $this->model->get_user_data($username);
-					$users = $this->model->manage_users();
-					$found_user = $this->model->find_user($_POST['name']);
-					$data = array($user, $users, $found_user);
-					$this->view->regenerate('admin_view.php', $data);
 				}
 			}
 			else
 			{
+				//DEFAULT
 				$user = $this->model->get_user_data($username);
 				$users = $this->model->manage_users();
 				$data = array($user, $users);
@@ -60,6 +56,7 @@ class Controller_Admin extends Controller
 	function approve_web()
 	{
 		$id = $_POST['id'];
+		//echo $id;
 		$approved = $this->model->approve_web($id);
 		$users = $this->model->manage_users();
 		$data = array($approved, $users);
@@ -72,6 +69,15 @@ class Controller_Admin extends Controller
 		$deleted = $this->model->delete_web($id);
 		$users = $this->model->manage_users();
 		$data = array($deleted, $users);
+		$this->view->regenerate('admin_view.php', $data);
+	}
+
+	function find_user($username)
+	{
+		$user = $this->model->get_user_data($username);
+		$users = $this->model->manage_users();
+		$found_user = $this->model->find_user($_POST['name']);
+		$data = array($user, $users, $found_user);
 		$this->view->regenerate('admin_view.php', $data);
 	}
 	

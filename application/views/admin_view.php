@@ -44,7 +44,7 @@
           <td align="right" valign="top">Showing:&nbsp;<?php echo ($data[1][1]['startRow'] + 1) ?> to <?php echo min($data[1][1]['startRow'] + $data[1][1]['maxRows'], $data[1][1]['totalRows']) ?> of <?php echo $data[1][1]['totalRows'] ?></td>
         </tr>
         <tr>
-          <td align="center" valign="top"><?php if ($totalRows_users > 0) { // Show if recordset not empty ?>
+          <td align="center" valign="top"><?php $i=0; if ($totalRows_users > 0) { // Show if recordset not empty ?>
             <?php do { ?>
                 <table class="width-500 TableStyle center WidthAuto">
                   <tr>
@@ -71,16 +71,15 @@
                     <td>
                       <div class="list">
                         <table class="center">
-                          <tr>
-                            <td><form id="DeleteUserForm"  name="DeleteUserForm" method="POST">
+                          <tr><input type="hidden" name="count" class="count" id="count<?php echo $manage_users['userID']; ?>" value="<?php echo $manage_users['userID']; ?>">
+                            <td><form class="DeleteUserForm<?php echo $manage_users['userID']; ?>" name="DeleteUserForm" method="POST">
                               <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="<?php echo $manage_users['userID']; ?>">
                               <input type="submit" name="DeleteUserButton"  class="DeleteUserButton" value="Delete User">
                             </form></td>
-                            <td><form action="<?php echo $editFormAction; ?>"  class="ApproveUserForm" name="ApproveUserForm" method="POST">
+                            <td><form class="ApproveUserForm<?php echo $manage_users['userID']; ?>" name="ApproveUserForm" method="POST">
                               <input name="ApproveUserHiddenField" type="hidden"  class="ApproveUserHiddenField" value="<?php echo "CURRENT_TIMESTAMP()"; ?>">
                               <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="<?php echo $manage_users['userID']; ?>">
                               <input type="submit" name="ApproveUserButton"  class="ApproveUserButton" value="Approve User">
-                              <input type="hidden" name="MM_update" value="ApproveUserForm">
                             </form></td>
                           </tr>
                         </table>
