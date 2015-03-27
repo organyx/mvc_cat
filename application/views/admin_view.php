@@ -46,27 +46,25 @@
         <tr>
           <td align="center" valign="top"><?php $i=0; if ($totalRows_users > 0) { // Show if recordset not empty ?>
             <?php do { ?>
-                <table class="width-500 TableStyle center WidthAuto">
+                <table class="width-600 TableStyle center WidthAuto">
                   <tr>
-                    <td>Registration Date: <?php echo $manage_users['registration']; ?></td>
-                  </tr>
-                  <tr>
+                    <td style="width:300px;">Registration Date: <?php echo $manage_users['registration']; ?></td>
                     <td 
 
                     <?php if($manage_users['approval'] == "0000-00-00 00:00:00") {?> 
-                      style="color:red;"
+                      style="color:red; width:300px;"
                     <?php } else { ?>
-                      style="color:green;"
+                      style="color:green; width:300px;"
                      <?php } ?>
 
-                    >Approval Date: <?php echo $manage_users['approval']; ?></td>
+                    >Approval Date: <?php echo $manage_users['approval']; ?>
+                    </td>
                   </tr>
+                  
                   <tr>
-                    <td>User: <?php echo $manage_users['first_name']; ?> <?php echo $manage_users['last_name']; ?> | Account: <?php echo $manage_users['email']; ?></td>
-                  </tr>
-                  <tr>
-                  	<td>Status: <?php echo ($manage_users['approval'] !== "0000-00-00 00:00:00" ? "Approved" : "Awaiting Approval"); ?></td>     
-                  </tr>                 
+                    <td style="width:300px;">User: <?php echo $manage_users['first_name']; ?> <?php echo $manage_users['last_name']; ?> | Account: <?php echo $manage_users['email']; ?></td>
+                    <td style="width:300px;">Status: <?php echo ($manage_users['approval'] !== "0000-00-00 00:00:00" ? "Approved" : "Awaiting Approval"); ?></td>
+                  </tr>               
                 </table>
                 <br>
                 <?php } while ($manage_users = $data[1][0]->fetch_assoc()) ?>

@@ -6,12 +6,12 @@
   text-align: right;
 }
 
-nav ul {
+.nav ul {
   margin: 0;
   padding: 0;
 }
 
-nav ul li {
+.nav ul li {
   list-style-type: none;
   float: left;
   display: block;
@@ -23,22 +23,22 @@ nav ul li {
   font-size: 17px;
 }
 
-nav ul li a {
+.nav ul li a {
   text-decoration: none;
   color: #fff;
 }
 
-nav ul li:hover {
+.nav ul li:hover {
   background-color: rgb(242,242,242);
 }
 
-nav ul li:hover a {
+.nav ul li:hover a {
   display: block;
   color: #000;
   text-decoration: none;
 }
 
-nav label {
+.nav label {
   color: #FFF;
 }
 
@@ -47,8 +47,19 @@ nav label {
   text-decoration: none;
 }
 
+.user {
+  float: left;
+}
 
+.login {
+  float: right;
+}
 
+#panel {
+  float: right;
+  min-width: 150px;
+  width: auto;
+}
 
 @media screen and (max-width: 700px) {
   #NavBar {

@@ -32,7 +32,7 @@
 		<div id="Holder">
 		  <div id="Header"></div>
 		  <div id="NavBar">
-		    	<nav>
+		    	<nav class="nav">
 		        	<ul>
 		            	<li><a href="/">Main</a></li>
 		                <li><a href="/register">Register</a></li>
@@ -40,22 +40,30 @@
 		                
 		            </ul>
 		        </nav>
-		        <div id="log">
-		        	<table id="login">
-		        		<?php if(!isset($_SESSION['Username'])) { ?>
-				        <tr>
-				          	<td>
-		        				<a href="/login">Login</a>
-		        			</td>
-		        		</tr>
-		        		<?php } else { ?>
-		        		<tr>
-		        			<td>
-		        				<a href="/account/logout/">Logout</a>
-		        			</td>
-		        		</tr>
-		        		<?php } ?>
-		        	</table>
+		        <div id="panel">
+			        <?php if(isset($_SESSION['Username'])) { ?>
+			        <div class="nav user">
+			        	<ul>
+				        	<li>
+				        		<a href="/account/"><?php echo $_SESSION['Username'] ?></a>
+				        	</li>
+			        	</ul>
+			        </div>
+			        <?php } ?>
+
+			        <div class="nav login">
+			        	<ul>
+			        		<?php if(!isset($_SESSION['Username'])) { ?>
+					        <li>
+			        				<a href="/login">Login</a>
+			        		</li>
+			        		<?php } else { ?>
+			        		<li>
+			        				<a href="/account/logout/">Logout</a>
+			        		</li>
+			        		<?php } ?>
+			        	</ul>
+			        </div>
 		        </div>
 		  </div>
 		  <div id="Content">
