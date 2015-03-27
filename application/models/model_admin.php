@@ -68,7 +68,7 @@ Class Model_Admin extends Model
 				            </tr>
 				            <tr>
 				              <td>URL: <a target="_blank" href="'.$user['url'].'"> '.$user['url'].'</a></td>
-				              <td width="145" height="145" rowspan="3" class="TableStyleBorderLeft">
+				              <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
 				        <a class="fancybox"  href="../../'.$user['preview_thumb'].'">
 				        <img src="../../'.$user['preview_thumb'].'" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
 				              </td>

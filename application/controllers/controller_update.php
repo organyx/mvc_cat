@@ -37,7 +37,7 @@ class Controller_Update extends Controller
 		}
 		else
 		{
-			Route::ErrorPage403();
+			Route::ErrorPage404();
 		}
 	}
 }

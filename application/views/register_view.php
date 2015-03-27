@@ -18,8 +18,7 @@
                     <p id="returnmessage"></p>
                 </div>
             </div>
-            <div class="ui-field">
-                
+            <div class="ui-field">       
                 <div class="ui-table">
                     <label for="first_name">First Name<span class="required">*</span>:</label>
                     <input name="first_name" id="first_name" type="text" maxlength="100" size="51" required/>

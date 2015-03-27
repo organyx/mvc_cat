@@ -5,7 +5,6 @@
           $user = $data[0]->fetch_assoc();
         }
         $result = $data[1]->fetch_assoc();
-        //echo $result['registration'] . "++++";
         ?>
 
     	  <h1><?php if (!is_string($data[0])) {
@@ -17,11 +16,7 @@
     	  <h2><a href="Account.php">Account</a></h2><br>
     	  <br>
     	</div>
-      <?php } 
-      
-      //echo "<pre>".print_r($result['title'])."</pre>";
-      
-      ?>
+      <?php } ?>
     <div id="contentRight">
       <table  class="width-670 center WidthAuto">
         <tr>
@@ -39,7 +34,7 @@
             </tr>
             <tr>
               <td>URL: <a target="_blank" href="<?php echo $result['url']; ?>"> <?php echo $result['url']; ?></a></td>
-              <td width="140" height="140" rowspan="3" class="TableStyleBorderLeft">
+              <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
 			  <a class="fancybox"  href="../../<?php echo $result['preview_thumb']; ?>">
 			  <img src="../../<?php echo $result['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
               </td>
