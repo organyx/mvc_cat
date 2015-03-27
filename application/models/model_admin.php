@@ -109,6 +109,7 @@ Class Model_Admin extends Model
 		                  </tr>
 				      </table>';
 				      $found->free();
+				      return $user;
 				}
 				else
 				{

@@ -75,9 +75,9 @@ class Controller_Admin extends Controller
 	{
 		$user = $this->model->get_user_data($username);
 		$users = $this->model->manage_users();
-		$this->model->find_user($_POST['name']);
-		//$found_user = $this->model->find_user($_POST['name']);
-		$data = array($user, $users);
+		//$this->model->find_user($_POST['name']);
+		$found_user = $this->model->find_user($_POST['name']);
+		$data = array($user, $users, $found_user);
 		$this->view->regenerate('admin_view.php', $data);
 	}
 	

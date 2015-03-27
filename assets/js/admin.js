@@ -4,12 +4,12 @@ $(document).ready(function ()
     {
         makeAjaxRequest();
     });
-    $('.searchForm').submit(function (e)
-    {
-        e.preventDefault();
-        makeAjaxRequest();
-        return false;
-    });
+    // $('.searchForm').submit(function (e)
+    // {
+    //     e.preventDefault();
+    //     makeAjaxRequest();
+    //     return false;
+    // });
     $(".reset").click(function (e)
     {
         $('.result').empty();

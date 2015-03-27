@@ -32,6 +32,7 @@
 		</div>
 
 		<div class="ret">
+      <br>
       <div id="returnmessage" class="returnmessage"></div>
       <br>
 			<div id="result" class="result"></div>
