@@ -29,62 +29,79 @@ $(document).ready(function ()
             success: function (response)
             {
                 $('div.result').html(response);
+                    $('.DeleteUserButton').click(function ()
+                    {
+                        deleteUser();
+                    });
+                    $('.DeleteUserForm').submit(function (e)
+                    {
+                        e.preventDefault();
+                        deleteUser();
+                        return false;
+                    });
+                    $('.ApproveUserButton').click(function ()
+                    {
+                        approveUser();
+                    });
+                    $('.ApproveUserForm').submit(function (e)
+                    {
+                        e.preventDefault();
+                        approveUser();
+                        return false;
+                    });
             }
         });
     }
 
 
-    $('.DeleteUserButton').click(function ()
-    {
-        deleteUser();
-    });
-    $('.ApproveUserButton').click(function ()
-    {
-        approveUser();
-    });
+
 
     function deleteUser()
     {
-        var no = $('.count').val();
-        var del = $('.DeleteUserForm'+no).serialize();
-        var formID = $('.DeleteUserHiddenField'+no).val();
+        //var del = $('.DeleteUserForm').serialize();
+        var formID = $('.DeleteUserHiddenField').val();
         $.ajax(
         {
+            url: '/admin/index/',
             type: 'post',
-            url: '/admin/',
             data: {
                 action: 'delete', 
                 id: formID,
             },
-            success: function (data)
+            success: function (response)
             {
-                $('div.result').html(data);
+                $('div.returnmessage').html(response);
+            },
+            error: function (response)
+            {
+                $('div.returnmessage').html(response);
             }
         });
-        return false;
+        //return false;
     }
 
     function approveUser()
     {   
-        var no = $('#count%d').val();
-        alert(no);
-        var app = $('.ApproveUserForm'+no).serialize();
-        var formID = $('.ApproveIDhiddenField'+no).val();
-        alert(formID);
+        //var app = $('.ApproveUserForm').serialize();
+        var formID = $('.ApproveIDhiddenField').val();
         $.ajax(
         {
+            url: '/admin/index/',
             type: 'post',
-            url: '/admin/',
             data: {
                 action: 'approve',
                 id: formID,
             },
-            success: function (data)
+            success: function (response)
             {
-                $('div.result').html(data);
+                $('div.returnmessage').html(response);
+            },
+            error: function (response)
+            {
+                $('div.returnmessage').html(response);
             }
         });
-        return false;
+       // return false;
     }  
 });
 // JavaScript Document

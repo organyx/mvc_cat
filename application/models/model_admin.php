@@ -48,6 +48,7 @@ Class Model_Admin extends Model
 				$found = $WebCatalogue->query($find_query);
 				$user = $found->fetch_assoc();
 				$total = $found->num_rows;
+				$timestamp = "CURRENT_TIMESTAMP()";
 				if($total > 0)
 				{
 					echo 
@@ -84,9 +85,30 @@ Class Model_Admin extends Model
 				          </table></td>
 				        </tr>
 				        <tr>
-				          <td>&nbsp;</td>
-				        </tr>
+		                    <td>
+		                      <div class="list">
+		                        <table class="center">
+		                          <tr>
+		                            <td>
+			                            <form class="DeleteUserForm" name="DeleteUserForm" method="POST">
+			                              <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="'.$user['userID'].'">
+			                              <input type="submit" name="DeleteUserButton"  class="DeleteUserButton" value="Delete User">
+			                            </form>
+		                            </td>
+		                            <td>
+			                            <form class="ApproveUserForm" name="ApproveUserForm" method="POST">
+			                              <input name="ApproveUserHiddenField" type="hidden"  class="ApproveUserHiddenField" value="'.$timestamp.'">
+			                              <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="'.$user['userID'].'">
+			                              <input type="submit" name="ApproveUserButton"  class="ApproveUserButton" value="Approve User">
+			                            </form>
+		                            </td>
+		                          </tr>
+		                        </table>
+		                      </div>
+		                    </td>
+		                  </tr>
 				      </table>';
+				      $found->free();
 				}
 				else
 				{
@@ -117,9 +139,14 @@ Class Model_Admin extends Model
 		$approve_query = sprintf("UPDATE `users` SET approval=CURRENT_TIMESTAMP() WHERE userID=%s",
                        GetSQLValueString($approve_user_id, "int"));
 		$approved = $WebCatalogue->query($approve_query);
-
-		echo "User " . $this->get_user_by_id($approve_user_id) . " is Approved";
-		return true;
+		if($approved === false) {
+			trigger_error('Wrong SQL: ' . $approve_query . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+		}
+		else
+		{
+			echo "User " . $this->get_user_by_id($approve_user_id) . " is Approved";
+			return true;
+		}
 	}
 
 	public function delete_web($delete_user_id)
@@ -129,9 +156,14 @@ Class Model_Admin extends Model
 		$delete_query = sprintf("DELETE FROM `users` WHERE userID=%s",
                        GetSQLValueString($delete_user_id, "int"));
 		$deleted = $WebCatalogue->query($delete_query);
-
-		echo "User " . $this->get_user_by_id($delete_user_id) . " has been Deleted";
-		return true;
+		if($deleted === false) {
+			trigger_error('Wrong SQL: ' . $delete_query . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+		}
+		else
+		{
+			echo "User " . $this->get_user_by_id($delete_user_id) . " has been Deleted";
+			return true;
+		}
 	}
 
 	public function manage_users()

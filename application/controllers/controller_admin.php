@@ -56,7 +56,6 @@ class Controller_Admin extends Controller
 	function approve_web()
 	{
 		$id = $_POST['id'];
-		//echo $id;
 		$approved = $this->model->approve_web($id);
 		$users = $this->model->manage_users();
 		$data = array($approved, $users);
@@ -76,8 +75,9 @@ class Controller_Admin extends Controller
 	{
 		$user = $this->model->get_user_data($username);
 		$users = $this->model->manage_users();
-		$found_user = $this->model->find_user($_POST['name']);
-		$data = array($user, $users, $found_user);
+		$this->model->find_user($_POST['name']);
+		//$found_user = $this->model->find_user($_POST['name']);
+		$data = array($user, $users);
 		$this->view->regenerate('admin_view.php', $data);
 	}
 	

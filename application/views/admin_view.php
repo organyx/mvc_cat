@@ -32,9 +32,9 @@
 		</div>
 
 		<div class="ret">
+      <div id="returnmessage" class="returnmessage"></div>
+      <br>
 			<div id="result" class="result"></div>
-			<div id="returnmessage" class="returnmessage">   
-      </div>
 		</div>
 
 	</div>
@@ -66,27 +66,7 @@
                   </tr>
                   <tr>
                   	<td>Status: <?php echo ($manage_users['approval'] !== "0000-00-00 00:00:00" ? "Approved" : "Awaiting Approval"); ?></td>     
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="list">
-                        <table class="center">
-                          <tr><input type="hidden" name="count" class="count" id="count<?php echo $manage_users['userID']; ?>" value="<?php echo $manage_users['userID']; ?>">
-                            <td><form class="DeleteUserForm<?php echo $manage_users['userID']; ?>" name="DeleteUserForm" method="POST">
-                              <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="<?php echo $manage_users['userID']; ?>">
-                              <input type="submit" name="DeleteUserButton"  class="DeleteUserButton" value="Delete User">
-                            </form></td>
-                            <td><form class="ApproveUserForm<?php echo $manage_users['userID']; ?>" name="ApproveUserForm" method="POST">
-                              <input name="ApproveUserHiddenField" type="hidden"  class="ApproveUserHiddenField" value="<?php echo "CURRENT_TIMESTAMP()"; ?>">
-                              <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="<?php echo $manage_users['userID']; ?>">
-                              <input type="submit" name="ApproveUserButton"  class="ApproveUserButton" value="Approve User">
-                            </form></td>
-                          </tr>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
-                  
+                  </tr>                 
                 </table>
                 <br>
                 <?php } while ($manage_users = $data[1][0]->fetch_assoc()) ?>
