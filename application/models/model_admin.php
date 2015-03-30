@@ -92,7 +92,8 @@ Class Model_Admin extends Model
 		}
 		else
 		{
-			echo "User " . $this->get_user_by_id($approve_user_id) . " is Approved";
+			$result = array('function_result' => "User " . $this->get_user_by_id($approve_user_id) . " is Approved");
+			echo json_encode($result);
 			return true;
 		}
 	}
@@ -109,7 +110,9 @@ Class Model_Admin extends Model
 		}
 		else
 		{
-			echo "User " . $delete_id . " has been Deleted";
+			//echo "User " . $delete_id . " has been Deleted";
+			$result = array('function_result' => "User " . $delete_id . " has been Deleted");
+			echo json_encode($result);
 			return true;
 		}
 	}

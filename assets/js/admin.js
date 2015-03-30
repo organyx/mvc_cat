@@ -118,7 +118,7 @@ $(document).ready(function ()
             success: function (response)
             {
                 obj = JSON.parse(response);
-                $('div.returnmessage').html(obj);
+                $('div.returnmessage').html(obj['function_result']);
             },
             error: function (response)
             {
@@ -143,8 +143,8 @@ $(document).ready(function ()
             success: function (response)
             {
                 obj = JSON.parse(response);
-                alert(obj);
-                $('div.returnmessage').html(obj);
+                //alert(obj);
+                $('div.returnmessage').html(obj['function_result']);
             },
             error: function (response)
             {
