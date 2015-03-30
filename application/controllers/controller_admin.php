@@ -63,7 +63,10 @@ class Controller_Admin extends Controller
 
 	function approve_web($item_id)
 	{
-		$approved = $this->model->approve_web($item_id);
+		$return = $_POST;
+		$return['json'] = json_encode($return);
+		//echo $return['json'];
+		$approved = $this->model->approve_web($return['id']);
 		$users = $this->model->manage_users();
 		$data = array($approved, $users);
 		//$this->view->regenerate('admin_view.php', $data);
@@ -71,7 +74,10 @@ class Controller_Admin extends Controller
 
 	function delete_web($item_id)
 	{
-		$deleted = $this->model->delete_web($item_id);
+		$return = $_POST;
+		$return['json'] = json_encode($return);
+		//print_r($return);
+		$deleted = $this->model->delete_web($return['id']);
 		$users = $this->model->manage_users();
 		$data = array($deleted, $users);
 		//$this->view->regenerate('admin_view.php', $data);
@@ -79,12 +85,13 @@ class Controller_Admin extends Controller
 
 	function find_user($current_user, $user_to_find)
 	{
-		// $return = $_POST;
-		// $return['json'] = json_encode($return);
-		// echo $return['json'];
+		//echo "<pre>".print_r($_POST)."</pre>";
+		$return = $_POST;
+		$return['json'] = json_encode($return);
+		//echo $return['json'];
 		$user = $this->model->get_user_data($current_user);
 		$users = $this->model->manage_users();
-		$found_user = $this->model->find_user($user_to_find);
+		$found_user = $this->model->find_user($return['name']);
 		$data = array($user, $users, $found_user);
 		//echo "<pre>".print_r($data)."</pre>";
 		//$this->view->regenerate('admin_view.php', $data);

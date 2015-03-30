@@ -51,74 +51,21 @@ Class Model_Admin extends Model
 				$timestamp = "CURRENT_TIMESTAMP()";
 				if($total > 0)
 				{
-					echo 
-					'<table class="width-670 center WidthAuto">
-				        <tr>
-				          <td align="center">Account: '.$user['email'].'</td>
-				        </tr>
-				        <tr>
-				          <td><table class="width-500 TableStyle center WidthAuto">
-				            <tr>
-				              <td valign="top">&nbsp;</td>
-				              <td align="right" valign="top">Registration date : </td>
-				            </tr>
-				            <tr>
-				              <td>Title: ' . $user['title'] . '</td>
-				              <td>'.$user['registration'].'</td>
-				            </tr>
-				            <tr>
-				              <td>URL: <a target="_blank" href="'.$user['url'].'"> '.$user['url'].'</a></td>
-				              <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
-				        <a class="fancybox"  href="../../'.$user['preview_thumb'].'">
-				        <img src="../../'.$user['preview_thumb'].'" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
-				              </td>
-				            </tr>
-				            <tr>
-				              <td>Languages: '.$user['language'].'</td>
-				              </tr>
-				            <tr>
-				              <td>Description:</td>
-				              </tr>
-				            <tr>
-				              <td colspan="2">'.$user['description'].'</td>
-				            </tr>
-				          </table></td>
-				        </tr>
-				        <tr>
-		                    <td>
-		                      <div class="list">
-		                        <table class="center">
-		                          <tr>
-		                            <td>
-			                            <form class="DeleteUserForm" name="DeleteUserForm" method="POST">
-			                              <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="'.$user['userID'].'">
-			                              <input type="submit" name="DeleteUserButton"  class="DeleteUserButton" value="Delete User">
-			                            </form>
-		                            </td>
-		                            <td>
-			                            <form class="ApproveUserForm" name="ApproveUserForm" method="POST">
-			                              <input name="ApproveUserHiddenField" type="hidden"  class="ApproveUserHiddenField" value="'.$timestamp.'">
-			                              <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="'.$user['userID'].'">
-			                              <input type="submit" name="ApproveUserButton"  class="ApproveUserButton" value="Approve User">
-			                            </form>
-		                            </td>
-		                          </tr>
-		                        </table>
-		                      </div>
-		                    </td>
-		                  </tr>
-				      </table>';
-				      $found->free();
-				      return $result = array('found' => true, 'user' => $user);
+					$result = array('found' => true, 'user' => $user);
+					echo json_encode($result);
+				    $found->free();
+				    return $result = array('found' => true, 'user' => $user);
 				}
 				else
 				{
-					echo "User Not Found.";
+					$result = array('result' => "User Not Found.");
+					echo json_encode($result);
 				}
 			}
 			else
 			{
-				echo "User not specified.";
+				$result = array('result' => "User Not specified.");
+				echo json_encode($result);
 			}
 		}
 	}

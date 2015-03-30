@@ -12,8 +12,7 @@ $(document).ready(function ()
     // });
     $(".reset").click(function (e)
     {
-        $('.result').empty();
-        $('.searchForm').closest('.searchForm').find("input[type=text]").val("");
+        reset_data();
     });
 
     function makeAjaxRequest()
@@ -22,19 +21,38 @@ $(document).ready(function ()
                 action: 'search',
                 name: $('input.email').val()
             }
-        //data = $(this).serialize() + "&" + $.param(data);
+        data = $(this).serialize() + "&" + $.param(data);
         $.ajax(
         {
-            url: '/admin/index/',
+            
             type: 'post',
-            //dataType: 'json',
+            url: '/admin/index/',
             data: data,
             success: function (response)
             {
-                $('div.result').html(response);
+                reset_data();
+                //alert(response);
+                obj = JSON.parse(response);
+                //alert(obj['found']);
+                $('div.result').html(obj['result']);
+                //alert(obj['result']);
 
-                // $('table#result_table').removeClass("off");
-                // $('span#found_title').append(response['title']);
+                if(obj['found'] == true)
+                 {
+
+                    //TABLE DATA
+                    $('table#result_table').removeClass("off");
+                    $('#found_title').append(obj['user']['title']);
+                    $('#found_reg').append(obj['user']['registration']);
+                    $('#found_url').append(obj['user']['url']);
+                    $('a#found_url_href').attr("href", obj['user']['url']);
+                    $('img#found_img').attr("src", "../../"+obj['user']['preview_thumb']);
+                    $('a#found_img_href').attr("href", "../../"+obj['user']['preview_thumb']);
+                    $('#found_lang').append(obj['user']['language']);
+                    $('#found_descr').append(obj['user']['description']);
+                    $('input.DeleteUserHiddenField').attr("value", obj['user']['userID']);
+                    $('input.ApproveIDhiddenField').attr("value", obj['user']['userID']);
+
 
                     $('.DeleteUserButton').click(function ()
                     {
@@ -56,12 +74,34 @@ $(document).ready(function ()
                         approveUser();
                         return false;
                     });
+                 }
+            },
+            error: function (x, y)
+            {
+                alert("X: " + x.responseCode + "; Y: " + y);
             }
         });
     }
 
 
-
+    function reset_data()
+    {
+        $('.result').empty();
+        $('.returnmessage').empty();
+        $('.searchForm').closest('.searchForm').find("input[type=text]").val("");
+        //TABLE DATA
+        $('table#result_table').addClass("off");
+        $('span#found_title').empty();
+        $('span#found_reg').empty();
+        $('span#found_url').empty();
+        $('a#found_url_href').attr("href", "");
+        $('img#found_img').attr("src", "");
+        $('a#found_img_href').attr("href", "");
+        $('span#found_lang').empty();
+        $('span#found_descr').empty();
+        $('input.DeleteUserHiddenField').attr("value", "");
+        $('input.ApproveIDhiddenField').attr("value", "");
+    }
 
     function deleteUser()
     {
@@ -77,7 +117,8 @@ $(document).ready(function ()
             },
             success: function (response)
             {
-                $('div.returnmessage').html(response);
+                obj = JSON.parse(response);
+                $('div.returnmessage').html(obj);
             },
             error: function (response)
             {
@@ -101,7 +142,9 @@ $(document).ready(function ()
             },
             success: function (response)
             {
-                $('div.returnmessage').html(response);
+                obj = JSON.parse(response);
+                alert(obj);
+                $('div.returnmessage').html(obj);
             },
             error: function (response)
             {

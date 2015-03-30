@@ -32,7 +32,6 @@
 		</div>
 
 		<div class="ret">
-      <?php if(isset($data[2][0]) && $data[2][0] == true) { ?>
       <table class="width-670 center WidthAuto off" id="result_table">
                 <tr>
                   <td align="center">Account: </td>
@@ -45,23 +44,23 @@
                     </tr>
                     <tr>
                       <td>Title: <span id="found_title"></span> </td>
-                      <td><?php echo $data[2][1]['registration'] ?></td>
+                      <td><span id="found_reg"></span></td>
                     </tr>
                     <tr>
-                      <td>URL: <a target="_blank" href=""> </a></td>
+                      <td>URL: <a id="found_url_href" target="_blank"><span id="found_url"></span></a></td>
                       <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
-                <a class="fancybox"  href="../../">
-                <img src="../../" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
+                <a class="fancybox" id="found_img_href"  href="../../">
+                <img src="../../" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail" id="found_img">
                       </td>
                     </tr>
                     <tr>
-                      <td>Languages: </td>
+                      <td>Languages: <span id="found_lang"></span></td>
                       </tr>
                     <tr>
-                      <td>Description:</td>
+                      <td>Description: </td>
                       </tr>
                     <tr>
-                      <td colspan="2"></td>
+                      <td colspan="2"><span id="found_descr"></span></td>
                     </tr>
                   </table></td>
                 </tr>
@@ -89,7 +88,6 @@
                         </td>
                       </tr>
               </table>
-      <?php } ?>
       <br>
       <div id="returnmessage" class="returnmessage"></div>
       <br>
