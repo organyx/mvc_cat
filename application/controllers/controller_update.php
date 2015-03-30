@@ -37,6 +37,7 @@ class Controller_Update extends Controller
 		}
 		else
 		{
+			session_destroy();
 			Route::ErrorPage404();
 		}
 	}

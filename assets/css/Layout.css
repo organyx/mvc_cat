@@ -80,6 +80,10 @@ body {
   color: #433E3E;
 }
 
+.current {
+  background-color: green;
+}
+
 .social {
   float: right;
   display: block;

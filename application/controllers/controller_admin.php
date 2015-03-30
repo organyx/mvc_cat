@@ -16,7 +16,15 @@ class Controller_Admin extends Controller
 		{
 			if(isset($_SESSION['Username']))
 			{
-				$username = $_SESSION['Username'];
+				$current_user = $_SESSION['Username'];
+			}
+			if(isset($_POST['name']))
+			{
+				$user_to_find = $_POST['name'];
+			}
+			if(isset($_POST['id']))
+			{
+				$item_id = $_POST['id'];
 			}
 			if (IS_AJAX)
 			{	
@@ -26,13 +34,13 @@ class Controller_Admin extends Controller
 				    $action = $_POST['action'];
 				    switch($action) {
 				        case 'approve' : 
-					        	$this->approve_web();
+					        	$this->approve_web($item_id);
 					        	break;
 				        case 'delete' : 
-				        		$this->delete_web();
+				        		$this->delete_web($item_id);
 					        	break; 
 					    case 'search' :
-					    		$this->find_user($username);
+					    		$this->find_user($current_user, $user_to_find);
 					    		break;
 				    }
 				}
@@ -40,7 +48,7 @@ class Controller_Admin extends Controller
 			else
 			{
 				//DEFAULT
-				$user = $this->model->get_user_data($username);
+				$user = $this->model->get_user_data($current_user);
 				$users = $this->model->manage_users();
 				$data = array($user, $users);
 				$this->view->generate('admin_view.php', 'template_view.php',$data);
@@ -53,32 +61,30 @@ class Controller_Admin extends Controller
 		}
 	}
 
-	function approve_web()
+	function approve_web($item_id)
 	{
-		$id = $_POST['id'];
-		$approved = $this->model->approve_web($id);
+		$approved = $this->model->approve_web($item_id);
 		$users = $this->model->manage_users();
 		$data = array($approved, $users);
-		$this->view->regenerate('admin_view.php', $data);
+		//$this->view->regenerate('admin_view.php', $data);
 	}
 
-	function delete_web()
+	function delete_web($item_id)
 	{
-		$id = $_POST['id'];
-		$deleted = $this->model->delete_web($id);
+		$deleted = $this->model->delete_web($item_id);
 		$users = $this->model->manage_users();
 		$data = array($deleted, $users);
-		$this->view->regenerate('admin_view.php', $data);
+		//$this->view->regenerate('admin_view.php', $data);
 	}
 
-	function find_user($username)
+	function find_user($current_user, $user_to_find)
 	{
-		$user = $this->model->get_user_data($username);
+		$user = $this->model->get_user_data($current_user);
 		$users = $this->model->manage_users();
-		//$this->model->find_user($_POST['name']);
-		$found_user = $this->model->find_user($_POST['name']);
+		$found_user = $this->model->find_user($user_to_find);
 		$data = array($user, $users, $found_user);
-		$this->view->regenerate('admin_view.php', $data);
+		//echo "<pre>".print_r($data)."</pre>";
+		//$this->view->regenerate('admin_view.php', $data);
 	}
 	
 	function action_logout()

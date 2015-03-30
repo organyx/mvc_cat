@@ -21,6 +21,7 @@ class Controller_Account extends Controller
 		}
 		else
 		{
+			session_destroy();
 			Route::ErrorPage403();
 		}
 	}
