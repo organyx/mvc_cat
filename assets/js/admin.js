@@ -18,17 +18,24 @@ $(document).ready(function ()
 
     function makeAjaxRequest()
     {
+        data = {
+                action: 'search',
+                name: $('input.email').val()
+            }
+        //data = $(this).serialize() + "&" + $.param(data);
         $.ajax(
         {
             url: '/admin/index/',
             type: 'post',
-            data: {
-                name: $('input.email').val(),
-                action: 'search'
-            },
+            //dataType: 'json',
+            data: data,
             success: function (response)
             {
                 $('div.result').html(response);
+
+                // $('table#result_table').removeClass("off");
+                // $('span#found_title').append(response['title']);
+
                     $('.DeleteUserButton').click(function ()
                     {
                         deleteUser();

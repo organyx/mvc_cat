@@ -79,6 +79,9 @@ class Controller_Admin extends Controller
 
 	function find_user($current_user, $user_to_find)
 	{
+		// $return = $_POST;
+		// $return['json'] = json_encode($return);
+		// echo $return['json'];
 		$user = $this->model->get_user_data($current_user);
 		$users = $this->model->manage_users();
 		$found_user = $this->model->find_user($user_to_find);

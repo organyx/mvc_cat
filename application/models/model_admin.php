@@ -153,7 +153,7 @@ Class Model_Admin extends Model
 	public function delete_web($delete_user_id)
 	{
 		Global $WebCatalogue;
-
+		$delete_id = $this->get_user_by_id($delete_user_id);
 		$delete_query = sprintf("DELETE FROM `users` WHERE userID=%s",
                        GetSQLValueString($delete_user_id, "int"));
 		$deleted = $WebCatalogue->query($delete_query);
@@ -162,7 +162,7 @@ Class Model_Admin extends Model
 		}
 		else
 		{
-			echo "User " . $this->get_user_by_id($delete_user_id) . " has been Deleted";
+			echo "User " . $delete_id . " has been Deleted";
 			return true;
 		}
 	}

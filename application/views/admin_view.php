@@ -33,9 +33,9 @@
 
 		<div class="ret">
       <?php if(isset($data[2][0]) && $data[2][0] == true) { ?>
-      <table class="width-670 center WidthAuto">
+      <table class="width-670 center WidthAuto off" id="result_table">
                 <tr>
-                  <td align="center">Account: <?php echo $data[2][1]['email'] ?></td>
+                  <td align="center">Account: </td>
                 </tr>
                 <tr>
                   <td><table class="width-500 TableStyle center WidthAuto">
@@ -44,24 +44,24 @@
                       <td align="right" valign="top">Registration date : </td>
                     </tr>
                     <tr>
-                      <td>Title: <?php echo $data[2][1]['title'] ?></td>
+                      <td>Title: <span id="found_title"></span> </td>
                       <td><?php echo $data[2][1]['registration'] ?></td>
                     </tr>
                     <tr>
-                      <td>URL: <a target="_blank" href="<?php echo $data[2][1]['url'] ?>"> <?php echo $data[2][1]['url'] ?></a></td>
+                      <td>URL: <a target="_blank" href=""> </a></td>
                       <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
-                <a class="fancybox"  href="../../<?php echo $data[2][1]['preview_thumb'] ?>">
-                <img src="../../<?php echo $data[2][1]['preview_thumb'] ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
+                <a class="fancybox"  href="../../">
+                <img src="../../" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
                       </td>
                     </tr>
                     <tr>
-                      <td>Languages: <?php echo $data[2][1]['language'] ?></td>
+                      <td>Languages: </td>
                       </tr>
                     <tr>
                       <td>Description:</td>
                       </tr>
                     <tr>
-                      <td colspan="2"><?php echo $data[2][1]['description'] ?></td>
+                      <td colspan="2"></td>
                     </tr>
                   </table></td>
                 </tr>
@@ -72,14 +72,14 @@
                               <tr>
                                 <td>
                                   <form class="DeleteUserForm" name="DeleteUserForm" method="POST">
-                                    <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="<?php echo $data[2][1]['userID'] ?>">
+                                    <input name="DeleteUserHiddenField" type="hidden"  class="DeleteUserHiddenField" value="">
                                     <input type="submit" name="DeleteUserButton"  class="DeleteUserButton" value="Delete User">
                                   </form>
                                 </td>
                                 <td>
                                   <form class="ApproveUserForm" name="ApproveUserForm" method="POST">
                                     <input name="ApproveUserHiddenField" type="hidden"  class="ApproveUserHiddenField" value="CURRENT_TIMESTAMP()">
-                                    <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="<?php echo $data[2][1]['userID'] ?>">
+                                    <input name="ApproveIDhiddenField" type="hidden"  class="ApproveIDhiddenField" value="">
                                     <input type="submit" name="ApproveUserButton"  class="ApproveUserButton" value="Approve User">
                                   </form>
                                 </td>
@@ -132,9 +132,9 @@
         <tr>
           <td align="right" valign="top">
               <!-- PAGINATION -->
+              <?php if ($data[1][1]['pageNum'] > 0) { // Show if not first page ?>
               <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], 0, $data[1][1]['queryString']); ?>">First Page</a>
               |
-              <?php if ($data[1][1]['pageNum'] > 0) { // Show if not first page ?>
                 <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max(0, $data[1][1]['pageNum'] - 1), $data[1][1]['queryString']); ?>">Previous</a>
                 |...|
                 <?php if($data[1][1]['pageNum'] != 1) {?>
@@ -157,9 +157,10 @@
               <?php } ?>
               <?php if ($data[1][1]['pageNum'] < $data[1][1]['totalPages']) { // Show if not last page ?>
               <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], min($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>">Next</a>
-              <?php } // Show if not last page ?>
               |
               <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>">Last Page</a>
+              <?php } // Show if not last page ?>
+              
           </td>
         </tr>
       </table>	

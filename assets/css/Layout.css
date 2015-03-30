@@ -95,12 +95,12 @@ body {
 
 .search {
   padding: 5px;
-  height: 80px;
   text-align: center;
 }
 
 .ret {
   margin: 0 auto;
+  min-height: 80px;
   text-align: center;
 }
 
