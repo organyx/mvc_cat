@@ -28,6 +28,12 @@ $(document).ready(function ()
             type: 'post',
             url: '/admin/index/',
             data: data,
+            beforeSend: function ()
+            {
+                $('table#result_table').addClass("off");
+                $('div.returnmessage').empty();
+                $('div.result').html('<div class="loading"><img src="../../assets/images/loader.gif" alt="Loading..." /></div>');
+            },
             success: function (response)
             {
                 reset_data();
@@ -43,6 +49,10 @@ $(document).ready(function ()
                     //TABLE DATA
                     $('table#result_table').removeClass("off");
                     $('#found_title').append(obj['user']['title']);
+                    if(obj['user']['approval']!=='0000-00-00 00:00:00')
+                        $('#found_approval').append("Approved");
+                    else
+                        $('#found_approval').append("Awaiting Approval");
                     $('#found_reg').append(obj['user']['registration']);
                     $('#found_url').append(obj['user']['url']);
                     $('a#found_url_href').attr("href", obj['user']['url']);
@@ -91,6 +101,7 @@ $(document).ready(function ()
         $('.searchForm').closest('.searchForm').find("input[type=text]").val("");
         //TABLE DATA
         $('table#result_table').addClass("off");
+        $('span#found_approval').empty();
         $('span#found_title').empty();
         $('span#found_reg').empty();
         $('span#found_url').empty();
@@ -143,7 +154,6 @@ $(document).ready(function ()
             success: function (response)
             {
                 obj = JSON.parse(response);
-                //alert(obj);
                 $('div.returnmessage').html(obj['function_result']);
             },
             error: function (response)

@@ -89,6 +89,11 @@ body {
   text-align: center;
 }
 
+#selectedUser {
+  border: hidden;
+  width: 500px;
+}
+
 .ret {
   margin: 0 auto;
   min-height: 80px;

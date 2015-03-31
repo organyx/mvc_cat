@@ -32,6 +32,11 @@
 		</div>
 
 		<div class="ret">
+      <br>
+      <div id="result" class="result"></div>
+      <br>
+      <div id="returnmessage" class="returnmessage"></div>
+      <br>
       <table class="width-700 center WidthAuto off" id="result_table">
                 <tr>
                   <td align="center">Account: </td>
@@ -39,7 +44,7 @@
                 <tr>
                   <td><table class="width-500 TableStyle center WidthAuto">
                     <tr>
-                      <td valign="top">&nbsp;</td>
+                      <td valign="top">Status : <span id="found_approval"></span></td>
                       <td align="right" valign="top">Registration date : </td>
                     </tr>
                     <tr>
@@ -89,9 +94,8 @@
                       </tr>
               </table>
       <br>
-      <div id="returnmessage" class="returnmessage"></div>
-      <br>
-			<div id="result" class="result"></div>
+      
+			
 		</div>
 
 	</div>
