@@ -28,6 +28,11 @@ class Controller_Admin extends Controller
 			}
 			if (IS_AJAX)
 			{	
+				$user = $this->model->get_user_data($current_user);
+				$users = $this->model->manage_users();
+				$data = array($user, $users);
+				//$this->view->regenerate('admin_view.php',$data);
+
 				//CHECK WHAT BUTTONS PRESSED
 				if(isset($_POST['action']) && !empty($_POST['action'])) 
 				{
@@ -44,13 +49,16 @@ class Controller_Admin extends Controller
 					    		break;
 				    }
 				}
+
+				
 			}
 			else
 			{
 				//DEFAULT
 				$user = $this->model->get_user_data($current_user);
-				$users = $this->model->manage_users();
-				$data = array($user, $users);
+				//$users = $this->model->manage_users();
+				//$data = array($user, $users);
+				$data = array($user);
 				$this->view->generate('admin_view.php', 'template_view.php',$data);
 			}
 		}
