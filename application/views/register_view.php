@@ -1,10 +1,10 @@
 <div id="PageHeading">
       <h1>Registration</h1>
 </div>
-    <?php if(isset($_SESSION['MM_Username'])) { ?>
+    <?php if(isset($_SESSION['Username'])) { ?>
     
 <div id="contentLeft">
-    <h2><a href="Account.php">Account</a></h2>
+    <h2><a href="/account/">Account</a></h2>
 </div>
      <?php }; ?>
 
@@ -89,4 +89,4 @@
 </form>
 </div>
 
-<script type="text/javascript" src="assets/js/registration.js"></script>
+<script type="text/javascript" src="../../assets/js/registration.js"></script>

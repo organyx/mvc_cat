@@ -28,6 +28,11 @@ body {
   width: 180px;
 }
 
+#thead {
+   text-align: right;
+   vertical-align: bottom;
+}
+
 #contentLeft {
   width: 100%;
   min-width: 280px;

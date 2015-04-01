@@ -17,7 +17,7 @@ class Model_Main extends Model
 			$startRow = $pageNum * $maxRows;		
 			//***Get values***
 			$sql="SELECT * FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
-			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, $startRow, $maxRows);
+			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
  
 			$result=$WebCatalogue->query($sql_limit);
 			 

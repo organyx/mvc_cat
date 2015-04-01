@@ -34,13 +34,15 @@
                </td>
         </tr>
         <tr>
-            <td align="right" valign="top"><?php if ($data[1]['pageNum'] < $data[1]['totalPages']) { // Show if not last page ?>
-                <a href="<?php printf("%s?pageNum=%d%s", $data[1]['currentPage'], min($data[1]['totalPages'], $data[1]['pageNum'] + 1), $data[1]['queryString']); ?>">Next</a>
-                <?php } // Show if not last page ?>
-                  |
+            <td align="right" valign="top">
                 <?php if ($data[1]['pageNum'] > 0) { // Show if not first page ?>
                 <a href="<?php printf("%s?pageNum=%d%s", $data[1]['currentPage'], max(0, $data[1]['pageNum'] - 1), $data[1]['queryString']); ?>">Previous</a>
-                <?php } // Show if not first page ?></td>
+                <?php } // Show if not first page ?>
+                |
+                <?php if ($data[1]['pageNum'] < $data[1]['totalPages']) { // Show if not last page ?>
+                <a href="<?php printf("%s?pageNum=%d%s", $data[1]['currentPage'], min($data[1]['totalPages'], $data[1]['pageNum'] + 1), $data[1]['queryString']); ?>">Next</a>
+                <?php } // Show if not last page ?>
+            </td>
         </tr>
     </table>
 </div>

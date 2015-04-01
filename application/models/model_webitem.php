@@ -4,11 +4,10 @@ class Model_Webitem extends Model
 	public function get_user_data($email)
 	{	
 			Global $WebCatalogue;
-
 			$colname_User = "-1";
-			if (isset($_SESSION['MM_Username'])) 
+			if (isset($_SESSION['Username'])) 
 			{
-			  $colname_User = $_SESSION['MM_Username'];
+			  $colname_User = $_SESSION['Username'];
 			}
 			else
 			{

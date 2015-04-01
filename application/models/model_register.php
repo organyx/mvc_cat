@@ -128,8 +128,6 @@ class Model_Register extends Model
 		    $GLOBALS['secure_password'] = password_hash($passwordToConfirm, PASSWORD_BCRYPT);
 		    return true;
 	  	}
-
-	  	return true;
 	}
 
 	public function upload_file()
@@ -238,6 +236,7 @@ class Model_Register extends Model
 			//echo "Registration Failed.";
 			return "Registration Failed.";
 		}
+		return false;
 	}
 
 }

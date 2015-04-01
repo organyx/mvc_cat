@@ -13,17 +13,16 @@
 						<th colspan="2">Autorization</th>
 					</tr>
 					<tr>
-						<td>Login</td>
-						<td><input type="text" name="login"></td>
+						<td><label for="login_input">Login</label></td>
+						<td><input type="text" name="login" id="login_input"></td>
 					</tr>
 					<tr>
-						<td>Password</td>
-						<td><input type="password" name="password"></td>
+						<td><label for="password_input">Password</label></td>
+						<td><input type="password" name="password" id="password_input"></td>
 					</tr>
-					
-					<th colspan="2" style="text-align: right">
-					<input type="submit" value="Enter" name="btn"
-					style="width: 150px; height: 30px;"></th>
+					<th id="thead" colspan="2">
+						<input type="submit" value="Enter" name="btn" style="width: 150px; height: 30px;">
+					</th>
 				</table>
 			</form>
 		</p>

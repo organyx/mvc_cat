@@ -20,7 +20,7 @@ $(document).ready(function ()
         data = {
                 action: 'search',
                 name: $('input.email').val()
-            }
+            };
         data = $(this).serialize() + "&" + $.param(data);
         $.ajax(
         {
@@ -38,7 +38,7 @@ $(document).ready(function ()
             {
                 reset_data();
                 //alert(response);
-                obj = JSON.parse(response);
+                var obj = JSON.parse(response);
                 //alert(obj['found']);
                 $('div.result').html(obj['result']);
                 //alert(obj['result']);
@@ -124,11 +124,11 @@ $(document).ready(function ()
             type: 'post',
             data: {
                 action: 'delete', 
-                id: formID,
+                id: formID
             },
             success: function (response)
             {
-                obj = JSON.parse(response);
+                var obj = JSON.parse(response);
                 $('div.returnmessage').html(obj['function_result']);
             },
             error: function (response)
@@ -149,11 +149,11 @@ $(document).ready(function ()
             type: 'post',
             data: {
                 action: 'approve',
-                id: formID,
+                id: formID
             },
             success: function (response)
             {
-                obj = JSON.parse(response);
+                var obj = JSON.parse(response);
                 $('div.returnmessage').html(obj['function_result']);
             },
             error: function (response)

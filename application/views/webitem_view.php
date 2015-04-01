@@ -11,10 +11,9 @@
          echo $user['first_name']."&nbsp";  echo $user['last_name'];
         } ?></h1>
       </div>
-      <?php if(isset($_SESSION['MM_Username'])) { ?>
+      <?php if(isset($_SESSION['Username'])) { ?>
     	<div id="contentLeft">        
-    	  <h2><a href="Account.php">Account</a></h2><br>
-    	  <br>
+    	  <h2><a href="/account/">Account</a></h2>
     	</div>
       <?php } ?>
     <div id="contentRight">

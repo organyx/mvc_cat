@@ -19,52 +19,62 @@ class Model_Forgot_Pass extends Model
 			  $colname_EmailPassword = $email;
 			}
 
-			$new_password = randomPassword();
-			$new_hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
-
-			$query_EmailPassword = sprintf(
-			  "UPDATE users SET password=%s WHERE email=%s",
-			                       GetSQLValueString($new_hashed_password, "text"),
-			                       GetSQLValueString($email, "text")
-			  );
-			$email_found = $WebCatalogue->query($query_EmailPassword);
-
-			$query_EmailPassword2 = sprintf("SELECT * FROM `users` WHERE email = %s", GetSQLValueString($colname_EmailPassword, "text"));
-			$email_number = $WebCatalogue->query($query_EmailPassword2);
-			$row_EmailPassword2 = $email_number->fetch_assoc();
-			$totalRows_EmailPassword2 = $email_number->num_rows;
-
-			if($totalRows_EmailPassword2 > 0)
+			$query_find_user = sprintf("SELECT * FROM `users` WHERE email = %s", GetSQLValueString($colname_EmailPassword, "text"));
+			$user_found = $WebCatalogue->query($query_find_user);
+			if($user_found === false)
 			{
-				$from = "noreply@domain.com";
-				$email = $email;
-				$subject = "Domain - Email Password";
-				$message = "Your password is: " .$new_password;
-				
-				mail($email, $subject,$message, "From: ".$from);
+				trigger_error('Wrong SQL: ' . $query_find_user . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+			}
+			$row_EmailPassword2 = $user_found->fetch_assoc();
+			$found = $user_found->num_rows;
 
-			  echo "Check your email. " . $new_password;
-			  $email_number->free();
-			  return true;
+			if($found > 0)
+			{
+				$new_password = randomPassword();
+				$new_hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+
+				$query_update_pass = sprintf(
+				  "UPDATE users SET password=%s WHERE email=%s",
+				                       GetSQLValueString($new_hashed_password, "text"),
+				                       GetSQLValueString($email, "text")
+				  );
+				$update = $WebCatalogue->query($query_update_pass);
+				if($update === false)
+				{
+					trigger_error('Wrong SQL: ' . $query_update_pass . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+				}
+				else
+				{
+					$from = "noreply@domain.com";
+					$email = $email;
+					$subject = "Domain - Email Password";
+					$message = "Your password is: " .$new_password;
+					
+					mail($email, $subject,$message, "From: ".$from);
+
+				  	echo "Check your email. " . $new_password;
+				  	$user_found->free();
+				  	return true;
+				}
 			}
 			else
 			{
-				$email_number->free();
+				$user_found->free();
 				if(filter_var($email, FILTER_VALIDATE_EMAIL))
-			  {
-			    echo "Email not Found.";
-			    return false;
-			  }
-			  elseif (empty($email)) 
-			  {
-			    echo "Email field is empty.";
-			    return false;
-			  }
-			  else
-			  {
-			    echo "Invalid email format.";
-			    return false;
-			  }
+			  	{
+				    echo "Email not Found.";
+				    return false;
+			  	}
+			  	elseif (empty($email)) 
+			  	{
+				    echo "Email field is empty.";
+				    return false;
+			  	}
+			  	else
+			  	{
+				    echo "Invalid email format.";
+				    return false;
+			  	}
 			}
 	}
 

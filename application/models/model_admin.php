@@ -7,9 +7,9 @@ Class Model_Admin extends Model
 		Global $WebCatalogue;
 
 			$colname_User = "-1";
-			if (isset($_SESSION['MM_Username'])) 
+			if (isset($_SESSION['Username'])) 
 			{
-			  $colname_User = $_SESSION['MM_Username'];
+			  $colname_User = $_SESSION['Username'];
 			}
 			else
 			{
@@ -48,7 +48,7 @@ Class Model_Admin extends Model
 				$found = $WebCatalogue->query($find_query);
 				$user = $found->fetch_assoc();
 				$total = $found->num_rows;
-				$timestamp = "CURRENT_TIMESTAMP()";
+				//$timestamp = "CURRENT_TIMESTAMP()";
 				if($total > 0)
 				{
 					$result = array('found' => true, 'user' => $user);
@@ -73,6 +73,7 @@ Class Model_Admin extends Model
 				echo json_encode($result);
 			}
 		}
+		return false;
 	}
 
 	public function get_user_by_id($id)
@@ -101,6 +102,7 @@ Class Model_Admin extends Model
 			echo json_encode($result);
 			return true;
 		}
+		return false;
 	}
 
 	public function delete_web($delete_user_id)
@@ -120,6 +122,7 @@ Class Model_Admin extends Model
 			echo json_encode($result);
 			return true;
 		}
+		return false;
 	}
 
 	public function manage_users()
@@ -136,7 +139,7 @@ Class Model_Admin extends Model
 		$startRow = $pageNum * $maxRows;
 			//***Get values***
 			$sql="SELECT * FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
-			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, $startRow, $maxRows);
+			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
  
 			$result=$WebCatalogue->query($sql_limit);
 			 
