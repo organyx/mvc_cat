@@ -227,8 +227,14 @@ class Model_Register extends Model
                        GetSQLValueString($GLOBALS['file'], "text"));
  
 				$result=$WebCatalogue->query($sql);
-				echo "Registration Succesful.";	
-				return "Registration Succesful.";	
+				if ($result === false) {
+					trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+				}
+				else
+				{
+					echo "Registration Succesful.";	
+					return "Registration Succesful.";	
+				}
 			}
 		} 
 		else

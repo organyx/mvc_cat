@@ -61,6 +61,8 @@ class Route
 			правильно было бы кинуть здесь исключение,
 			но для упрощения сразу сделаем редирект на страницу 404
 			*/
+			//throw new Exception("Controller doesn't exist.", 1);
+			
 			Route::ErrorPage404();
 		}
 		
@@ -76,6 +78,8 @@ class Route
 		else
 		{
 			// здесь также разумнее было бы кинуть исключение
+			//throw new Exception("Action doesn't exist.", 1);
+			
 			Route::ErrorPage404();
 			//echo "Function doesn't exist " . $controller->$action();
 		}
