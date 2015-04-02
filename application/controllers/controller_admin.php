@@ -42,6 +42,9 @@ class Controller_Admin extends Controller
 					    case 'search' :
 					    		$this->find_user($current_user, $user_to_find);
 					    		break;
+					    case 'user_list':
+					    		$this->get_user_list();
+					    		break;
 				    }
 				}
 			}
@@ -95,6 +98,14 @@ class Controller_Admin extends Controller
 		$data = array($user, $users, $found_user);
 		//echo "<pre>".print_r($data)."</pre>";
 		//$this->view->regenerate('admin_view.php', $data);
+	}
+
+	function get_user_list()
+	{
+		$return = $_POST;
+		$user = $this->model->get_user_data($current_user);
+		$users = $this->model->manage_users();
+		$data = array($user, $users);
 	}
 	
 	function action_logout()
