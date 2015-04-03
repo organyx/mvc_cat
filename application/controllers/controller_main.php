@@ -18,8 +18,8 @@ class Controller_Main extends Controller
 		}
 		else
 		{
-			//$data = $this->model->get_web_list();
-			$this->view->generate('main_view.php', 'template_view.php');
+			$data = $this->model->get_web_list();
+			$this->view->generate('main_view.php', 'template_view.php', $data);
 		}
 	}
 }
