@@ -16,7 +16,7 @@ class Model_Main extends Model
 			}
 			$startRow = $pageNum * $maxRows;		
 			//***Get values***
-			$sql="SELECT * FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
+			$sql="SELECT userID, url, title, preview_thumb FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
 			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
  
 			$result=$WebCatalogue->query($sql_limit);
@@ -73,7 +73,19 @@ class Model_Main extends Model
 			// while($row = $result->fetch_assoc()){
 			//     echo $row['email'] . '<br>';
 			// }
-			$data = array($result, $pages);
+			// $data = array($result, $pages);
+
+			$res = $WebCatalogue->query($sql_limit);
+			$rows = array();
+			while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
+				$rows[] = $row;
+			}
+			echo json_encode($rows);
+			// foreach ($rows as $row) {
+			// 	echo json_encode($row);
+			// }
+
+			$data = array($result, $pages, json_encode($rows));
 			return $data;
 	}
 
