@@ -1,9 +1,15 @@
 $(document).ready(function(){
+	var start_row = 0;
+	var total_rows = 0;
 	var limit = 0;
 	var per_page = 10;
+	var page = 0;
 	data = { 
 		limit: limit,
-		per_page: per_page
+		per_page: per_page,
+		start_row: start_row,
+		total_rows: total_rows,
+		page: page
 	 }
 	data = $(this).serialize() + "&" + $.param(data);
 	$.ajax({
@@ -21,6 +27,7 @@ $(document).ready(function(){
 			//alert(func);
 			// var obj = JSON.parse(data);
    //              alert(obj);
+
    			create_main(data);
 		},
 		error: function (x,y,z)
@@ -29,7 +36,16 @@ $(document).ready(function(){
 		}
 	});
 
-	function pagination_numbers(data)
+	function pagination_numbers()
+	{
+		var top_row = document.getElementById('top_row');
+		// var result_from = document.createElement('span');
+		// var result_to = document.createElement('span');
+		// var result_total = document.createElement('span');
+		top_row.innerHTML = "Showing results : " + (start_row + 1) + " to " + (Math.min(start_row + per_page, total_rows)) + " of " + total_rows;
+	}
+
+	function pagination_links()
 	{
 		
 	}
@@ -39,6 +55,13 @@ $(document).ready(function(){
 			var content = document.getElementById("contentRight");
    			var main_table = document.createElement('table');
    			main_table.className = main_table.className + "width-670 center WidthAuto";
+
+   			var next_link = document.createElement('a');
+   			next_link.innerHTML = "Next";
+   			next_link.href = "#";
+   			var previous_link = document.createElement('a');
+   			previous_link.innerHTML = "Previous";
+   			previous_link.href = "#";
 
    			var tr1 = document.createElement('tr');
    			var tr2 = document.createElement('tr');
@@ -50,12 +73,15 @@ $(document).ready(function(){
 
    			td1.style.align = 'right';
    			td1.style.vAlign = 'top';
+   			td1.setAttribute('id', 'top_row');
 
    			td2.style.align = 'center';
    			td2.style.vAlign = 'top';
 
    			td3.style.align = 'right';
    			td3.style.vAlign = 'top';
+   			td3.appendChild(previous_link);
+   			td3.appendChild(next_link);
 
    			tr1.appendChild(td1);
 
@@ -73,6 +99,7 @@ $(document).ready(function(){
             main_table.appendChild(tr2);
             main_table.appendChild(tr3);
             content.appendChild(main_table);
+            pagination_numbers();
 	}
 
 	function create_item_table(data_item)

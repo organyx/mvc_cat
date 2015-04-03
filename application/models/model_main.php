@@ -6,7 +6,6 @@ class Model_Main extends Model
 	public function get_web_list()
 	{	
 			Global $WebCatalogue;
-
 			//****Pagination Setup*****
 			$currentPage = "/main/index/";
 			$maxRows = 10;
@@ -85,7 +84,7 @@ class Model_Main extends Model
 			// 	echo json_encode($row);
 			// }
 
-			$data = array($result, $pages, json_encode($rows));
+			$data = array($result, $pages, $rows);
 			return $data;
 	}
 
