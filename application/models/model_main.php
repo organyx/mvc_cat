@@ -9,6 +9,10 @@ class Model_Main extends Model
 			//****Pagination Setup*****
 			$currentPage = "/main/index/";
 			$maxRows = 10;
+			if(isset($_POST['per_page']))
+			{
+				$maxRows = $_POST['per_page'];
+			}
 			$pageNum = 0;
 			if (isset($_POST['page'])) {
 			  $pageNum = $_POST['page'];

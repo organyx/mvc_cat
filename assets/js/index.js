@@ -1,32 +1,62 @@
 $(document).ready(function(){
-	var start_row = document.getElementById('startRow').value;
-	var total_rows = document.getElementById('totalRows').value;
-	var total_pages = document.getElementById('totalPages').value;
-	var per_page = document.getElementById('maxRows').value;
-	var page = document.getElementById('pageNum').value;
+	
+	function get_pages()
+	{
+		var start_row = parseInt(document.getElementById('startRow').value);
+		var total_rows = parseInt(document.getElementById('totalRows').value);
+		var total_pages = parseInt(document.getElementById('totalPages').value);
+		var per_page = parseInt(document.getElementById('perPage_html').value);
+		var page = parseInt(document.getElementById('pageNum').value);
+
+		return [start_row, total_rows, total_pages, per_page, page];
+	}
+
+	function selected()
+	{
+			var updated_pages = get_pages();
+			// update_table();
+			var pages = {
+				start_row: updated_pages[0], 
+				total_rows: updated_pages[1], 
+				total_pages: updated_pages[2], 
+				per_page: updated_pages[3], 
+				page: updated_pages[4]
+			};
+			$.post('/main/index/', pages, function(data){
+				reset_data();
+				//alert(data);
+				//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
+				fill_tables(pages, data);
+			}, 'json');
+	}
 
 	$('a#next').click(function(){
+
+		var updated_pages = get_pages();
 		// update_table();
 		var pages = {
-			start_row: parseInt(start_row), 
-			total_rows: parseInt(total_rows), 
-			total_pages: parseInt(total_pages), 
-			per_page: parseInt(per_page), 
-			page: parseInt(page) + 1
+			start_row: updated_pages[0], 
+			total_rows: updated_pages[1], 
+			total_pages: updated_pages[2], 
+			per_page: updated_pages[3], 
+			page: updated_pages[4] + 1
 		};
 		$.post('/main/index/', pages, function(data){
 			reset_data();
-			fill_tables();
+			//alert(data);
+			//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
+			fill_tables(pages, data);
 		}, 'json');
 	});
 
 	$('a#previous').click(function(){
+
 		var pages = {
-			start_row: parseInt(start_row), 
-			total_rows: parseInt(total_rows), 
-			total_pages: parseInt(total_pages), 
-			per_page: parseInt(per_page), 
-			page: parseInt(page) - 1
+			start_row: updated_pages[0], 
+			total_rows: updated_pages[1], 
+			total_pages: updated_pages[2], 
+			per_page: updated_pages[3], 
+			page: updated_pages[4] - 1
 		};
 		$.post('/main/index/', pages, function(data){
 			//create_main(data);
@@ -36,7 +66,7 @@ $(document).ready(function(){
 	function update_table()
 	{
 		data = { 
-			limit: limit,
+			total_pages: total_pages,
 			per_page: per_page,
 			start_row: start_row,
 			total_rows: total_rows,
@@ -95,17 +125,21 @@ $(document).ready(function(){
 
 	}
 
-	function fill_tables()
+	function fill_tables(pages, data)
 	{
-		$('span#result_start_page').innerHTML = start_row;
-        $('span#result_end_page').empty();
-        $('span#result_total').empty();
-        $('span.main_item_title').empty();
-        $('a.main_item_href').attr("href", "");
-        $('a.main_item_img_href').attr("href", "");
-        $('img.main_item_img_src').attr("src", "");
-        $('a.main_item_url').attr("href", "");
-        $('span.main_item_url').empty();
+		//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
+		$('span#result_start_page').html(pages['start_row']);
+        $('span#result_end_page').html(pages['total_pages']);
+        $('span#result_total').html(pages['total_rows']);
+        for (var i = 0; i < 10; i++) 
+        {
+        	        $('span.cl_title' + i).html(data[i]['title']);
+			        $('a.cl_item' + i).attr("href", 'webitem/index/?site=' + data[i]['userID']);
+			        $('a.cl_img_href' + i).attr("href", data[i]['preview_thumb']);
+			        $('img.cl_img_src' + i).attr("src", "../../" + data[i]['preview_thumb']);
+			        $('a.cl_url_href' + i).attr("href", data[i]['url']);
+			        $('span.cl_url' + i).html(data[i]['url']);			
+        };
 	}
 
 	function create_main(data)
