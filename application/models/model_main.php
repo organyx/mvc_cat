@@ -1,5 +1,4 @@
 <?php
-
 class Model_Main extends Model
 {
 	
@@ -8,16 +7,22 @@ class Model_Main extends Model
 			Global $WebCatalogue;
 			//****Pagination Setup*****
 			$currentPage = "/main/index/";
-			$maxRows = 10;
-			if(isset($_POST['per_page']))
+			if (isset($_POST['per_page'])) {
+			  $maxRows = $_POST['per_page'];
+			}
+			else
 			{
-				$maxRows = $_POST['per_page'];
+				$maxRows = 10;
 			}
-			
-			$pageNum = 0;
-			if (isset($_POST['page'])) {
-			  $pageNum = $_POST['page'];
+
+			if (isset($_POST['page_to_go'])) {
+			 	$pageNum = $_POST['page_to_go'];
 			}
+			else
+			{
+				$pageNum = 0;
+			}
+
 			$startRow = $pageNum * $maxRows;		
 			//***Get values***
 			$sql="SELECT userID, url, title, preview_thumb FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
@@ -28,9 +33,8 @@ class Model_Main extends Model
 			if($result === false) {
 			  trigger_error('Wrong SQL: ' . $sql_limit . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
 			} else {
-			  //$totalRows = $result->num_rows;
-				if (isset($_POST['total_rows'])) {
-				  $totalRows = $_POST['total_rows'];
+				if (isset($_GET['totalRows'])) {
+				  $totalRows = $_GET['totalRows'];
 				} else {
 				  $all_ManageUsers = $WebCatalogue->query($sql);
 				  if($all_ManageUsers === false)
@@ -43,23 +47,6 @@ class Model_Main extends Model
 				  }
 				}
 				$totalPages = ceil($totalRows/$maxRows)-1;
-
-
-				// $queryString = "";
-				// if (!empty($_SERVER['QUERY_STRING'])) {
-				//   $params = explode("&", $_SERVER['QUERY_STRING']);
-				//   $newParams = array();
-				//   foreach ($params as $param) {
-				//     if (stristr($param, "pageNum") == false && 
-				//         stristr($param, "totalRows") == false) {
-				//       array_push($newParams, $param);
-				//     }
-				//   }
-				//   if (count($newParams) != 0) {
-				//     $queryString = "&" . htmlentities(implode("&", $newParams));
-				//   }
-				// }
-				// $queryString = sprintf("&totalRows=%d%s", $totalRows, $queryString);
 			}
 			//****Saving Values*****
 			$pages = array(
@@ -69,15 +56,9 @@ class Model_Main extends Model
 				'totalRows' => $totalRows, 
 				'totalPages' => $totalPages, 
 				'currentPage' => $currentPage,
-				//'queryString' => $queryString
 				);
 			//******Pagination END*******
-
 			$result->data_seek(0);
-			// while($row = $result->fetch_assoc()){
-			//     echo $row['email'] . '<br>';
-			// }
-			// $data = array($result, $pages);
 
 			$res = $WebCatalogue->query($sql_limit);
 			$rows = array();
@@ -86,12 +67,8 @@ class Model_Main extends Model
 			}
 			array_push($rows, $pages);
 			echo json_encode($rows);
-			// foreach ($rows as $row) {
-			// 	echo json_encode($row);
-			// }
-			//echo json_encode($pages);
-			$data = array($result, $pages);
+
+			$data = array($result, $pages, json_encode($rows));
 			return $data;
 	}
-
 }

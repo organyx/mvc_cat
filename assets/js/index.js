@@ -1,99 +1,74 @@
 $(document).ready(function(){
 	
-	function get_pages()
+	if(document.getElementById('start_row') != null)
 	{
-		var start_row = parseInt(document.getElementById('startRow').value);
-		var total_rows = parseInt(document.getElementById('totalRows').value);
-		var total_pages = parseInt(document.getElementById('totalPages').value);
-		var per_page = parseInt(document.getElementById('perPage_html').value);
-		var page = parseInt(document.getElementById('pageNum').value);
-
-		return [start_row, total_rows, total_pages, per_page, page];
+		var this_page = document.getElementById('start_row').value;
+	}
+	else
+	{
+		var this_page = 0;
 	}
 
-	$('#perPage_html').on('change', function()
+	pages_list = $(this).serialize();
+	$('#contentRight').on('change', make_a_call(pages_list));
+
+	function make_a_call()
 	{
-			var updated_pages = get_pages();
-			//alert(updated_pages[3]);
-			// update_table();
-			var pages = {
-				start_row: updated_pages[0], 
-				total_rows: updated_pages[1], 
-				total_pages: updated_pages[2], 
-				per_page: updated_pages[3], 
-				page: updated_pages[4]
-			};
-			$.post('/main/index/', pages, function(data){
-				reset_data();
-				//alert(data);
-				//alert(data);
-				//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
-				fill_tables(pages, data);
-			}, 'json');
-	});
-
-
-
-	$('a#next').click(function(){
-
-		var updated_pages = get_pages();
-		// update_table();
-		var pages = {
-			start_row: updated_pages[0], 
-			total_rows: updated_pages[1], 
-			total_pages: updated_pages[2], 
-			per_page: updated_pages[3], 
-			page: updated_pages[4] + 1
-		};
-		$.post('/main/index/', pages, function(data){
-			reset_data();
-			//alert(data);
-			//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
-			fill_tables(pages, data);
-		}, 'json');
-	});
-
-	$('a#previous').click(function(){
-
-		var pages = {
-			start_row: updated_pages[0], 
-			total_rows: updated_pages[1], 
-			total_pages: updated_pages[2], 
-			per_page: updated_pages[3], 
-			page: updated_pages[4] - 1
-		};
-		$.post('/main/index/', pages, function(data){
-			//create_main(data);
-		}, 'json');
-	});
-
-	function update_table()
-	{
-		data = { 
-			total_pages: total_pages,
-			per_page: per_page,
-			start_row: start_row,
-			total_rows: total_rows,
-			page: page
+		var limit = 0;
+		var per_page = 0;
+		if(document.getElementById('perPage_html') != null)
+		{
+			per_page = document.getElementById('perPage_html').value;
 		}
-		data = $(this).serialize() + "&" + $.param(data);
+		else
+		{
+			per_page = 10;
+		}
+		var start_row = this_page;
+		
+		data = { 
+			limit: limit,
+			per_page: per_page,
+			start_row: start_row
+		}
+		
+		pages_list = $(this).serialize() + "&" + $.param(data);
+
 		$.ajax({
 			type: 'post',
 			url: '/main/index/',
 			dataType: 'json',
-			data: data,
+			data: pages_list,
 			beforeSend: function ()
 			{
-				//$('div#contentRight').html('<div class="loading"><img src="../../assets/images/loader.gif" alt="Loading..." /></div>');
+				$('div#contentRight').html('<div class="loading"><img src="../../assets/images/loader.gif" alt="Loading..." /></div>');
 			},
 			success: function (data, func)
 			{
-				//alert(data);
-				//alert(func);
-				// var obj = JSON.parse(data);
-	   //              alert(obj);
-	   			pagination_numbers();
-	   			//create_main(data);
+	   			create_main(data, per_page, start_row);
+
+	   			$('#perPage_html').on('change', function()
+				{
+					var p = document.getElementById('perPage_html').value
+					var pages = {
+						per_page: document.getElementById('perPage_html').value, 
+					};
+					$.post('/main/index/', pages, make_a_call(pages_list, p), 'json');
+				});
+
+				$('#next_page').on('click', function()
+				{
+					var pages = { page_to_go: (this_page + 1) };
+					alert(pages['page_to_go']);
+					$.post('/main/index/', pages, make_a_call(pages_list), 'json');
+				});
+
+				$('#prev_page').on('click', function()
+				{
+					var pages = { page_to_go: (this_page - 1) };
+					alert(pages['page_to_go']);
+					$.post('/main/index/', pages, make_a_call(pages_list), 'json');
+				});
 			},
 			error: function (x,y,z)
 			{
@@ -102,64 +77,78 @@ $(document).ready(function(){
 		});
 	}
 
-	function pagination_numbers()
+
+	function pagination_numbers(data)
 	{
-		var top_row = document.getElementById('top_row');
-		var result_start_page = document.getElementById('result_start_page');
-		var result_end_page = document.getElementById('result_end_page');
-		var result_total = document.getElementById('result_total');
-		result_start_page.innerHTML = parseInt(start_row) + 1;
-		result_end_page.innerHTML = Math.min(parseInt(start_row) + parseInt(per_page), parseInt(total_rows));
-		result_total.innerHTML = parseInt(total_rows);
-		//top_row.innerHTML = "Showing results : " + (start_row + 1) + " to " + (Math.min(start_row + per_page, total_rows)) + " of " + total_rows;
+		var one = document.createTextNode("Showing: ");
+		var two = document.createTextNode(" - to - ");
+		var three = document.createTextNode("- of - ");
+
+		var span_from = document.getElementById('span_from');
+   		var span_per_page = document.getElementById('span_per_page');
+   		var span_total = document.getElementById('span_total');
+
+   		span_from.innerHTML("one");
+   		// span_per_page.appendChild(two);
+   		// span_total.appendChild(three);
 	}
 
-	function reset_data()
+	function create_page_limit()
 	{
-        //TABLE DATA
-        $('span#result_start_page').empty();
-        $('span#result_end_page').empty();
-        $('span#result_total').empty();
-        $('span.main_item_title').empty();
-        $('a.main_item_href').attr("href", "");
-        $('a.main_item_img_href').attr("href", "");
-        $('img.main_item_img_src').attr("src", "");
-        $('a.main_item_url').attr("href", "");
-        $('span.main_item_url').empty();
+		var select = document.createElement('select');
+		var opt1 = document.createElement('option');
+		var opt2 = document.createElement('option');
+		var opt3 = document.createElement('option');
 
+		opt1.innerHTML = "10";
+		opt2.innerHTML = "20";
+		opt3.innerHTML = "50";
+
+		opt1.value = 10;
+		opt2.value = 20;
+		opt3.value = 50;
+
+		select.setAttribute('id', 'perPage_html');
+
+		select.appendChild(opt1);
+		select.appendChild(opt2);
+		select.appendChild(opt3);
+
+		return select;
 	}
 
-	function fill_tables(pages, data)
+	function create_page_btns()
 	{
-		var updated_pages = get_pages(); 
-		//alert(updated_pages['per_page']);
-		//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
-		$('span#result_start_page').html(pages['start_row']);
-        $('span#result_end_page').html(pages['total_pages']);
-        $('span#result_total').html(pages['total_rows']);
-        for (var i = 0; i < updated_pages[3]; i++) 
-        {
-        	        $('span.cl_title' + i).html(data[i]['title']);
-			        $('a.cl_item' + i).attr("href", 'webitem/index/?site=' + data[i]['userID']);
-			        $('a.cl_img_href' + i).attr("href", data[i]['preview_thumb']);
-			        $('img.cl_img_src' + i).attr("src", "../../" + data[i]['preview_thumb']);
-			        $('a.cl_url_href' + i).attr("href", data[i]['url']);
-			        $('span.cl_url' + i).html(data[i]['url']);			
-        };
+		var divider = document.createTextNode(' | ');
+		var btns = document.createElement('div');
+		var next = document.createElement('a');
+		var prev = document.createElement('a');
+
+		next.setAttribute('href', '#');
+		next.setAttribute('id', 'next_page');
+		prev.setAttribute('href', '#');
+		prev.setAttribute('id', 'prev_page');
+
+		next.innerHTML = 'Next';
+		prev.innerHTML = 'Previous';
+
+		btns.appendChild(prev);
+		btns.appendChild(divider);
+		btns.appendChild(next);
+
+		return btns;
 	}
 
-	function create_main(data)
+	function create_main(data, per_page,start_row_nr)
 	{
+			var start_row = document.createElement('input');
+			start_row.type = 'hidden';
+			start_row.setAttribute('id', 'start_row');
+			start_row.value = start_row_nr;
+
 			var content = document.getElementById("contentRight");
    			var main_table = document.createElement('table');
    			main_table.className = main_table.className + "width-670 center WidthAuto";
-
-   			var next_link = document.createElement('a');
-   			next_link.innerHTML = "Next";
-   			next_link.href = "#";
-   			var previous_link = document.createElement('a');
-   			previous_link.innerHTML = "Previous";
-   			previous_link.href = "#";
 
    			var tr1 = document.createElement('tr');
    			var tr2 = document.createElement('tr');
@@ -171,24 +160,44 @@ $(document).ready(function(){
 
    			td1.style.align = 'right';
    			td1.style.vAlign = 'top';
-   			td1.setAttribute('id', 'top_row');
+
+   			var span_from = document.createElement('span');
+   			var span_per_page = document.createElement('span');
+   			var span_total = document.createElement('span');
+
+   			span_from.setAttribute('id','span_from');
+   			span_per_page.setAttribute('id','span_per_page');
+   			span_total.setAttribute('id','span_total');
+
+   			this_page = data[data.length-1]['startRow'];
+   			//alert(this_page);
+
+   			span_from.appendChild(document.createTextNode("Showing: " + (data[data.length-1]['startRow'] + 1)));
+   			span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(data[data.length-1]['startRow'] + data[data.length-1]['maxRows'], data[data.length-1]['totalRows'])));
+   			span_total.appendChild(document.createTextNode(" - of - " + data[data.length-1]['totalRows']));
+
+   			td1.appendChild(span_from);
+   			td1.appendChild(span_per_page);
+   			td1.appendChild(span_total);
 
    			td2.style.align = 'center';
    			td2.style.vAlign = 'top';
 
    			td3.style.align = 'right';
    			td3.style.vAlign = 'top';
-   			td3.appendChild(previous_link);
-   			td3.appendChild(next_link);
+   			td3.appendChild(create_page_btns());
 
    			tr1.appendChild(td1);
 
             for (var i = 0; i < per_page; i++) 
             {
-            	console.log(data[i]);
-            	var t = create_item_table(data[i]);
-            	td2.appendChild(t);
-            	tr2.appendChild(td2);
+            	// console.log(data[i]);
+            	if(typeof data[i] !== 'undefined' && ("userID" in data[i]))
+            	{
+            		var t = create_item_table(data[i]);
+	            	td2.appendChild(t);
+	            	tr2.appendChild(td2);
+            	}
             };
 
             tr3.appendChild(td3);
@@ -196,8 +205,9 @@ $(document).ready(function(){
             main_table.appendChild(tr1);
             main_table.appendChild(tr2);
             main_table.appendChild(tr3);
+            content.appendChild(create_page_limit());
+            content.appendChild(start_row);
             content.appendChild(main_table);
-            pagination_numbers();
 	}
 
 	function create_item_table(data_item)
@@ -218,7 +228,7 @@ $(document).ready(function(){
             var td4 = document.createElement('td');
             var td5 = document.createElement('td');
             
-
+            td1.innerHTML = data_item['userID'];
             //ITEM LINK
            	var item_link = document.createElement('a');
            	item_link.href = '/webitem/index/?site='+data_item['userID'];
