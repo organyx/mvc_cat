@@ -11,9 +11,10 @@ $(document).ready(function(){
 		return [start_row, total_rows, total_pages, per_page, page];
 	}
 
-	function selected()
+	$('#perPage_html').on('change', function()
 	{
 			var updated_pages = get_pages();
+			//alert(updated_pages[3]);
 			// update_table();
 			var pages = {
 				start_row: updated_pages[0], 
@@ -25,10 +26,13 @@ $(document).ready(function(){
 			$.post('/main/index/', pages, function(data){
 				reset_data();
 				//alert(data);
+				//alert(data);
 				//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
 				fill_tables(pages, data);
 			}, 'json');
-	}
+	});
+
+
 
 	$('a#next').click(function(){
 
@@ -127,11 +131,13 @@ $(document).ready(function(){
 
 	function fill_tables(pages, data)
 	{
+		var updated_pages = get_pages(); 
+		//alert(updated_pages['per_page']);
 		//alert("start_row: " + pages['start_row'] + " total_pages: " + pages['total_pages'] + " total_rows: " + pages['total_rows']);
 		$('span#result_start_page').html(pages['start_row']);
         $('span#result_end_page').html(pages['total_pages']);
         $('span#result_total').html(pages['total_rows']);
-        for (var i = 0; i < 10; i++) 
+        for (var i = 0; i < updated_pages[3]; i++) 
         {
         	        $('span.cl_title' + i).html(data[i]['title']);
 			        $('a.cl_item' + i).attr("href", 'webitem/index/?site=' + data[i]['userID']);
@@ -144,54 +150,54 @@ $(document).ready(function(){
 
 	function create_main(data)
 	{
-			// var content = document.getElementById("contentRight");
-   // 			var main_table = document.createElement('table');
-   // 			main_table.className = main_table.className + "width-670 center WidthAuto";
+			var content = document.getElementById("contentRight");
+   			var main_table = document.createElement('table');
+   			main_table.className = main_table.className + "width-670 center WidthAuto";
 
-   // 			var next_link = document.createElement('a');
-   // 			next_link.innerHTML = "Next";
-   // 			next_link.href = "#";
-   // 			var previous_link = document.createElement('a');
-   // 			previous_link.innerHTML = "Previous";
-   // 			previous_link.href = "#";
+   			var next_link = document.createElement('a');
+   			next_link.innerHTML = "Next";
+   			next_link.href = "#";
+   			var previous_link = document.createElement('a');
+   			previous_link.innerHTML = "Previous";
+   			previous_link.href = "#";
 
-   // 			var tr1 = document.createElement('tr');
-   // 			var tr2 = document.createElement('tr');
-   // 			var tr3 = document.createElement('tr');
+   			var tr1 = document.createElement('tr');
+   			var tr2 = document.createElement('tr');
+   			var tr3 = document.createElement('tr');
 
-   // 			var td1 = document.createElement('td');
-   // 			var td2 = document.createElement('td');
-   // 			var td3 = document.createElement('td');
+   			var td1 = document.createElement('td');
+   			var td2 = document.createElement('td');
+   			var td3 = document.createElement('td');
 
-   // 			td1.style.align = 'right';
-   // 			td1.style.vAlign = 'top';
-   // 			td1.setAttribute('id', 'top_row');
+   			td1.style.align = 'right';
+   			td1.style.vAlign = 'top';
+   			td1.setAttribute('id', 'top_row');
 
-   // 			td2.style.align = 'center';
-   // 			td2.style.vAlign = 'top';
+   			td2.style.align = 'center';
+   			td2.style.vAlign = 'top';
 
-   // 			td3.style.align = 'right';
-   // 			td3.style.vAlign = 'top';
-   // 			td3.appendChild(previous_link);
-   // 			td3.appendChild(next_link);
+   			td3.style.align = 'right';
+   			td3.style.vAlign = 'top';
+   			td3.appendChild(previous_link);
+   			td3.appendChild(next_link);
 
-   // 			tr1.appendChild(td1);
+   			tr1.appendChild(td1);
 
-   //          for (var i = 0; i < per_page; i++) 
-   //          {
-   //          	console.log(data[i]);
-   //          	var t = create_item_table(data[i]);
-   //          	td2.appendChild(t);
-   //          	tr2.appendChild(td2);
-   //          };
+            for (var i = 0; i < per_page; i++) 
+            {
+            	console.log(data[i]);
+            	var t = create_item_table(data[i]);
+            	td2.appendChild(t);
+            	tr2.appendChild(td2);
+            };
 
-   //          tr3.appendChild(td3);
+            tr3.appendChild(td3);
 
-   //          main_table.appendChild(tr1);
-   //          main_table.appendChild(tr2);
-   //          main_table.appendChild(tr3);
-   //          content.appendChild(main_table);
-   //          pagination_numbers();
+            main_table.appendChild(tr1);
+            main_table.appendChild(tr2);
+            main_table.appendChild(tr3);
+            content.appendChild(main_table);
+            pagination_numbers();
 	}
 
 	function create_item_table(data_item)

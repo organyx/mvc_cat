@@ -16,7 +16,7 @@
 <div id="contentRight">
     <table class="width-670 center WidthAuto">
         <tr>
-            <select id="perPage_html"  onchange ="selected()">
+            <select id="perPage_html">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>

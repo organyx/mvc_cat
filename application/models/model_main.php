@@ -13,6 +13,7 @@ class Model_Main extends Model
 			{
 				$maxRows = $_POST['per_page'];
 			}
+			
 			$pageNum = 0;
 			if (isset($_POST['page'])) {
 			  $pageNum = $_POST['page'];
