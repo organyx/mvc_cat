@@ -9,7 +9,7 @@ $(document).ready(function(){
 		var this_page = 0;
 	}
 
-	pages_list = $(this).serialize();
+	var pages_list = $(this).serialize();
 	$('#contentRight').on('change', make_a_call(pages_list));
 
 	function make_a_call()
@@ -26,13 +26,13 @@ $(document).ready(function(){
 		}
 		var start_row = this_page;
 		
-		data = { 
+		var data = { 
 			limit: limit,
 			per_page: per_page,
 			start_row: start_row
-		}
+		};
 		
-		pages_list = $(this).serialize() + "&" + $.param(data);
+		var pages_list = $(this).serialize() + "&" + $.param(data);
 
 		$.ajax({
 			type: 'post',
@@ -49,23 +49,28 @@ $(document).ready(function(){
 
 	   			$('#perPage_html').on('change', function()
 				{
-					var p = document.getElementById('perPage_html').value
+					var p = document.getElementById('perPage_html').value;
 					var pages = {
-						per_page: document.getElementById('perPage_html').value, 
+						per_page: document.getElementById('perPage_html').value 
 					};
 					$.post('/main/index/', pages, make_a_call(pages_list, p), 'json');
 				});
 
 				$('#next_page').on('click', function()
 				{
-					var pages = { page_to_go: (this_page + 1) };
+					var pages = { 
+						page_to_go: (this_page + 1),
+						per_page: document.getElementById('perPage_html').value
+					 };
 					alert(pages['page_to_go']);
 					$.post('/main/index/', pages, make_a_call(pages_list), 'json');
 				});
 
 				$('#prev_page').on('click', function()
 				{
-					var pages = { page_to_go: (this_page - 1) };
+					var pages = { 
+						page_to_go: (this_page - 1),
+						per_page: document.getElementById('perPage_html').value };
 					alert(pages['page_to_go']);
 					$.post('/main/index/', pages, make_a_call(pages_list), 'json');
 				});
@@ -93,7 +98,7 @@ $(document).ready(function(){
    		// span_total.appendChild(three);
 	}
 
-	function create_page_limit()
+	function create_page_limit(current_opt)
 	{
 		var select = document.createElement('select');
 		var opt1 = document.createElement('option');
@@ -109,6 +114,7 @@ $(document).ready(function(){
 		opt3.value = 50;
 
 		select.setAttribute('id', 'perPage_html');
+		select.style.width = '100px';
 
 		select.appendChild(opt1);
 		select.appendChild(opt2);
@@ -139,12 +145,32 @@ $(document).ready(function(){
 		return btns;
 	}
 
-	function create_main(data, per_page,start_row_nr)
+	function create_main(data, per_page_nr, start_row_nr)
 	{
 			var start_row = document.createElement('input');
 			start_row.type = 'hidden';
 			start_row.setAttribute('id', 'start_row');
 			start_row.value = start_row_nr;
+
+			var per_page = document.createElement('input');
+			per_page.type = 'hidden';
+			per_page.setAttribute('id', 'per_page');
+			per_page.value = per_page_nr;
+			switch(per_page_nr)
+			{
+				case 10:
+					var current_opt = 1;
+					break;
+				case 20: 
+					var current_opt = 2;
+					break;
+				case 50:
+					var current_opt = 3;
+					break;
+				default:
+					var current_opt = 1;
+					break;
+			}
 
 			var content = document.getElementById("contentRight");
    			var main_table = document.createElement('table');
@@ -189,7 +215,7 @@ $(document).ready(function(){
 
    			tr1.appendChild(td1);
 
-            for (var i = 0; i < per_page; i++) 
+            for (var i = 0; i < per_page_nr; i++) 
             {
             	// console.log(data[i]);
             	if(typeof data[i] !== 'undefined' && ("userID" in data[i]))
@@ -198,15 +224,16 @@ $(document).ready(function(){
 	            	td2.appendChild(t);
 	            	tr2.appendChild(td2);
             	}
-            };
+            }
 
             tr3.appendChild(td3);
 
             main_table.appendChild(tr1);
             main_table.appendChild(tr2);
             main_table.appendChild(tr3);
-            content.appendChild(create_page_limit());
+            content.appendChild(create_page_limit(current_opt));
             content.appendChild(start_row);
+            content.appendChild(per_page);
             content.appendChild(main_table);
 	}
 
