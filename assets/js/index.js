@@ -49,11 +49,11 @@ $(document).ready(function(){
 
 	   			$('#perPage_html').on('change', function()
 				{
-					var p = document.getElementById('perPage_html').value;
+					//var p = document.getElementById('perPage_html').value;
 					var pages = {
-						per_page: document.getElementById('perPage_html').value 
+						per_page: parseInt(document.getElementById('perPage_html').value) 
 					};
-					$.post('/main/index/', pages, make_a_call(pages_list, p), 'json');
+					$.post('/main/index/', pages, make_a_call(), 'json');
 				});
 
 				$('#next_page').on('click', function()
@@ -114,11 +114,35 @@ $(document).ready(function(){
 		opt3.value = 50;
 
 		select.setAttribute('id', 'perPage_html');
+		select.setAttribute('name', 'perPage_html');
 		select.style.width = '100px';
 
 		select.appendChild(opt1);
 		select.appendChild(opt2);
 		select.appendChild(opt3);
+
+		var o = 0;
+		switch(current_opt)
+		{
+			case 1:
+				o = 10;
+				break;
+			case 2: 
+				o = 20;
+				break;
+			case 3:
+				o = 50;
+				break;
+		}
+		//alert(o);
+
+		select.value = o;
+		alert("create_page_limit: "+select.value);
+
+		// var opt = $("option[value=" + o + "]"),
+	 //    html = $("<div>").append(opt.clone()).html();
+		// html = html.replace(/\>/, ' selected="selected">');
+		// opt.replaceWith(html);
 
 		return select;
 	}
@@ -147,6 +171,7 @@ $(document).ready(function(){
 
 	function create_main(data, per_page_nr, start_row_nr)
 	{
+			alert("create_main: "+ parseInt(per_page_nr));
 			var start_row = document.createElement('input');
 			start_row.type = 'hidden';
 			start_row.setAttribute('id', 'start_row');
@@ -155,22 +180,22 @@ $(document).ready(function(){
 			var per_page = document.createElement('input');
 			per_page.type = 'hidden';
 			per_page.setAttribute('id', 'per_page');
-			per_page.value = per_page_nr;
-			switch(per_page_nr)
+			per_page.value = parseInt(per_page_nr);
+
+			var current_opt = 0;
+			switch(parseInt(per_page_nr))
 			{
 				case 10:
-					var current_opt = 1;
+					current_opt = 1;
 					break;
 				case 20: 
-					var current_opt = 2;
+					current_opt = 2;
 					break;
 				case 50:
-					var current_opt = 3;
-					break;
-				default:
-					var current_opt = 1;
+					current_opt = 3;
 					break;
 			}
+			alert("create_main switch : " + current_opt)
 
 			var content = document.getElementById("contentRight");
    			var main_table = document.createElement('table');
