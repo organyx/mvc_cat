@@ -15,8 +15,8 @@ class Model_Main extends Model
 				$maxRows = 10;
 			}
 
-			if (isset($_POST['page_to_go'])) {
-			 	$pageNum = $_POST['page_to_go'];
+			if (isset($_POST['page_num'])) {
+			 	$pageNum = $_POST['page_num'];
 			}
 			else
 			{
@@ -33,8 +33,8 @@ class Model_Main extends Model
 			if($result === false) {
 			  trigger_error('Wrong SQL: ' . $sql_limit . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
 			} else {
-				if (isset($_GET['totalRows'])) {
-				  $totalRows = $_GET['totalRows'];
+				if (isset($_POST['totalRows'])) {
+				  $totalRows = $_POST['totalRows'];
 				} else {
 				  $all_ManageUsers = $WebCatalogue->query($sql);
 				  if($all_ManageUsers === false)

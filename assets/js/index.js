@@ -1,20 +1,25 @@
 $(document).ready(function(){
 	
-	if(document.getElementById('start_row') != null)
-	{
-		var this_page = document.getElementById('start_row').value;
-	}
-	else
-	{
-		var this_page = 0;
-	}
+	//var this_page = 0;
 
 	var pages_list = $(this).serialize();
 	$('#contentRight').on('change', make_a_call(pages_list));
 
 	function make_a_call()
 	{
-		var limit = 0;
+		
+		if(document.getElementById('page_num'))
+		{
+			this_page = parseInt(document.getElementById('page_num').value);
+			alert ("this_page_html : " + this_page);
+		}
+		else
+		{
+			this_page = 0;
+		}
+
+		var page_num = parseInt(this_page);
+
 		var per_page = 0;
 		if(document.getElementById('perPage_html') != null)
 		{
@@ -24,12 +29,10 @@ $(document).ready(function(){
 		{
 			per_page = 10;
 		}
-		var start_row = this_page;
 		
 		var data = { 
-			limit: limit,
 			per_page: per_page,
-			start_row: start_row
+			page_num: page_num
 		};
 		
 		var pages_list = $(this).serialize() + "&" + $.param(data);
@@ -43,13 +46,12 @@ $(document).ready(function(){
 			{
 				$('div#contentRight').html('<div class="loading"><img src="../../assets/images/loader.gif" alt="Loading..." /></div>');
 			},
-			success: function (data, func)
+			success: function (data_returned, func)
 			{
-	   			create_main(data, per_page, start_row);
+	   			create_main(data_returned, page_num);
 
 	   			$('#perPage_html').on('change', function()
 				{
-					//var p = document.getElementById('perPage_html').value;
 					var pages = {
 						per_page: parseInt(document.getElementById('perPage_html').value) 
 					};
@@ -58,21 +60,41 @@ $(document).ready(function(){
 
 				$('#next_page').on('click', function()
 				{
+					var hi = document.getElementById('page_num');
+					hi.value = parseInt(page_num) + 1;
 					var pages = { 
-						page_to_go: (this_page + 1),
-						per_page: document.getElementById('perPage_html').value
-					 };
-					alert(pages['page_to_go']);
-					$.post('/main/index/', pages, make_a_call(pages_list), 'json');
+						page_to_go: parseInt(document.getElementById('page_num').value),
+						per_page: parseInt(document.getElementById('perPage_html').value)
+					};
+					alert("go to: "+pages['page_to_go']);
+
+					$.post('/main/index/', pages, make_a_call(), 'json');
+					// $.ajax({
+					// 	type:'post',
+					// 	url:'/main/index/',
+					// 	//dataType: 'json',
+					// 	data: pages,
+					// 	success: function()
+					// 	{
+					// 		make_a_call();
+					// 	},
+					// 	error: function(x,y,z)
+					// 	{
+					// 		alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
+					// 	}
+					// });
 				});
 
 				$('#prev_page').on('click', function()
 				{
+					var hi = document.getElementById('page_num');
+					hi.value = parseInt(page_num) - 1;
 					var pages = { 
-						page_to_go: (this_page - 1),
-						per_page: document.getElementById('perPage_html').value };
-					alert(pages['page_to_go']);
-					$.post('/main/index/', pages, make_a_call(pages_list), 'json');
+						page_to_go: parseInt(document.getElementById('page_num').value),
+						per_page: parseInt(document.getElementById('perPage_html').value)
+					};
+					alert("go to: "+pages['page_to_go']);
+					$.post('/main/index/', pages, make_a_call(), 'json');
 				});
 			},
 			error: function (x,y,z)
@@ -81,7 +103,6 @@ $(document).ready(function(){
 			}
 		});
 	}
-
 
 	function pagination_numbers(data)
 	{
@@ -134,25 +155,20 @@ $(document).ready(function(){
 				o = 50;
 				break;
 		}
-		//alert(o);
-
 		select.value = o;
-		alert("create_page_limit: "+select.value);
-
-		// var opt = $("option[value=" + o + "]"),
-	 //    html = $("<div>").append(opt.clone()).html();
-		// html = html.replace(/\>/, ' selected="selected">');
-		// opt.replaceWith(html);
 
 		return select;
 	}
 
-	function create_page_btns()
+	function create_page_btns(page_nr)
 	{
 		var divider = document.createTextNode(' | ');
 		var btns = document.createElement('div');
 		var next = document.createElement('a');
 		var prev = document.createElement('a');
+
+		var page_hidden = document.getElementById('page_num');
+		page_hidden.value = page_nr;
 
 		next.setAttribute('href', '#');
 		next.setAttribute('id', 'next_page');
@@ -169,21 +185,22 @@ $(document).ready(function(){
 		return btns;
 	}
 
-	function create_main(data, per_page_nr, start_row_nr)
+	function create_main(data, page_nr)
 	{
-			alert("create_main: "+ parseInt(per_page_nr));
-			var start_row = document.createElement('input');
-			start_row.type = 'hidden';
-			start_row.setAttribute('id', 'start_row');
-			start_row.value = start_row_nr;
+			//alert("create_main var: "+page_nr);
+			var page_num = document.createElement('input');
+			page_num.type = 'hidden';
+			page_num.setAttribute('id', 'page_num');
+			page_num.value = parseInt(data[data.length-1]['pageNum']);
+			//alert("create_main_html : "+page_num.value);
 
 			var per_page = document.createElement('input');
 			per_page.type = 'hidden';
 			per_page.setAttribute('id', 'per_page');
-			per_page.value = parseInt(per_page_nr);
+			per_page.value = parseInt(data[data.length-1]['maxRows']);
 
 			var current_opt = 0;
-			switch(parseInt(per_page_nr))
+			switch(parseInt(data[data.length-1]['maxRows']))
 			{
 				case 10:
 					current_opt = 1;
@@ -195,9 +212,10 @@ $(document).ready(function(){
 					current_opt = 3;
 					break;
 			}
-			alert("create_main switch : " + current_opt)
 
 			var content = document.getElementById("contentRight");
+			content.appendChild(page_num);
+            content.appendChild(per_page);
    			var main_table = document.createElement('table');
    			main_table.className = main_table.className + "width-670 center WidthAuto";
 
@@ -220,8 +238,8 @@ $(document).ready(function(){
    			span_per_page.setAttribute('id','span_per_page');
    			span_total.setAttribute('id','span_total');
 
-   			this_page = data[data.length-1]['startRow'];
-   			//alert(this_page);
+   			this_page = data[data.length-1]['pageNum'];
+   			alert("this_page_from_model: " + data[data.length-1]['pageNum']);
 
    			span_from.appendChild(document.createTextNode("Showing: " + (data[data.length-1]['startRow'] + 1)));
    			span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(data[data.length-1]['startRow'] + data[data.length-1]['maxRows'], data[data.length-1]['totalRows'])));
@@ -236,11 +254,11 @@ $(document).ready(function(){
 
    			td3.style.align = 'right';
    			td3.style.vAlign = 'top';
-   			td3.appendChild(create_page_btns());
+   			td3.appendChild(create_page_btns(page_nr));
 
    			tr1.appendChild(td1);
 
-            for (var i = 0; i < per_page_nr; i++) 
+            for (var i = 0; i < data[data.length-1]['maxRows']; i++) 
             {
             	// console.log(data[i]);
             	if(typeof data[i] !== 'undefined' && ("userID" in data[i]))
@@ -257,8 +275,7 @@ $(document).ready(function(){
             main_table.appendChild(tr2);
             main_table.appendChild(tr3);
             content.appendChild(create_page_limit(current_opt));
-            content.appendChild(start_row);
-            content.appendChild(per_page);
+            
             content.appendChild(main_table);
 	}
 
