@@ -11,7 +11,7 @@ $(document).ready(function(){
 		if(document.getElementById('page_num'))
 		{
 			this_page = parseInt(document.getElementById('page_num').value);
-			alert ("this_page_html : " + this_page);
+			//alert ("this_page_html : " + this_page);
 		}
 		else
 		{
@@ -48,7 +48,8 @@ $(document).ready(function(){
 			},
 			success: function (data_returned, func)
 			{
-	   			create_main(data_returned, page_num);
+				$('div.loading').addClass('off');
+	   			create_main(data_returned);
 
 	   			$('#perPage_html').on('change', function()
 				{
@@ -62,39 +63,43 @@ $(document).ready(function(){
 				{
 					var hi = document.getElementById('page_num');
 					hi.value = parseInt(page_num) + 1;
-					var pages = { 
-						page_to_go: parseInt(document.getElementById('page_num').value),
-						per_page: parseInt(document.getElementById('perPage_html').value)
-					};
-					alert("go to: "+pages['page_to_go']);
-
-					$.post('/main/index/', pages, make_a_call(), 'json');
-					// $.ajax({
-					// 	type:'post',
-					// 	url:'/main/index/',
-					// 	//dataType: 'json',
-					// 	data: pages,
-					// 	success: function()
-					// 	{
-					// 		make_a_call();
-					// 	},
-					// 	error: function(x,y,z)
-					// 	{
-					// 		alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
-					// 	}
-					// });
+					make_a_call();
+					// var pages = { 
+					// 	page_to_go: parseInt(document.getElementById('page_num').value),
+					// 	per_page: parseInt(document.getElementById('perPage_html').value)
+					// };
+					// $.post('/main/index/', pages, make_a_call(), 'json');
 				});
 
 				$('#prev_page').on('click', function()
 				{
 					var hi = document.getElementById('page_num');
 					hi.value = parseInt(page_num) - 1;
-					var pages = { 
-						page_to_go: parseInt(document.getElementById('page_num').value),
-						per_page: parseInt(document.getElementById('perPage_html').value)
-					};
-					alert("go to: "+pages['page_to_go']);
-					$.post('/main/index/', pages, make_a_call(), 'json');
+					make_a_call();
+					// var pages = { 
+					// 	page_to_go: parseInt(document.getElementById('page_num').value),
+					// 	per_page: parseInt(document.getElementById('perPage_html').value)
+					// };
+					// $.post('/main/index/', pages, make_a_call(), 'json');
+				});
+
+				$('#first_page').on('click', function()
+				{
+					var hi = document.getElementById('page_num');
+					hi.value = 0;
+					make_a_call();
+					// var pages = { 
+					// 	page_to_go: parseInt(document.getElementById('page_num').value),
+					// 	per_page: parseInt(document.getElementById('perPage_html').value)
+					// };
+					// $.post('/main/index/', pages, make_a_call(), 'json');
+				});
+
+				$('#last_page').on('click', function()
+				{
+					var hi = document.getElementById('page_num');
+					hi.value = Math.max(data_returned[data_returned.length-1]['totalPages'], data_returned[data_returned.length-1]['pageNum'] + 1);
+					make_a_call();
 				});
 			},
 			error: function (x,y,z)
@@ -102,21 +107,6 @@ $(document).ready(function(){
 				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
 			}
 		});
-	}
-
-	function pagination_numbers(data)
-	{
-		var one = document.createTextNode("Showing: ");
-		var two = document.createTextNode(" - to - ");
-		var three = document.createTextNode("- of - ");
-
-		var span_from = document.getElementById('span_from');
-   		var span_per_page = document.getElementById('span_per_page');
-   		var span_total = document.getElementById('span_total');
-
-   		span_from.innerHTML("one");
-   		// span_per_page.appendChild(two);
-   		// span_total.appendChild(three);
 	}
 
 	function create_page_limit(current_opt)
@@ -160,39 +150,56 @@ $(document).ready(function(){
 		return select;
 	}
 
-	function create_page_btns(page_nr)
+	function create_page_btns(pages)
 	{
 		var divider = document.createTextNode(' | ');
 		var btns = document.createElement('div');
-		var next = document.createElement('a');
-		var prev = document.createElement('a');
+		btns.appendChild(document.createElement('br'));
+		if (pages['pageNum'] > 0) {
+			var first = document.createElement('a');
+			first.setAttribute('href', '#');
+			first.setAttribute('id', 'first_page');
+			first.innerHTML = 'First Page';
+			btns.appendChild(first);
 
+			btns.appendChild(document.createTextNode(' | '));
+
+			var prev = document.createElement('a');
+			prev.setAttribute('href', '#');
+			prev.setAttribute('id', 'prev_page');
+			prev.innerHTML = 'Previous';
+			btns.appendChild(prev);
+		}
+		
 		var page_hidden = document.getElementById('page_num');
-		page_hidden.value = page_nr;
-
-		next.setAttribute('href', '#');
-		next.setAttribute('id', 'next_page');
-		prev.setAttribute('href', '#');
-		prev.setAttribute('id', 'prev_page');
-
-		next.innerHTML = 'Next';
-		prev.innerHTML = 'Previous';
-
-		btns.appendChild(prev);
+		page_hidden.value = pages['pageNum'];
 		btns.appendChild(divider);
-		btns.appendChild(next);
 
+		if (pages['pageNum'] < pages['totalPages']) {
+			var next = document.createElement('a');
+			next.setAttribute('href', '#');
+			next.setAttribute('id', 'next_page');
+			next.innerHTML = 'Next';
+			btns.appendChild(next);
+
+			btns.appendChild(document.createTextNode(' | '));
+
+			var last = document.createElement('a');
+			last.setAttribute('href', '#');
+			last.setAttribute('id', 'last_page');
+			last.innerHTML = 'Last Page';
+			btns.appendChild(last);
+		};
+		
 		return btns;
 	}
 
-	function create_main(data, page_nr)
+	function create_main(data)
 	{
-			//alert("create_main var: "+page_nr);
 			var page_num = document.createElement('input');
 			page_num.type = 'hidden';
 			page_num.setAttribute('id', 'page_num');
 			page_num.value = parseInt(data[data.length-1]['pageNum']);
-			//alert("create_main_html : "+page_num.value);
 
 			var per_page = document.createElement('input');
 			per_page.type = 'hidden';
@@ -239,11 +246,10 @@ $(document).ready(function(){
    			span_total.setAttribute('id','span_total');
 
    			this_page = data[data.length-1]['pageNum'];
-   			alert("this_page_from_model: " + data[data.length-1]['pageNum']);
-
-   			span_from.appendChild(document.createTextNode("Showing: " + (data[data.length-1]['startRow'] + 1)));
-   			span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(data[data.length-1]['startRow'] + data[data.length-1]['maxRows'], data[data.length-1]['totalRows'])));
-   			span_total.appendChild(document.createTextNode(" - of - " + data[data.length-1]['totalRows']));
+   			
+   			span_from.appendChild(document.createTextNode("Showing: " + (parseInt(data[data.length-1]['startRow'] + 1))));
+   			span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(parseInt(data[data.length-1]['startRow']) + parseInt(data[data.length-1]['maxRows']), parseInt(data[data.length-1]['totalRows']))));
+   			span_total.appendChild(document.createTextNode(" - of - " + parseInt( data[data.length-1]['totalRows'])));
 
    			td1.appendChild(span_from);
    			td1.appendChild(span_per_page);
@@ -254,7 +260,7 @@ $(document).ready(function(){
 
    			td3.style.align = 'right';
    			td3.style.vAlign = 'top';
-   			td3.appendChild(create_page_btns(page_nr));
+   			td3.appendChild(create_page_btns(data[data.length-1]));
 
    			tr1.appendChild(td1);
 
@@ -264,6 +270,7 @@ $(document).ready(function(){
             	if(typeof data[i] !== 'undefined' && ("userID" in data[i]))
             	{
             		var t = create_item_table(data[i]);
+            		td2.appendChild(document.createElement('br'));
 	            	td2.appendChild(t);
 	            	tr2.appendChild(td2);
             	}
@@ -281,7 +288,7 @@ $(document).ready(function(){
 
 	function create_item_table(data_item)
 	{
-		    var content = document.getElementById("contentRight");
+		    //var content = document.getElementById("contentRight");
             var table = document.createElement('table');
             table.border = 1;
             table.className = table.className + "width-630 TableStyle center WidthAuto";
@@ -297,7 +304,8 @@ $(document).ready(function(){
             var td4 = document.createElement('td');
             var td5 = document.createElement('td');
             
-            td1.innerHTML = data_item['userID'];
+            td1.innerHTML = data_item['rn'];
+            td1.style.textAlign = 'center';
             //ITEM LINK
            	var item_link = document.createElement('a');
            	item_link.href = '/webitem/index/?site='+data_item['userID'];
@@ -310,25 +318,25 @@ $(document).ready(function(){
            	image.src = '../../' + data_item['preview_thumb'];
            	image.className = image.className + 'img-thumbnail';
            	image.style.width = "140px";
-           	image.style.height = "140px";
+           	//image.style.height = "140px";
            	image.alt = "Preview Thumb";
 
            	td2.style.width = '400px';
            	td2.style.height = '50px';
-           	td2.style.align = 'center';
+           	td2.style.textAlign = 'center';
            	td2.appendChild(item_link);
 
            	image_link.appendChild(image);
            	td3.style.width = '150px';
            	td3.rowSpan = '2';
-           	td3.style.align = 'center';
+           	td3.style.textAlign = 'center';
            	td3.appendChild(image_link);
 
            	var url = document.createElement('a');
            	url.href = data_item['url'];
            	url.innerHTML = data_item['url'];
            	td5.style.height = '50px';
-           	td5.style.align = 'center';
+           	td5.style.textAlign = 'center';
            	td5.appendChild(url);
 
             tr1.appendChild(td1);
@@ -338,10 +346,8 @@ $(document).ready(function(){
             tr2.appendChild(td4);
             tr2.appendChild(td5);
            
-
             table.appendChild(tr1);
             table.appendChild(tr2);
-            table.appendChild(br);
 
             return table;
 	}

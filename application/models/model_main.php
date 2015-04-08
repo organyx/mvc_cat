@@ -7,7 +7,7 @@ class Model_Main extends Model
 			Global $WebCatalogue;
 			//****Pagination Setup*****
 			$currentPage = "/main/index/";
-			if (isset($_POST['per_page'])) {
+			if (isset($_POST['per_page']) && $_POST['per_page'] <= 50) {
 			  $maxRows = $_POST['per_page'];
 			}
 			else
@@ -25,7 +25,7 @@ class Model_Main extends Model
 
 			$startRow = $pageNum * $maxRows;		
 			//***Get values***
-			$sql="SELECT userID, url, title, preview_thumb FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
+			$sql="SELECT @rownum:=@rownum+1 rn, userID, url, title, preview_thumb FROM `users`,(SELECT @rownum:=0) r WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
 			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
  
 			$result=$WebCatalogue->query($sql_limit);

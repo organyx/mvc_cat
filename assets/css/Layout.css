@@ -57,6 +57,12 @@ body {
   color: #000000;
 }
 
+.loading {
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px;
+}
+
 .required {
   color: #F8080C;
 }
