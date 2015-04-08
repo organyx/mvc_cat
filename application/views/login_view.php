@@ -26,11 +26,13 @@
 				</table>
 			</form>
 		</p>
-		<?php extract($data); ?>
-		<?php if($login_status=="access_granted") { ?>
-		<p style="color:green">Autorization successful.</p>
-		<?php } elseif($login_status=="access_denied") { ?>
-		<p style="color:red">Username or/and Password is incorrect.</p>
-		<?php } ?>
+		<div id="login_msg">
+			<?php extract($data); ?>
+			<?php if($login_status=="access_granted") { ?>
+			<p style="color:green">Autorization successful.</p>
+			<?php } elseif($login_status=="access_denied") { ?>
+			<p style="color:red">Username or/and Password is incorrect.</p>
+			<?php } ?>
+		</div>
 	</div>
 </div>

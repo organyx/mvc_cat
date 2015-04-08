@@ -63,6 +63,27 @@ body {
   padding: 40px;
 }
 
+#perPage_html {
+  float: right;
+}
+
+#btns {
+  min-width: 120px;
+  width: auto;
+  text-align: center;
+}
+
+#btns a {
+  padding: 2px 5px;
+  min-width: 10px;
+}
+
+#btns a:hover {
+  border-radius: 10px;
+  color: white;
+  background-color: #665550;
+}
+
 .required {
   color: #F8080C;
 }
@@ -88,6 +109,10 @@ body {
 #Footer a:hover {
   background-color: #F3E9E9;
   color: #433E3E;
+}
+
+#login_msg {
+  text-align: center;
 }
 
 .current {
