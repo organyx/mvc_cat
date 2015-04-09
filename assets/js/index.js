@@ -6,9 +6,7 @@ $(document).ready(function(){
 	function make_a_call(page_n)
 	{
 
-		var this_page = page_n;
-
-		var page_num = parseInt(this_page);
+		var page_num = parseInt(page_n);
 
 		var per_page = 0;
 		if(document.getElementById('perPage_html') != null)

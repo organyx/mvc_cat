@@ -135,9 +135,9 @@
           <td align="right" valign="top">
               <!-- PAGINATION -->
               <?php if ($data[1][1]['pageNum'] > 0) { // Show if not first page ?>
-              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], 0, $data[1][1]['queryString']); ?>">First Page</a>
+              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], 0, $data[1][1]['queryString']); ?>"> << </a>
               |
-                <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max(0, $data[1][1]['pageNum'] - 1), $data[1][1]['queryString']); ?>">Previous</a>
+                <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max(0, $data[1][1]['pageNum'] - 1), $data[1][1]['queryString']); ?>"> < </a>
                 |...|
                 <?php if($data[1][1]['pageNum'] != 1) {?>
                   <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max(0, $data[1][1]['pageNum'] - 2), $data[1][1]['queryString']); ?>"><?php echo ($data[1][1]['pageNum'] -1) ?></a>
@@ -158,9 +158,9 @@
               |...|
               <?php } ?>
               <?php if ($data[1][1]['pageNum'] < $data[1][1]['totalPages']) { // Show if not last page ?>
-              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], min($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>">Next</a>
+              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], min($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>"> > </a>
               |
-              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>">Last Page</a>
+              <a href="<?php printf("/admin%s?pageNum=%d%s", $data[1][1]['currentPage'], max($data[1][1]['totalPages'], $data[1][1]['pageNum'] + 1), $data[1][1]['queryString']); ?>"> >> </a>
               <?php } // Show if not last page ?>
               
           </td>
