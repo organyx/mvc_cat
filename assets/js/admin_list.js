@@ -46,6 +46,20 @@ $(document).ready(function(){
 
     function create_main_table(data)
     {
+        var current_opt = 0;
+            switch(parseInt(data[data.length-1]['maxRows']))
+            {
+                case 10:
+                    current_opt = 1;
+                    break;
+                case 20: 
+                    current_opt = 2;
+                    break;
+                case 50:
+                    current_opt = 3;
+                    break;
+            }
+
         var user_list = document.getElementById('user_list');
         var user_search = document.getElementById('user_search');
 
@@ -63,11 +77,31 @@ $(document).ready(function(){
         td1.style.textAlign = 'right';
         td1.style.vAlign = 'top';
 
+        var span_from = document.createElement('span');
+        var span_per_page = document.createElement('span');
+        var span_total = document.createElement('span');
+
+        span_from.setAttribute('id','span_from');
+        span_per_page.setAttribute('id','span_per_page');
+        span_total.setAttribute('id','span_total');
+
+        this_page = data[data.length-1]['pageNum'];
+            
+        span_from.appendChild(document.createTextNode("Showing: " + (parseInt(data[data.length-1]['startRow'] + 1))));
+        span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(parseInt(data[data.length-1]['startRow']) + parseInt(data[data.length-1]['maxRows']), parseInt(data[data.length-1]['totalRows']))));
+        span_total.appendChild(document.createTextNode(" - of - " + parseInt( data[data.length-1]['totalRows'])));
+
+        td1.appendChild(span_from);
+        td1.appendChild(span_per_page);
+        td1.appendChild(span_total);
+
         td2.style.textAlign = 'center';
         td2.style.vAlign = 'top';
 
         td3.style.textAlign = 'right';
         td3.style.vAlign = 'top';
+
+        td3.appendChild(create_page_btns(data[data.length-1]));
 
         tr1.appendChild(td1);
 
@@ -82,6 +116,8 @@ $(document).ready(function(){
         }
 
         tr3.appendChild(td3);
+
+        td1.appendChild(create_page_limit(current_opt));
         main_table.appendChild(tr1);
         main_table.appendChild(tr2);
         main_table.appendChild(tr3);
@@ -128,6 +164,97 @@ $(document).ready(function(){
         {
             td4.innerHTML += "Awaiting Approval";
         }
+    }
+
+    function create_page_limit(current_opt)
+    {
+        var select = document.createElement('select');
+        var opt1 = document.createElement('option');
+        var opt2 = document.createElement('option');
+        var opt3 = document.createElement('option');
+
+        opt1.innerHTML = "10";
+        opt2.innerHTML = "20";
+        opt3.innerHTML = "50";
+
+        opt1.value = 10;
+        opt2.value = 20;
+        opt3.value = 50;
+
+        select.setAttribute('id', 'perPage_html');
+        select.setAttribute('name', 'perPage_html');
+        select.style.width = '100px';
+
+        select.appendChild(opt1);
+        select.appendChild(opt2);
+        select.appendChild(opt3);
+
+        var o = 0;
+        switch(current_opt)
+        {
+            case 1:
+                o = 10;
+                break;
+            case 2: 
+                o = 20;
+                break;
+            case 3:
+                o = 50;
+                break;
+        }
+        select.value = o;
+
+        return select;
+    }
+
+    function create_page_btns(pages)
+    {
+        var divider = document.createTextNode(' | ');
+        var btns = document.createElement('div');
+        btns.setAttribute('id', 'btns');
+        btns.appendChild(document.createElement('br'));
+        
+        if (pages['pageNum'] > 0) {
+            var first = document.createElement('a');
+            first.setAttribute('href', '#');
+            first.setAttribute('id', 'first_page');
+            first.title = 'First Page';
+            first.innerHTML = '<<';
+            btns.appendChild(first);
+
+            btns.appendChild(document.createTextNode(' | '));
+
+            var prev = document.createElement('a');
+            prev.setAttribute('href', '#');
+            prev.setAttribute('id', 'prev_page');
+            prev.title = 'Previous Page';
+            prev.innerHTML = '<';
+            btns.appendChild(prev);
+        }
+
+        var current = document.createTextNode(" | " + (parseInt(pages['pageNum']) + 1) + " ");
+        btns.appendChild(current);
+        btns.appendChild(divider);
+
+        if (pages['pageNum'] < pages['totalPages']) {
+            var next = document.createElement('a');
+            next.setAttribute('href', '#');
+            next.setAttribute('id', 'next_page');
+            next.title = 'Next Page';
+            next.innerHTML = '>';
+            btns.appendChild(next);
+
+            btns.appendChild(document.createTextNode(' | '));
+
+            var last = document.createElement('a');
+            last.setAttribute('href', '#');
+            last.setAttribute('id', 'last_page');
+            last.title = 'Last Page';
+            last.innerHTML = '>>';
+            btns.appendChild(last);
+        };
+        
+        return btns;
     }
 
     //create function, it expects 2 values.

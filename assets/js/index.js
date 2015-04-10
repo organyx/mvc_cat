@@ -185,6 +185,7 @@ $(document).ready(function(){
 
    			var main_table = document.createElement('table');
    			main_table.className = main_table.className + "width-670 center WidthAuto";
+   			main_table.setAttribute('id', 'main_table');
 
    			var tr1 = document.createElement('tr');
    			var tr2 = document.createElement('tr');

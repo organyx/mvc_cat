@@ -7,8 +7,8 @@ class Model_Main extends Model
 			Global $WebCatalogue;
 			//****Pagination Setup*****
 			$currentPage = "/main/index/";
-			if (isset($_POST['per_page']) && $_POST['per_page'] <= 50) {
-			  $maxRows = $_POST['per_page'];
+			if (isset($_POST['per_page']) && intval($_POST['per_page']) <= 50) {
+			  $maxRows = intval($_POST['per_page']);
 			}
 			else
 			{
@@ -16,7 +16,7 @@ class Model_Main extends Model
 			}
 
 			if (isset($_POST['page_num'])) {
-			 	$pageNum = $_POST['page_num'];
+			 	$pageNum = intval($_POST['page_num']);
 			}
 			else
 			{
