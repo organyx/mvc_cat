@@ -70,7 +70,7 @@ class Model_Register extends Model
 
 	  //if there is a row in the database, the username was found - can not add the requested username
 	  	if($login_found_user){
-		    echo "Username Already Exists.";
+		    echo "User Already Exists.";
 		    return false;
 	  	}
 
@@ -97,25 +97,6 @@ class Model_Register extends Model
 		    return false;
 	  	}
 
-	  	if(empty($_POST['url']))
-	  	{
-		    echo "Please enter website address.";
-		    return false;
-	  	}
-
-	  	if(filter_var($_POST['url'], FILTER_VALIDATE_URL)) {    
-	  	}
-	  	else {
-		    echo "Url is broken.";
-		    return false;
-	  	}
-
-	  	if(empty($_POST['title']))
-	  	{
-		    echo "Please enter website title.";
-		    return false;
-	  	}
-
 	  	$passwordToConfirm = $_POST['password'];
 	  	$passwordConfirm = $_POST['passwordwc'];
 	  	if($passwordToConfirm != $passwordConfirm)
@@ -126,8 +107,29 @@ class Model_Register extends Model
 	  	else
 	  	{
 		    $GLOBALS['secure_password'] = password_hash($passwordToConfirm, PASSWORD_BCRYPT);
-		    return true;
+		    //return true;
 	  	}
+
+	  	if(empty($_POST['url']))
+	  	{
+		    echo "Please enter website address.";
+		    return false;
+	  	}
+
+	  	if(filter_var($_POST['url'], FILTER_VALIDATE_URL)) {    
+	  	}
+	  	else {
+		    echo "Website Url is broken.";
+		    return false;
+	  	}
+
+	  	if(empty($_POST['title']))
+	  	{
+		    echo "Please enter your website title.";
+		    return false;
+	  	}
+
+	  	return true;
 	}
 
 	public function upload_file()

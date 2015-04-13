@@ -41,10 +41,11 @@ $(document).ready(function(){
 
 	   			$('#perPage_html').on('change', function()
 				{
-					var pages = {
-						per_page: parseInt(document.getElementById('perPage_html').value), 
-					};
-					$.post('/main/index/', pages, make_a_call(0), 'json');
+					// var pages = {
+					// 	per_page: parseInt(document.getElementById('perPage_html').value), 
+					// };
+					// $.post('/main/index/', pages, make_a_call(0), 'json');
+					make_a_call(0);
 				});
 
 				$('#next_page').on('click', function()
