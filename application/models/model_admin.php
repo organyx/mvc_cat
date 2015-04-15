@@ -103,6 +103,11 @@ Class Model_Admin extends Model
 		  $pageNum = $_GET['pageNum'];
 		}
 		$startRow = $pageNum * $maxRows;
+
+			$sql_count="SELECT userID, url, title, preview_thumb FROM `users` WHERE NOT `approval` = '0000-00-00 00:00:00' AND NOT `Userlevel` = '2' ORDER BY registration DESC";
+			$sql_count_result=$WebCatalogue->query($sql_count);
+			$total_approved = $sql_count_result->num_rows;
+
 			//***Get values***
 			$sql="SELECT * FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
 			$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
@@ -154,7 +159,9 @@ Class Model_Admin extends Model
 				'totalRows' => $totalRows, 
 				'totalPages' => $totalPages, 
 				'currentPage' => $currentPage,
-				'queryString' => $queryString
+				'queryString' => $queryString,
+				'totalApproved' => $total_approved,
+				'totalAwaiting' => $totalRows - $total_approved
 				);
 
 			//******Pagination END*******

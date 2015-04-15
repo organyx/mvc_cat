@@ -102,6 +102,15 @@
 	<div id="user_list">
 		<table class="width-670 center WidthAuto">
         <tr>
+          <td align="center" valign="top">
+            <table width="200px">
+              <tr><td>Total records:</td><td align="right"><?php echo $data[1][1]['totalRows'] ?></td></tr>
+              <tr><td>Approved records:</td><td align="right"><?php echo $data[1][1]['totalApproved'] ?></td></tr>
+              <tr><td>Awaiting approval:</td><td align="right"><?php echo $data[1][1]['totalAwaiting'] ?></td></tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
           <td align="right" valign="top">Showing:&nbsp;<?php echo ($data[1][1]['startRow'] + 1) ?> - <?php echo min($data[1][1]['startRow'] + $data[1][1]['maxRows'], $data[1][1]['totalRows']) ?> of <?php echo $data[1][1]['totalRows'] ?></td>
         </tr>
         <tr>

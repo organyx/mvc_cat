@@ -222,6 +222,27 @@ $(document).ready(function(){
             first.innerHTML = '<<';
             btns.appendChild(first);
 
+            if(pages['pageNum'] > 2)
+            {
+                btns.appendChild(document.createTextNode(' | '));
+
+                var back_two = document.createElement('a');
+                back_two.setAttribute('href', '#');
+                back_two.setAttribute('id', 'back_two');
+                back_two.title = 'Page: ' + (parseInt(pages['pageNum']) - 1);
+                back_two.innerHTML = (parseInt(pages['pageNum']) - 1);
+                btns.appendChild(back_two);
+            }
+
+            btns.appendChild(document.createTextNode(' | '));
+
+            var back_one = document.createElement('a');
+            back_one.setAttribute('href', '#');
+            back_one.setAttribute('id', 'back_one');
+            back_one.title = 'Page: ' + parseInt(pages['pageNum']);
+            back_one.innerHTML = parseInt(pages['pageNum']);
+            btns.appendChild(back_one);
+
             btns.appendChild(document.createTextNode(' | '));
 
             var prev = document.createElement('a');
@@ -243,6 +264,27 @@ $(document).ready(function(){
             next.title = 'Next Page';
             next.innerHTML = '>';
             btns.appendChild(next);
+
+            btns.appendChild(document.createTextNode(' | '));
+
+            var fwd_one = document.createElement('a');
+            fwd_one.setAttribute('href', '#');
+            fwd_one.setAttribute('id', 'fwd_one');
+            fwd_one.title = 'Page: ' + (parseInt(pages['pageNum'] + 2));
+            fwd_one.innerHTML = (parseInt(pages['pageNum'] + 2));
+            btns.appendChild(fwd_one);
+
+            if (pages['pageNum'] < pages['totalPages'] - 2) 
+            {
+                btns.appendChild(document.createTextNode(' | '));
+
+                var fwd_two = document.createElement('a');
+                fwd_two.setAttribute('href', '#');
+                fwd_two.setAttribute('id', 'fwd_two');
+                fwd_two.title = 'Page: ' + (parseInt(pages['pageNum'] + 3));
+                fwd_two.innerHTML = (parseInt(pages['pagesNum'] + 3));
+                btns.appendChild(fwd_two);
+            }
 
             btns.appendChild(document.createTextNode(' | '));
 
