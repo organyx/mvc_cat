@@ -2,7 +2,7 @@
         <?php $user = $data[0]->fetch_assoc(); ?>
 
         <div id="PageHeading">
-    	  <h1>Welcome,  <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?>!</h1>
+    	  <h1>Welcome,  <?php echo escape($user['first_name']); ?> <?php echo escape($user['last_name']); ?>!</h1>
         </div>
 
     	<div id="contentLeft">

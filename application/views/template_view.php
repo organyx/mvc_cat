@@ -45,7 +45,7 @@
 			        <div class="nav user">
 			        	<ul>
 				        	<li>
-				        		<a href="/account/"><?php echo $_SESSION['Username'] ?></a>
+				        		<a href="/account/"><?php echo escape($_SESSION['Username']) ?></a>
 				        	</li>
 			        	</ul>
 			        </div>

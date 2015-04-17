@@ -15,7 +15,6 @@ class Controller_Forgot_pass extends Controller
 		{
 			//echo "<pre>".print_r($_POST)."</pre>";
 			$data = $this->model->forgot_pass();
-			$this->view->regenerate('forgot_pass_view.php',$data);
 		}
 		else
 		{

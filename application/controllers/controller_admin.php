@@ -72,7 +72,6 @@ class Controller_Admin extends Controller
 		$approved = $this->model->approve_web($return['id']);
 		$users = $this->model->manage_users();
 		$data = array($approved, $users);
-		//$this->view->regenerate('admin_view.php', $data);
 	}
 
 	function delete_web($item_id)
@@ -83,7 +82,6 @@ class Controller_Admin extends Controller
 		$deleted = $this->model->delete_web($return['id']);
 		$users = $this->model->manage_users();
 		$data = array($deleted, $users);
-		//$this->view->regenerate('admin_view.php', $data);
 	}
 
 	function find_user($current_user, $user_to_find)
@@ -97,7 +95,6 @@ class Controller_Admin extends Controller
 		$found_user = $this->model->find_user($return['name']);
 		$data = array($user, $users, $found_user);
 		//echo "<pre>".print_r($data)."</pre>";
-		//$this->view->regenerate('admin_view.php', $data);
 	}
 
 	function get_user_list()

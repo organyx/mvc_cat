@@ -14,7 +14,6 @@ class Controller_Register extends Controller
 		if(IS_AJAX)
 		{
 			$data = $this->model->register();
-			$this->view->regenerate('register_view.php',$data);
 		}
 		else
 		{

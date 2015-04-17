@@ -30,3 +30,11 @@ if (!function_exists("GetSQLValueString")) {
      return $theValue;
   }
 }
+
+if(!function_exists("escape"))
+{
+  function escape($string)
+  {
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+  }
+}

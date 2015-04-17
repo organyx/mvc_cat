@@ -9,7 +9,7 @@
     }
 		?>
 <div id="PageHeading">
-	<h1><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></h1>
+	<h1><?php echo escape($user['first_name']); ?> <?php echo escape($user['last_name']); ?></h1>
 </div>
 
 <div id="contentLeft">
@@ -118,7 +118,7 @@
             <?php do { ?>
                 <table class="width-600 TableStyle center WidthAuto">
                   <tr>
-                    <td style="width:300px;">Registration Date: <?php echo $manage_users['registration']; ?></td>
+                    <td style="width:300px;">Registration Date: <?php echo escape($manage_users['registration']); ?></td>
                     <td 
 
                     <?php if($manage_users['approval'] == "0000-00-00 00:00:00") {?> 
@@ -127,12 +127,12 @@
                       style="color:green; width:300px;"
                      <?php } ?>
 
-                    >Approval Date: <?php echo $manage_users['approval']; ?>
+                    >Approval Date: <?php echo escape($manage_users['approval']); ?>
                     </td>
                   </tr>
                   
                   <tr>
-                    <td style="width:300px;">User: <?php echo $manage_users['first_name']; ?> <?php echo $manage_users['last_name']; ?> | Account: <?php echo $manage_users['email']; ?></td>
+                    <td style="width:300px;">User: <?php echo escape($manage_users['first_name']); ?> <?php echo escape($manage_users['last_name']); ?> | Account: <?php echo escape($manage_users['email']); ?></td>
                     <td style="width:300px;">Status: <?php echo ($manage_users['approval'] !== "0000-00-00 00:00:00" ? "Approved" : "Awaiting Approval"); ?></td>
                   </tr>               
                 </table>

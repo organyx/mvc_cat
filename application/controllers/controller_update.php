@@ -25,7 +25,6 @@ class Controller_Update extends Controller
 				{
 					$user = $this->model->get_user_data($username);
 					$data = array($user);
-					$this->view->regenerate('update_view.php', $data);
 				}
 			}
 			else
