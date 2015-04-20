@@ -13,7 +13,18 @@ class Controller_Test extends Controller
 		if(IS_AJAX)
 		{
 			//echo "<pre>".print_r($_POST)."</pre>";
-			$this->model->find_user($_POST['name']);
+			switch($_POST['action'])
+			{
+				case 'search':
+					$this->model->find_user($_POST['name']);
+					break;
+				case 'approve':
+					$this->model->approve_web($_POST['id']);
+					break;
+				case 'delete':
+					$this->model->delete_web($_POST['id']);
+					break;
+			}
 		}
 		else
 		{

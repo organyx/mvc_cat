@@ -2,15 +2,6 @@ $(document).ready(function(){
 
 	var pages_list = $(this).serialize();
 
-	//$('#contentRight').on('change', create_table());
-
-	// $('#btn').on('click', function(){
-	// 	test_this();
-	// });
-	// $('#ret').on('load', function(){
-	// 	create_table();
-	// });
-
 	$('#btnSearch').on('click', function(){
 		test_this();
 	});
@@ -18,6 +9,8 @@ $(document).ready(function(){
 	$('#reset').on('click', function(){
 		reset_result();
 	});
+
+	var executed = false;
 
 	function test_this()
 	{
@@ -33,21 +26,83 @@ $(document).ready(function(){
 			dataType: 'json',
 			data: data,
 			success: function(data) {
-				alert(data['found']);
-				if(data['found'] == true)
+				//alert(data['found']);
+				
+				if(data['found'] == true && !executed)
 				{
 					create_table(data['user']);
+					executed = true;
 				}
 				else if(data['found'] == false)
 				{
 					not_found(data['result']);
 				}
+
+				$('#delete_btn').on('click', function(e){
+					delete_web(data['user']['userID']);
+					e.preventDefault();
+				});
+
+				$('#approve_btn').on('click', function(e){
+					approve_web(data['user']['userID']);
+					e.preventDefault();
+				});
 			},
 			error: function (x,y,z)
 			{
 				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
 			}
 
+		});
+	}
+
+	function approve_web(id)
+	{
+		data = {
+			action: 'approve',
+			id: id
+		};
+
+		data = $(this).serialize() + "&" + $.param(data);
+
+		$.ajax({
+			type: 'POST',
+			url: '/test/index/',
+			dataType: 'json',
+			data: data,
+			success: function(data) {
+				var return_message = document.getElementById('returnmessage');
+				return_message.innerHTML = data['function_result'];
+			},
+			error: function (x,y,z)
+			{
+				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
+			}
+		});
+	}
+
+	function delete_web(id)
+	{
+		data = {
+			action: 'delete',
+			id: id
+		};
+
+		data = $(this).serialize() + "&" + $.param(data);
+
+		$.ajax({
+			type: 'POST',
+			url: '/test/index/',
+			dataType: 'json',
+			data: data,
+			success: function(data) {
+				var return_message = document.getElementById('returnmessage');
+				return_message.innerHTML = data['function_result'];
+			},
+			error: function (x,y,z)
+			{
+				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
+			}
 		});
 	}
 
@@ -89,41 +144,48 @@ $(document).ready(function(){
 	{
 		var check = check_browser();
 		var table = document.getElementById('result_table');
-		var return_message = document.getElementById('result');
-		var result = document.getElementById('returnmessage');
-		if(check != false)
-		{
-			switch(check[0])
+		var return_message = document.getElementById('returnmessage');
+		var user = document.getElementById('email');
+			if(check != false)
 			{
-				case 'opera':
-				case 'ff':
-				case 'safari':
-				case 'chrome':
-					table.remove();
-					return_message.remove();
-					result.remove();
-					break;
-				case 'ie':
-					if (check[1] > 6)
-					{
-						table.remove();
-						return_message.remove();
-						result.remove();
-					}
-					break;
-				default:
-					table.parentNode.removeChild(table);
-					return_message.parentNode.removeChild(table);
-					result.parentNode.removeChild(table);
+				switch(check[0])
+				{
+					case 'opera':
+					case 'ff':
+					case 'safari':
+					case 'chrome':
+						if(table)
+							table.remove();
+						if(return_message)
+							return_message.remove();
+						user.value = '';
+						break;
+					case 'ie':
+						if (check[1] > 6)
+						{
+							if(table)
+								table.remove();
+							if(return_message)
+								return_message.remove();
+							user.value = '';
+						}
+						break;
+					default:
+						if(table)
+							table.parentNode.removeChild(table);
+						if(return_message)
+							return_message.parentNode.removeChild(table);
+						user.value = '';
+						break;
+				}
 			}
-		}		
+		executed = false;
 	}
 
 	function not_found(result_msg)
 	{
 		create_return_msg();
 		var return_message = document.getElementById('returnmessage');
-		var result = document.getElementById('result');
 		return_message.innerHTML = result_msg;
 	}
 
@@ -131,29 +193,16 @@ $(document).ready(function(){
 	{
 		var ret = document.getElementById('ret');
 
-		var result = document.createElement('div');
-		result.className = result.className + "result";
-		result.setAttribute('id', 'result');
-
 		var return_message = document.createElement('div');
 		return_message.className = return_message.className + 'returnmessage';
 		return_message.setAttribute('id', 'returnmessage');
 
-		ret.appendChild(result);
 		ret.appendChild(return_message);
 	}
 
 	function create_table(user)
 	{
 		var ret = document.getElementById('ret');
-
-		// var result = document.createElement('div');
-		// result.className = result.className + "result";
-		// result.setAttribute('id', 'result');
-
-		// var return_message = document.createElement('div');
-		// return_message.className = return_message.className + 'returnmessage';
-		// return_message.setAttribute('id', 'returnmessage');
 
 		var result_table = document.createElement('table');
 		result_table.className = result_table.className + "width-700 center WidthAuto";
@@ -237,7 +286,23 @@ $(document).ready(function(){
 
         td2.appendChild(inner_table);
 
-        var inner_table_btns_container = document.createElement('div');
+        td3.appendChild(create_inner_table_btns(user['userID']));
+
+        tr1.appendChild(td1);
+        tr2.appendChild(td2);
+        tr3.appendChild(td3);
+
+        result_table.appendChild(tr1);
+        result_table.appendChild(tr2);
+        result_table.appendChild(tr3);
+
+        create_return_msg();
+        ret.appendChild(result_table);
+	}
+	
+	function create_inner_table_btns(id)
+	{
+		var inner_table_btns_container = document.createElement('div');
         inner_table_btns_container.className = inner_table_btns_container.className + "center";
 
         var inner_table_btns = document.createElement('table');
@@ -258,12 +323,13 @@ $(document).ready(function(){
 
         delete_id.setAttribute('type', 'hidden');
         delete_id.setAttribute('name', 'DeleteUserHiddenField');
-        delete_id.setAttribute('value', '');
+        delete_id.setAttribute('value', id);
         delete_id.className = delete_id.className + "DeleteUserHiddenField";
 
         delete_btn.setAttribute('type', 'submit');
         delete_btn.setAttribute('name', 'DeleteUserButton');
         delete_btn.setAttribute('value', 'Delete User');
+        delete_btn.setAttribute('id', 'delete_btn');
         delete_btn.className = delete_btn.className + 'DeleteUserButton';
 
         form_delete.appendChild(delete_id);
@@ -280,7 +346,7 @@ $(document).ready(function(){
 
         approve_id.setAttribute('type', 'hidden');
         approve_id.setAttribute('name', 'ApproveIDhiddenField');
-        approve_id.setAttribute('value', '');
+        approve_id.setAttribute('value', id);
         approve_id.className = approve_id.className + "ApproveIDhiddenField";
 
         approve_date.setAttribute('type', 'hidden');
@@ -291,6 +357,7 @@ $(document).ready(function(){
         approve_btn.setAttribute('type', 'submit');
         approve_btn.setAttribute('name', 'ApproveUserButton');
         approve_btn.setAttribute('value', 'Approve User');
+        approve_btn.setAttribute('id', 'approve_btn');
         approve_btn.className = approve_btn.className + "ApproveUserButton";
 
         form_approve.appendChild(approve_date);
@@ -306,20 +373,6 @@ $(document).ready(function(){
         inner_table_btns.appendChild(tr_inner_table_btns);
         inner_table_btns_container.appendChild(inner_table_btns);
 
-        td3.appendChild(inner_table_btns_container);
-
-        tr1.appendChild(td1);
-        tr2.appendChild(td2);
-        tr3.appendChild(td3);
-
-        result_table.appendChild(tr1);
-        result_table.appendChild(tr2);
-        result_table.appendChild(tr3);
-
-        // ret.appendChild(result);
-        // ret.appendChild(return_message);
-        create_return_msg();
-        ret.appendChild(result_table);
-	}
-		
+        return inner_table_btns_container;
+	}	
 });
