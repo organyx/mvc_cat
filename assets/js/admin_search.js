@@ -27,7 +27,7 @@ $(document).ready(function(){
 			data: data,
 			success: function(data) {
 				//alert(data['found']);
-				
+				reset_result();
 				if(data['found'] == true && !executed)
 				{
 					create_table(data['user']);

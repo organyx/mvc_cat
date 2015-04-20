@@ -51,23 +51,6 @@ Class Model_Test extends Model
 	    return $row_User['email'];
 	}
 
-	public function get_userID_by_email($email)
-	{
-	    Global $WebCatalogue;
-
-	    $query_User = sprintf("SELECT * FROM `users` WHERE email = %s", GetSQLValueString($email, "text"));
-	    $User = $WebCatalogue->query($query_User);
-	    if($User === false)
-	    {
-			trigger_error('Wrong SQL: ' . $query_User . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
-	    }
-	    else
-	    {
-		    $row_User = $User->fetch_assoc();
-		    return $row_User['userID'];
-	    }
-	}
-
 	public function approve_web($id)
 	{
 		Global $WebCatalogue;
