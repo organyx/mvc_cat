@@ -9,10 +9,10 @@
 		    <button type="button" id="reset" class="reset">Reset</button>  
 		</form>
 		</div>
-	<div id="ret" class="ret"></div>
-
-	<input type="button" id="btn" name="Btn" value="Show Table">
+	<div id="ret" class="ret">
+		
+	</div>
 </div>
 
-
+<script type="text/javascript" src="/../../assets/js/bowser/bowser.min.js"></script>
 <script type="text/javascript" src="/../../assets/js/admin_search.js"></script>

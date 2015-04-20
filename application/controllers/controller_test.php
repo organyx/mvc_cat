@@ -4,7 +4,7 @@ class Controller_Test extends Controller
 {
 	function __construct()
 	{
-		//$this->model = new Model_Main();
+		$this->model = new Model_Test();
 		$this->view = new View();
 	}
 
@@ -12,7 +12,8 @@ class Controller_Test extends Controller
 	{	
 		if(IS_AJAX)
 		{
-
+			//echo "<pre>".print_r($_POST)."</pre>";
+			$this->model->find_user($_POST['name']);
 		}
 		else
 		{

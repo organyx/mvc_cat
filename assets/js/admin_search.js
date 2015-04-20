@@ -12,19 +12,36 @@ $(document).ready(function(){
 	// });
 
 	$('#btnSearch').on('click', function(){
-		create_table();
+		test_this();
+	});
+
+	$('#reset').on('click', function(){
+		reset_result();
 	});
 
 	function test_this()
 	{
+		data = {
+                action: 'search',
+                name: $('input.email').val()
+            };
+        data = $(this).serialize() + "&" + $.param(data);
+
 		$.ajax({
 			type: 'POST',
 			url: '/test/index/',
-			//dataType: 'json',
-			data: pages_list,
+			dataType: 'json',
+			data: data,
 			success: function(data) {
-				create_table();
-
+				alert(data['found']);
+				if(data['found'] == true)
+				{
+					create_table(data['user']);
+				}
+				else if(data['found'] == false)
+				{
+					not_found(data['result']);
+				}
 			},
 			error: function (x,y,z)
 			{
@@ -34,7 +51,83 @@ $(document).ready(function(){
 		});
 	}
 
-	function create_table()
+	function check_browser()
+	{
+		var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;// Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+		var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+		var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;// At least Safari 3+: "[object HTMLElementConstructor]"
+		var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+		var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
+
+		var version = bowser.version;
+
+		if(isOpera)
+		{
+			return ['opera', version];
+		}
+		else if(isFirefox)
+		{
+			return ['ff', version];
+		}
+		else if(isSafari)
+		{
+			return ['safari', version];
+		}
+		else if(isChrome)
+		{
+			return ['chrome', version];
+		}
+		else if(isIE)
+		{
+			return ['ie', version];
+		}
+
+		return false;
+	}
+
+	function reset_result()
+	{
+		var check = check_browser();
+		var table = document.getElementById('result_table');
+		var return_message = document.getElementById('result');
+		var result = document.getElementById('returnmessage');
+		if(check != false)
+		{
+			switch(check[0])
+			{
+				case 'opera':
+				case 'ff':
+				case 'safari':
+				case 'chrome':
+					table.remove();
+					return_message.remove();
+					result.remove();
+					break;
+				case 'ie':
+					if (check[1] > 6)
+					{
+						table.remove();
+						return_message.remove();
+						result.remove();
+					}
+					break;
+				default:
+					table.parentNode.removeChild(table);
+					return_message.parentNode.removeChild(table);
+					result.parentNode.removeChild(table);
+			}
+		}		
+	}
+
+	function not_found(result_msg)
+	{
+		create_return_msg();
+		var return_message = document.getElementById('returnmessage');
+		var result = document.getElementById('result');
+		return_message.innerHTML = result_msg;
+	}
+
+	function create_return_msg()
 	{
 		var ret = document.getElementById('ret');
 
@@ -45,6 +138,22 @@ $(document).ready(function(){
 		var return_message = document.createElement('div');
 		return_message.className = return_message.className + 'returnmessage';
 		return_message.setAttribute('id', 'returnmessage');
+
+		ret.appendChild(result);
+		ret.appendChild(return_message);
+	}
+
+	function create_table(user)
+	{
+		var ret = document.getElementById('ret');
+
+		// var result = document.createElement('div');
+		// result.className = result.className + "result";
+		// result.setAttribute('id', 'result');
+
+		// var return_message = document.createElement('div');
+		// return_message.className = return_message.className + 'returnmessage';
+		// return_message.setAttribute('id', 'returnmessage');
 
 		var result_table = document.createElement('table');
 		result_table.className = result_table.className + "width-700 center WidthAuto";
@@ -82,7 +191,7 @@ $(document).ready(function(){
 		var td9_inner = document.createElement('td');
 
 		td1_inner.style.vAlign = 'top';
-		td1_inner.innerHTML = "Status : <span id=\"found_approval\"></span>";
+		td1_inner.innerHTML = "Status : " + user['approval'];
 
 		td2_inner.style.vAlign = 'top';
 		td2_inner.style.align = 'right';
@@ -90,23 +199,23 @@ $(document).ready(function(){
 		tr1_inner.appendChild(td1_inner);
 		tr1_inner.appendChild(td2_inner);
 
-		td3_inner.innerHTML = "Title: <span id=\"found_title\"></span> ";
-		td4_inner.innerHTML = "<span id=\"found_reg\"></span>";
+		td3_inner.innerHTML = "Title: " + user['title'];
+		td4_inner.innerHTML = user['registration'];
 
 		tr2_inner.appendChild(td3_inner);
 		tr2_inner.appendChild(td4_inner);
 
-		td5_inner.innerHTML = "URL: <a id=\"found_url_href\" target=\"_blank\"><span id=\"found_url\"></span></a>";
+		td5_inner.innerHTML = "URL: <a id=\"found_url_href\" target=\"_blank\" href=\"" + user['url'] + "\">" + user['url'] + "</a>";
 		td6_inner.style.width = '150px';
 		td6_inner.style.height = '150px';
 		td6_inner.rowSpan = '3';
 		td6_inner.className = td6_inner.className + "TableStyleBorderLeft";
-		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"../../\"><img src=\"../../\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\">";
+		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"" + user['preview'] + "\"><img src=\"" + user['preview'] + "\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\">";
 
         tr3_inner.appendChild(td5_inner);
         tr3_inner.appendChild(td6_inner);
 
-        td7_inner.innerHTML = "Languages: <span id=\"found_lang\"></span>";
+        td7_inner.innerHTML = "Languages: " + user['language'];
 
         tr4_inner.appendChild(td7_inner);
 
@@ -115,7 +224,7 @@ $(document).ready(function(){
         tr5_inner.appendChild(td8_inner);
 
         td9_inner.colSpan = '2';
-        td9_inner.innerHTML = "<span id=\"found_descr\"></span>";
+        td9_inner.innerHTML = user['description'];
 
         tr6_inner.appendChild(td9_inner);
 
@@ -129,7 +238,7 @@ $(document).ready(function(){
         td2.appendChild(inner_table);
 
         var inner_table_btns_container = document.createElement('div');
-        inner_table_btns_container.className = inner_table_btns_container.className + "list";
+        inner_table_btns_container.className = inner_table_btns_container.className + "center";
 
         var inner_table_btns = document.createElement('table');
         inner_table_btns.className = inner_table_btns.className + "center";
@@ -207,8 +316,10 @@ $(document).ready(function(){
         result_table.appendChild(tr2);
         result_table.appendChild(tr3);
 
-        ret.appendChild(result);
-        ret.appendChild(return_message);
+        // ret.appendChild(result);
+        // ret.appendChild(return_message);
+        create_return_msg();
         ret.appendChild(result_table);
 	}
+		
 });
