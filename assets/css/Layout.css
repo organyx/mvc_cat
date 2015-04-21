@@ -71,6 +71,18 @@ body {
   float: right;
 }
 
+.current_page {
+  background-color: #E0D1DE;
+  /*border: 1px solid #000;*/
+  border-radius: 10px;
+  padding: 2px 5px;
+}
+
+.current_page:hover {
+  background-color: #665550;
+  color: white;
+}
+
 #btns {
   min-width: 120px;
   width: auto;

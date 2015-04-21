@@ -41,6 +41,26 @@ $(document).ready(function(){
                     make_a_call(0);
                 });
 
+                $('#back_two').on('click', function()
+                {
+                    make_a_call(data['page_num'] - 2);
+                });
+
+                $('#back_one').on('click', function()
+                {
+                    make_a_call(data['page_num'] - 1);
+                });
+
+                $('#fwd_two').on('click', function()
+                {
+                    make_a_call(data['page_num'] + 2);
+                });
+
+                $('#fwd_one').on('click', function()
+                {
+                    make_a_call(data['page_num'] + 1);
+                });
+
                 $('#next_page').on('click', function()
                 {
                     make_a_call(data['page_num'] + 1);
@@ -246,7 +266,7 @@ $(document).ready(function(){
 
     function create_page_btns(pages)
     {
-        var divider = document.createTextNode(' | ');
+        // var divider = document.createTextNode(' | ');
         var btns = document.createElement('div');
         btns.setAttribute('id', 'btns');
         btns.appendChild(document.createElement('br'));
@@ -259,27 +279,6 @@ $(document).ready(function(){
             first.innerHTML = '<<';
             btns.appendChild(first);
 
-            // if(pages['pageNum'] > 2)
-            // {
-            //     btns.appendChild(document.createTextNode(' | '));
-
-            //     var back_two = document.createElement('a');
-            //     back_two.setAttribute('href', '#');
-            //     back_two.setAttribute('id', 'back_two');
-            //     back_two.title = 'Page: ' + (parseInt(pages['pageNum']) - 1);
-            //     back_two.innerHTML = (parseInt(pages['pageNum']) - 1);
-            //     btns.appendChild(back_two);
-            // }
-
-            // btns.appendChild(document.createTextNode(' | '));
-
-            // var back_one = document.createElement('a');
-            // back_one.setAttribute('href', '#');
-            // back_one.setAttribute('id', 'back_one');
-            // back_one.title = 'Page: ' + parseInt(pages['pageNum']);
-            // back_one.innerHTML = parseInt(pages['pageNum']);
-            // btns.appendChild(back_one);
-
             btns.appendChild(document.createTextNode(' | '));
 
             var prev = document.createElement('a');
@@ -288,13 +287,61 @@ $(document).ready(function(){
             prev.title = 'Previous Page';
             prev.innerHTML = '<';
             btns.appendChild(prev);
+
+            if(pages['pageNum'] >= 2)
+            {
+                btns.appendChild(document.createTextNode(' | '));
+
+                var back_two = document.createElement('a');
+                back_two.setAttribute('href', '#');
+                back_two.setAttribute('id', 'back_two');
+                back_two.title = 'Page: ' + (parseInt(pages['pageNum']) - 1);
+                back_two.innerHTML = (parseInt(pages['pageNum']) - 1);
+                btns.appendChild(back_two);
+            }
+
+            btns.appendChild(document.createTextNode(' | '));
+
+            var back_one = document.createElement('a');
+            back_one.setAttribute('href', '#');
+            back_one.setAttribute('id', 'back_one');
+            back_one.title = 'Page: ' + parseInt(pages['pageNum']);
+            back_one.innerHTML = parseInt(pages['pageNum']);
+            btns.appendChild(back_one);
         }
 
-        var current = document.createTextNode(" | " + (parseInt(pages['pageNum']) + 1) + " ");
-        btns.appendChild(current);
-        btns.appendChild(divider);
+        var current_inner = document.createElement('span');
+        var current_outer = document.createElement('span');
+        current_inner.innerHTML = (parseInt(pages['pageNum']) + 1);
+        current_inner.className = current_inner.className + "current_page";
+        current_outer.appendChild(document.createTextNode(" | "));
+        current_outer.appendChild(current_inner);
+        current_outer.appendChild(document.createTextNode(" | "));
+        btns.appendChild(current_outer);
 
         if (pages['pageNum'] < pages['totalPages']) {
+
+            var fwd_one = document.createElement('a');
+            fwd_one.setAttribute('href', '#');
+            fwd_one.setAttribute('id', 'fwd_one');
+            fwd_one.title = 'Page: ' + (parseInt(pages['pageNum']) + 2);
+            fwd_one.innerHTML = (parseInt(pages['pageNum']) + 2);
+            btns.appendChild(fwd_one);
+
+            if (pages['pageNum'] <= pages['totalPages'] - 2) 
+            {
+                btns.appendChild(document.createTextNode(' | '));
+
+                var fwd_two = document.createElement('a');
+                fwd_two.setAttribute('href', '#');
+                fwd_two.setAttribute('id', 'fwd_two');
+                fwd_two.title = 'Page: ' + (parseInt(pages['pageNum']) + 3);
+                fwd_two.innerHTML = (parseInt(pages['pageNum']) + 3);
+                btns.appendChild(fwd_two);
+            }
+
+            btns.appendChild(document.createTextNode(' | '));
+
             var next = document.createElement('a');
             next.setAttribute('href', '#');
             next.setAttribute('id', 'next_page');
@@ -302,26 +349,7 @@ $(document).ready(function(){
             next.innerHTML = '>';
             btns.appendChild(next);
 
-            // btns.appendChild(document.createTextNode(' | '));
-
-            // var fwd_one = document.createElement('a');
-            // fwd_one.setAttribute('href', '#');
-            // fwd_one.setAttribute('id', 'fwd_one');
-            // fwd_one.title = 'Page: ' + (parseInt(pages['pageNum'] + 2));
-            // fwd_one.innerHTML = (parseInt(pages['pageNum'] + 2));
-            // btns.appendChild(fwd_one);
-
-            // if (pages['pageNum'] < pages['totalPages'] - 2) 
-            // {
-            //     btns.appendChild(document.createTextNode(' | '));
-
-            //     var fwd_two = document.createElement('a');
-            //     fwd_two.setAttribute('href', '#');
-            //     fwd_two.setAttribute('id', 'fwd_two');
-            //     fwd_two.title = 'Page: ' + (parseInt(pages['pageNum'] + 3));
-            //     fwd_two.innerHTML = (parseInt(pages['pagesNum'] + 3));
-            //     btns.appendChild(fwd_two);
-            // }
+          
 
             btns.appendChild(document.createTextNode(' | '));
 
