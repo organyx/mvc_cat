@@ -22,18 +22,23 @@ class Controller_Test extends Controller
 			if(IS_AJAX)
 			{
 				//echo "<pre>".print_r($_POST)."</pre>";
-				switch($_POST['action'])
+				if(isset($_POST['action']))
 				{
-					case 'search':
-						$this->model->find_user($_POST['name']);
-						break;
-					case 'approve':
-						$this->model->approve_web($_POST['id']);
-						break;
-					case 'delete':
-						$this->model->delete_web($_POST['id']);
-						break;
+					switch($_POST['action'])
+					{
+						case 'search':
+							$this->model->find_user($_POST['name']);
+							break;
+						case 'approve':
+							$this->model->approve_web($_POST['id']);
+							break;
+						case 'delete':
+							$this->model->delete_web($_POST['id']);
+							break;
+					}
 				}
+				else
+					$this->model->get_web_list();
 			}
 			else
 			{

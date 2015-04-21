@@ -1,22 +1,22 @@
 $(document).ready(function(){
-    $('#user_list').on('change', make_a_call(0));
+    $('#user_list').on('load', make_a_call(0));
 
     function make_a_call(page_n)
     {
         var page_num = parseInt(page_n);
 
-        // var per_page = 0;
-        // if(document.getElementById('perPage_html') != null)
-        // {
-        //     per_page = document.getElementById('perPage_html').value;
-        // }
-        // else
-        // {
-        //     per_page = 10;
-        // }
+        var per_page = 0;
+        if(document.getElementById('perPage_html') != null)
+        {
+            per_page = document.getElementById('perPage_html').value;
+        }
+        else
+        {
+            per_page = 10;
+        }
         
         var data = { 
-            //per_page: per_page,
+            per_page: per_page,
             page_num: page_num
         };
         
@@ -24,7 +24,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'post',
-            url: '/admin/index/',
+            url: '/test/index/',
             dataType: 'json',
             data: pages_list,
             beforeSend: function ()
@@ -36,6 +36,30 @@ $(document).ready(function(){
                 $('div.loading').addClass('off');
                 create_main_table(data_returned);
 
+                $('#perPage_html').on('change', function()
+                {
+                    make_a_call(0);
+                });
+
+                $('#next_page').on('click', function()
+                {
+                    make_a_call(data['page_num'] + 1);
+                });
+
+                $('#prev_page').on('click', function()
+                {
+                    make_a_call(data['page_num'] - 1);
+                });
+
+                $('#first_page').on('click', function()
+                {
+                    make_a_call(0);
+                });
+
+                $('#last_page').on('click', function()
+                {
+                    make_a_call(Math.max(parseInt(data_returned[data_returned.length-1]['totalPages']), parseInt(data_returned[data_returned.length-1]['pageNum']) + 1));
+                });
             },
             error: function (x,y,z)
             {
@@ -106,7 +130,7 @@ $(document).ready(function(){
         tr1.appendChild(td1);
 
         for (var i = 0; i < data[data.length-1]['maxRows']; i++) {
-            if()
+            if(typeof data[i] !== 'undefined' && ("userID" in data[i]))
             {
                 var t = create_item_table(data[i]);
                 td2.appendChild(document.createElement('br'));
@@ -121,7 +145,10 @@ $(document).ready(function(){
         main_table.appendChild(tr1);
         main_table.appendChild(tr2);
         main_table.appendChild(tr3);
-        user_list.insertAfter(main_table, user_search);
+        user_list.appendChild(main_table);
+
+        //user_list.insertAfter(main_table, user_search);
+        insertAfter(user_list, user_search);
     }
 
     function create_item_table(data_item)
@@ -164,6 +191,16 @@ $(document).ready(function(){
         {
             td4.innerHTML += "Awaiting Approval";
         }
+
+        tr1.appendChild(td1);
+        tr1.appendChild(td2);
+        tr2.appendChild(td3);
+        tr2.appendChild(td4);
+
+        item_table.appendChild(tr1);
+        item_table.appendChild(tr2);
+
+        return item_table;
     }
 
     function create_page_limit(current_opt)
@@ -222,26 +259,26 @@ $(document).ready(function(){
             first.innerHTML = '<<';
             btns.appendChild(first);
 
-            if(pages['pageNum'] > 2)
-            {
-                btns.appendChild(document.createTextNode(' | '));
+            // if(pages['pageNum'] > 2)
+            // {
+            //     btns.appendChild(document.createTextNode(' | '));
 
-                var back_two = document.createElement('a');
-                back_two.setAttribute('href', '#');
-                back_two.setAttribute('id', 'back_two');
-                back_two.title = 'Page: ' + (parseInt(pages['pageNum']) - 1);
-                back_two.innerHTML = (parseInt(pages['pageNum']) - 1);
-                btns.appendChild(back_two);
-            }
+            //     var back_two = document.createElement('a');
+            //     back_two.setAttribute('href', '#');
+            //     back_two.setAttribute('id', 'back_two');
+            //     back_two.title = 'Page: ' + (parseInt(pages['pageNum']) - 1);
+            //     back_two.innerHTML = (parseInt(pages['pageNum']) - 1);
+            //     btns.appendChild(back_two);
+            // }
 
-            btns.appendChild(document.createTextNode(' | '));
+            // btns.appendChild(document.createTextNode(' | '));
 
-            var back_one = document.createElement('a');
-            back_one.setAttribute('href', '#');
-            back_one.setAttribute('id', 'back_one');
-            back_one.title = 'Page: ' + parseInt(pages['pageNum']);
-            back_one.innerHTML = parseInt(pages['pageNum']);
-            btns.appendChild(back_one);
+            // var back_one = document.createElement('a');
+            // back_one.setAttribute('href', '#');
+            // back_one.setAttribute('id', 'back_one');
+            // back_one.title = 'Page: ' + parseInt(pages['pageNum']);
+            // back_one.innerHTML = parseInt(pages['pageNum']);
+            // btns.appendChild(back_one);
 
             btns.appendChild(document.createTextNode(' | '));
 
@@ -265,26 +302,26 @@ $(document).ready(function(){
             next.innerHTML = '>';
             btns.appendChild(next);
 
-            btns.appendChild(document.createTextNode(' | '));
+            // btns.appendChild(document.createTextNode(' | '));
 
-            var fwd_one = document.createElement('a');
-            fwd_one.setAttribute('href', '#');
-            fwd_one.setAttribute('id', 'fwd_one');
-            fwd_one.title = 'Page: ' + (parseInt(pages['pageNum'] + 2));
-            fwd_one.innerHTML = (parseInt(pages['pageNum'] + 2));
-            btns.appendChild(fwd_one);
+            // var fwd_one = document.createElement('a');
+            // fwd_one.setAttribute('href', '#');
+            // fwd_one.setAttribute('id', 'fwd_one');
+            // fwd_one.title = 'Page: ' + (parseInt(pages['pageNum'] + 2));
+            // fwd_one.innerHTML = (parseInt(pages['pageNum'] + 2));
+            // btns.appendChild(fwd_one);
 
-            if (pages['pageNum'] < pages['totalPages'] - 2) 
-            {
-                btns.appendChild(document.createTextNode(' | '));
+            // if (pages['pageNum'] < pages['totalPages'] - 2) 
+            // {
+            //     btns.appendChild(document.createTextNode(' | '));
 
-                var fwd_two = document.createElement('a');
-                fwd_two.setAttribute('href', '#');
-                fwd_two.setAttribute('id', 'fwd_two');
-                fwd_two.title = 'Page: ' + (parseInt(pages['pageNum'] + 3));
-                fwd_two.innerHTML = (parseInt(pages['pagesNum'] + 3));
-                btns.appendChild(fwd_two);
-            }
+            //     var fwd_two = document.createElement('a');
+            //     fwd_two.setAttribute('href', '#');
+            //     fwd_two.setAttribute('id', 'fwd_two');
+            //     fwd_two.title = 'Page: ' + (parseInt(pages['pageNum'] + 3));
+            //     fwd_two.innerHTML = (parseInt(pages['pagesNum'] + 3));
+            //     btns.appendChild(fwd_two);
+            // }
 
             btns.appendChild(document.createTextNode(' | '));
 

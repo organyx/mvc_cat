@@ -36,3 +36,4 @@
 </div>
 <script type="text/javascript" src="/../../assets/js/bowser/bowser.min.js"></script>
 <script type="text/javascript" src="/../../assets/js/admin_search.js"></script>
+<script type="text/javascript" src="/../../assets/js/admin_list.js"></script>
