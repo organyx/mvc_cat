@@ -10,25 +10,42 @@ class Controller_Test extends Controller
 
 	function action_index()
 	{	
-		if(IS_AJAX)
+		session_start();
+
+		if($_SESSION['lvl'] == 2)
 		{
-			//echo "<pre>".print_r($_POST)."</pre>";
-			switch($_POST['action'])
+			if(isset($_SESSION['Username']))
 			{
-				case 'search':
-					$this->model->find_user($_POST['name']);
-					break;
-				case 'approve':
-					$this->model->approve_web($_POST['id']);
-					break;
-				case 'delete':
-					$this->model->delete_web($_POST['id']);
-					break;
+				$current_user = $_SESSION['Username'];
+			}
+
+			if(IS_AJAX)
+			{
+				//echo "<pre>".print_r($_POST)."</pre>";
+				switch($_POST['action'])
+				{
+					case 'search':
+						$this->model->find_user($_POST['name']);
+						break;
+					case 'approve':
+						$this->model->approve_web($_POST['id']);
+						break;
+					case 'delete':
+						$this->model->delete_web($_POST['id']);
+						break;
+				}
+			}
+			else
+			{
+				$user = $this->model->get_user_data($current_user);
+				$data = array($user);
+				$this->view->generate('test_view.php', 'template_view.php', $data);
 			}
 		}
 		else
 		{
-			$this->view->generate('test_view.php', 'template_view.php');
+			session_destroy();
+			Route::ErrorPage404();
 		}
 	}
 }

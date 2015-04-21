@@ -32,6 +32,7 @@ $(document).ready(function(){
 				{
 					create_table(data['user']);
 					executed = true;
+					//document.getElementById('email').readOnly = true;
 				}
 				else if(data['found'] == false)
 				{
@@ -180,6 +181,7 @@ $(document).ready(function(){
 				}
 			}
 		executed = false;
+		//document.getElementById('email').readOnly = false;
 	}
 
 	function not_found(result_msg)
@@ -259,7 +261,7 @@ $(document).ready(function(){
 		td6_inner.style.height = '150px';
 		td6_inner.rowSpan = '3';
 		td6_inner.className = td6_inner.className + "TableStyleBorderLeft";
-		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"" + user['preview'] + "\"><img src=\"" + user['preview'] + "\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\">";
+		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"../../" + user['preview'] + "\"><img src=\"../../" + user['preview'] + "\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\">";
 
         tr3_inner.appendChild(td5_inner);
         tr3_inner.appendChild(td6_inner);
@@ -319,12 +321,6 @@ $(document).ready(function(){
         form_delete.method = "POST";
 
         var delete_btn = document.createElement('input');
-        var delete_id = document.createElement('input');
-
-        delete_id.setAttribute('type', 'hidden');
-        delete_id.setAttribute('name', 'DeleteUserHiddenField');
-        delete_id.setAttribute('value', id);
-        delete_id.className = delete_id.className + "DeleteUserHiddenField";
 
         delete_btn.setAttribute('type', 'submit');
         delete_btn.setAttribute('name', 'DeleteUserButton');
@@ -332,7 +328,6 @@ $(document).ready(function(){
         delete_btn.setAttribute('id', 'delete_btn');
         delete_btn.className = delete_btn.className + 'DeleteUserButton';
 
-        form_delete.appendChild(delete_id);
         form_delete.appendChild(delete_btn);
 
         var form_approve = document.createElement('form');
@@ -341,18 +336,6 @@ $(document).ready(function(){
         form_approve.method = "POST";
 
         var approve_btn = document.createElement('input');
-        var approve_id = document.createElement('input');
-        var approve_date = document.createElement('input');
-
-        approve_id.setAttribute('type', 'hidden');
-        approve_id.setAttribute('name', 'ApproveIDhiddenField');
-        approve_id.setAttribute('value', id);
-        approve_id.className = approve_id.className + "ApproveIDhiddenField";
-
-        approve_date.setAttribute('type', 'hidden');
-        approve_date.setAttribute('name', 'ApproveUserHiddenField');
-        approve_date.setAttribute('value', 'CURRENT_TIMESTAMP()');
-        approve_date.className = approve_date.className + "ApproveUserHiddenField";
 
         approve_btn.setAttribute('type', 'submit');
         approve_btn.setAttribute('name', 'ApproveUserButton');
@@ -360,8 +343,6 @@ $(document).ready(function(){
         approve_btn.setAttribute('id', 'approve_btn');
         approve_btn.className = approve_btn.className + "ApproveUserButton";
 
-        form_approve.appendChild(approve_date);
-        form_approve.appendChild(approve_id);
         form_approve.appendChild(approve_btn);
 
         td1_inner_table_btns.appendChild(form_delete);
