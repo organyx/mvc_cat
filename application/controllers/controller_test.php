@@ -35,6 +35,9 @@ class Controller_Test extends Controller
 						case 'delete':
 							$this->model->delete_web($_POST['id']);
 							break;
+						case 'auto':
+							$this->model->auto();
+							break;
 					}
 				}
 				else

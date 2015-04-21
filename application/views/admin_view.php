@@ -37,3 +37,6 @@
 <script type="text/javascript" src="/../../assets/js/bowser/bowser.min.js"></script>
 <script type="text/javascript" src="/../../assets/js/admin_search.js"></script>
 <script type="text/javascript" src="/../../assets/js/admin_list.js"></script>
+<script type="text/javascript" src="/../../assets/js/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/../../assets/js/jquery-ui/jquery-ui.theme.min.css" />
+<link rel="stylesheet" href="/../../assets/js/jquery-ui/jquery-ui.min.css" />

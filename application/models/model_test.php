@@ -41,14 +41,46 @@ Class Model_Test extends Model
 		return false;
 	}
 
+	public function auto()
+	{
+		Global $WebCatalogue;
+
+		if($_POST['type'] == 'email')
+		{
+			$sql = "SELECT email FROM users where email LIKE '".strtoupper($_POST['name_startsWith'])."%'";
+			$result = $WebCatalogue->query($sql);	
+			if($result === false)
+			{
+				trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+			}
+			else
+			{	
+				$data = array();
+				while ($row = $result->fetch_array(MYSQLI_ASSOC)) 
+				{
+					array_push($data, $row['email']);	
+				}
+			}
+		}	
+		echo json_encode($data);
+
+	}
+
 	public function get_user_by_id($id)
 	{
 	    Global $WebCatalogue;
 
 	    $query_User = sprintf("SELECT * FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
 	    $User = $WebCatalogue->query($query_User);
-	    $row_User = $User->fetch_assoc();
-	    return $row_User['email'];
+	    if($User === false)
+	    {
+	    	trigger_error('Wrong SQL: ' . $query_User . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+	    }
+	    else
+	    {
+	    	$row_User = $User->fetch_assoc();
+	    	return $row_User['email'];
+	    }
 	}
 
 	public function approve_web($id)

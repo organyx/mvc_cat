@@ -10,6 +10,32 @@ $(document).ready(function(){
 		reset_result();
 	});
 
+
+	$('#email').autocomplete({
+		      	source: function( request, response ) {
+		      		$.ajax({
+		      			url : '/test/index/',
+		      			type: 'POST',
+		      			dataType: "json",
+						data: {
+							action: 'auto',
+						   name_startsWith: request.term,
+						   type: 'email'
+						},
+						 success: function( data ) {
+							 response( $.map( data, function( item ) {
+								return {
+									label: item,
+									value: item
+								}
+							}));
+						}
+		      		});
+		      	},
+		      	autoFocus: true,
+		      	minLength: 2      	
+		      });
+
 	var executed = false;
 
 	function test_this()
