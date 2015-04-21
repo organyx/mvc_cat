@@ -7,54 +7,44 @@ class Controller_Admin extends Controller
 		$this->model = new Model_Admin();
 		$this->view = new View();
 	}
-	
+
 	function action_index()
-	{
+	{	
 		session_start();
-		
-		if ( $_SESSION['lvl'] == 2 )
+
+		if($_SESSION['lvl'] == 2)
 		{
 			if(isset($_SESSION['Username']))
 			{
 				$current_user = $_SESSION['Username'];
 			}
-			if(isset($_POST['name']))
+
+			if(IS_AJAX)
 			{
-				$user_to_find = $_POST['name'];
-			}
-			if(isset($_POST['id']))
-			{
-				$item_id = $_POST['id'];
-			}
-			if (IS_AJAX)
-			{	
-				//CHECK WHAT BUTTONS PRESSED
-				if(isset($_POST['action']) && !empty($_POST['action'])) 
+				//echo "<pre>".print_r($_POST)."</pre>";
+				if(isset($_POST['action']))
 				{
-				    $action = $_POST['action'];
-				    switch($action) {
-				        case 'approve' : 
-					        	$this->approve_web($item_id);
-					        	break;
-				        case 'delete' : 
-				        		$this->delete_web($item_id);
-					        	break; 
-					    case 'search' :
-					    		$this->find_user($current_user, $user_to_find);
-					    		break;
-					    case 'user_list':
-					    		$this->get_user_list();
-					    		break;
-				    }
+					switch($_POST['action'])
+					{
+						case 'search':
+							$this->model->find_user($_POST['name']);
+							break;
+						case 'approve':
+							$this->model->approve_web($_POST['id']);
+							break;
+						case 'delete':
+							$this->model->delete_web($_POST['id']);
+							break;
+					}
 				}
+				else
+					$this->model->get_web_list();
 			}
 			else
 			{
-				//DEFAULT
 				$user = $this->model->get_user_data($current_user);
-				$users = $this->model->manage_users();
-				$data = array($user, $users);
-				$this->view->generate('admin_view.php', 'template_view.php',$data);
+				$data = array($user);
+				$this->view->generate('test_view.php', 'template_view.php', $data);
 			}
 		}
 		else
@@ -64,52 +54,10 @@ class Controller_Admin extends Controller
 		}
 	}
 
-	function approve_web($item_id)
-	{
-		$return = $_POST;
-		$return['json'] = json_encode($return);
-		//echo $return['json'];
-		$approved = $this->model->approve_web($return['id']);
-		$users = $this->model->manage_users();
-		$data = array($approved, $users);
-	}
-
-	function delete_web($item_id)
-	{
-		$return = $_POST;
-		$return['json'] = json_encode($return);
-		//print_r($return);
-		$deleted = $this->model->delete_web($return['id']);
-		$users = $this->model->manage_users();
-		$data = array($deleted, $users);
-	}
-
-	function find_user($current_user, $user_to_find)
-	{
-		//echo "<pre>".print_r($_POST)."</pre>";
-		$return = $_POST;
-		$return['json'] = json_encode($return);
-		//echo $return['json'];
-		$user = $this->model->get_user_data($current_user);
-		$users = $this->model->manage_users();
-		$found_user = $this->model->find_user($return['name']);
-		$data = array($user, $users, $found_user);
-		//echo "<pre>".print_r($data)."</pre>";
-	}
-
-	function get_user_list()
-	{
-		$return = $_POST;
-		$user = $this->model->get_user_data($current_user);
-		$users = $this->model->manage_users();
-		$data = array($user, $users);
-	}
-	
 	function action_logout()
 	{
 		session_start();
 		session_destroy();
 		header('Location:/');
 	}
-
 }

@@ -53,4 +53,11 @@ class Controller_Test extends Controller
 			Route::ErrorPage404();
 		}
 	}
+
+	function action_logout()
+	{
+		session_start();
+		session_destroy();
+		header('Location:/');
+	}
 }
