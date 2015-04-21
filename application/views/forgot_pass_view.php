@@ -2,7 +2,7 @@
       <h1>Forgot Password</h1>
 </div>
      
-<div id="contentRight">
+<div id="content_bottom">
 	<form method="POST" id="sendPassForm" action="javascript:void(null);" >
        
         <div class="ui-form ui-200">

@@ -12,17 +12,17 @@
         } ?></h1>
       </div>
       <?php if(isset($_SESSION['Username'])) { ?>
-    	<div id="contentLeft">        
+    	<div id="content_top">        
     	  <h2><a href="/account/">Account</a></h2>
     	</div>
       <?php } ?>
-    <div id="contentRight">
-      <table  class="width-670 center WidthAuto">
+    <div id="content_bottom">
+      <table  class="width-670 center width_auto">
         <tr>
           <td align="center">&nbsp;</td>
         </tr>
         <tr>
-          <td><table id="selectedUser" class="TableStyle center WidthAuto">
+          <td><table id="selected_user" class="table_style center width_auto">
             <tr>
               <td align="left" valign="top"></td>
               <td align="right" valign="top">Registration date : </td>
@@ -33,7 +33,7 @@
             </tr>
             <tr>
               <td>URL: <a target="_blank" href="<?php echo $result['url']; ?>"> <?php echo escape($result['url']); ?></a></td>
-              <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
+              <td width="150" height="150" rowspan="3" class="border_left">
 			  <a class="fancybox"  href="../../<?php echo $result['preview_thumb']; ?>">
 			  <img src="../../<?php echo $result['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
               </td>

@@ -108,7 +108,7 @@ $(document).ready(function(){
         var user_search = document.getElementById('user_search');
 
         var main_table = document.createElement('table');
-        main_table.className = main_table.className + "width-670 center WidthAuto";
+        main_table.className = main_table.className + "width-670 center width_auto";
 
         var tr1 = document.createElement('tr');
         var tr2 = document.createElement('tr');
@@ -133,7 +133,7 @@ $(document).ready(function(){
             
         span_from.appendChild(document.createTextNode("Showing: " + (parseInt(data[data.length-1]['startRow'] + 1))));
         span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(parseInt(data[data.length-1]['startRow']) + parseInt(data[data.length-1]['maxRows']), parseInt(data[data.length-1]['totalRows']))));
-        span_total.appendChild(document.createTextNode(" - of - " + parseInt( data[data.length-1]['totalRows'])));
+        span_total.appendChild(document.createTextNode(" - of - " + parseInt( data[data.length-1]['totalRows']) + " - by - "));
 
         td1.appendChild(span_from);
         td1.appendChild(span_per_page);
@@ -174,7 +174,7 @@ $(document).ready(function(){
     function create_item_table(data_item)
     {
         var item_table = document.createElement('table');
-        item_table.className = item_table.className + "width-600 TableStyle center WidthAuto";
+        item_table.className = item_table.className + "width-600 table_style center width_auto";
 
         var tr1 = document.createElement('tr');
         var tr2 = document.createElement('tr');

@@ -208,7 +208,7 @@ $(document).ready(function(){
 		var ret = document.getElementById('ret');
 
 		var result_table = document.createElement('table');
-		result_table.className = result_table.className + "width-700 center WidthAuto";
+		result_table.className = result_table.className + "width-700 center width_auto";
 		result_table.setAttribute('id', 'result_table');
 
 		var tr1 = document.createElement('tr');
@@ -223,7 +223,7 @@ $(document).ready(function(){
 		td1.innerHTML = "Account: ";
 
 		var inner_table = document.createElement('table');
-		inner_table.className = inner_table.className + "width-500 TableStyle center WidthAuto";
+		inner_table.className = inner_table.className + "width-500 table_style center width_auto";
 
 		var tr1_inner = document.createElement('tr');
 		var tr2_inner = document.createElement('tr');
@@ -261,7 +261,7 @@ $(document).ready(function(){
 		td6_inner.style.width = '150px';
 		td6_inner.style.height = '150px';
 		td6_inner.rowSpan = '3';
-		td6_inner.className = td6_inner.className + "TableStyleBorderLeft";
+		td6_inner.className = td6_inner.className + "border_left";
 		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"../../" + user['preview'] + "\"><img src=\"../../" + user['preview'] + "\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\">";
 
         tr3_inner.appendChild(td5_inner);

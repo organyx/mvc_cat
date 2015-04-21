@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	var pages_list = $(this).serialize();
-	$('#contentRight').on('change', make_a_call(0));
+	$('#content_bottom').on('change', make_a_call(0));
 
 	function make_a_call(page_n)
 	{
@@ -32,7 +32,7 @@ $(document).ready(function(){
 			data: pages_list,
 			beforeSend: function ()
 			{
-				$('div#contentRight').html('<div class="loading"><img src="../../assets/images/loader.gif" alt="Loading..." /></div>');
+				$('div#content_bottom').html('<div class="loading"><img src="../../assets/images/loader.gif" alt="Loading..." /></div>');
 			},
 			success: function (data_returned, func)
 			{
@@ -178,10 +178,10 @@ $(document).ready(function(){
 					break;
 			}
 
-			var content = document.getElementById("contentRight");
+			var content = document.getElementById("content_bottom");
 
    			var main_table = document.createElement('table');
-   			main_table.className = main_table.className + "width-670 center WidthAuto";
+   			main_table.className = main_table.className + "width-670 center width_auto";
    			main_table.setAttribute('id', 'main_table');
 
    			var tr1 = document.createElement('tr');
@@ -247,10 +247,10 @@ $(document).ready(function(){
 
 	function create_item_table(data_item)
 	{
-		    //var content = document.getElementById("contentRight");
+		    //var content = document.getElementById("content_bottom");
             var table = document.createElement('table');
             table.border = 1;
-            table.className = table.className + "width-630 TableStyle center WidthAuto";
+            table.className = table.className + "width-630 table_style center width_auto";
 
             var br = document.createElement('br');
 

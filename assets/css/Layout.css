@@ -32,7 +32,7 @@ body {
    text-align: right;
 }
 
-#contentLeft {
+#content_top {
   width: 100%;
   min-width: 280px;
   padding-top: 11px;
@@ -41,18 +41,18 @@ body {
   padding-bottom: 15px;
 }
 
-#contentLeft a {
+#content_top a {
   text-decoration: none;
   color: #000000;
 }
 
-#contentRight {
+#content_bottom {
   min-width: 680px;
   width: 100%;
   min-height: 200px;
 }
 
-#contentRight a {
+#content_bottom a {
   text-decoration: none;
   color: #000000;
 }
@@ -69,11 +69,11 @@ body {
 
 #perPage_html {
   float: right;
+  margin-left: 5px;
 }
 
 .current_page {
   background-color: #E0D1DE;
-  /*border: 1px solid #000;*/
   border-radius: 10px;
   padding: 2px 5px;
 }
@@ -140,7 +140,7 @@ body {
   text-align: center;
 }
 
-#selectedUser {
+#selected_user {
   border: hidden;
   width: 500px;
 }
@@ -212,18 +212,18 @@ h6 {
   width: 700px;
 }
 
-.TableStyle {
+.table_style {
   border-spacing: 0;
   border-collapse: collapse;
   box-sizing: border-box;
   background-color: transparent;
 }
 
-.TableStyle tr {
+.table_style tr {
   border: 1px solid #000;
 }
 
-.TableStyleBorderLeft {
+.border_left {
   border-left: 1px solid #000;
 }
 
@@ -365,7 +365,7 @@ h6 {
     height: 50px;
   }
 
-  .WidthAuto {
+  .width_auto {
     width: auto;
   }
 }

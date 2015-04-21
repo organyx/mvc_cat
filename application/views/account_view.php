@@ -5,7 +5,7 @@
     	  <h1>Welcome,  <?php echo escape($user['first_name']); ?> <?php echo escape($user['last_name']); ?>!</h1>
       </div>
 
-    	<div id="contentLeft">
+    	<div id="content_top">
           <?php if ($_SESSION['lvl'] == 2) { ?>
           <h2><a href="/admin">Manage Users</a></h2><br>
           <?php } ?>
@@ -13,13 +13,13 @@
     	  <h2><a href="/account/logout">Log Out</a></h2>
     	</div>
 
-    <div id="contentRight">
-      <table class="width-670 center WidthAuto">
+    <div id="content_bottom">
+      <table class="width-670 center width_auto">
         <tr>
           <td align="center">Account: <?php echo $user['email']; ?></td>
         </tr>
         <tr>
-          <td><table class="width-500 TableStyle center WidthAuto">
+          <td><table class="width-500 table_style center width_auto">
             <tr>
               <td><?php echo ($user['approval'] == "0000-00-00 00:00:00") ? "Awaiting Approval" : "Approved" ?></td>
               <td align="right" valign="top">Registration date : </td>
@@ -30,7 +30,7 @@
             </tr>
             <tr>
               <td>URL: <a target="_blank" href="<?php echo $user['url']; ?>"> <?php echo $user['url']; ?></a></td>
-              <td width="150" height="150" rowspan="3" class="TableStyleBorderLeft">
+              <td width="150" height="150" rowspan="3" class="border_left">
         			  <a class="fancybox"  href="../../<?php echo $user['preview_thumb']; ?>">
         			  <img src="../../<?php echo $user['preview_thumb']; ?>" alt="Preview Thumb" height="140px" width="140px" class="img-thumbnail">
               </td>

@@ -5,12 +5,12 @@
     	  <h1>Welcome,  <?php echo escape($user['first_name']); ?> <?php echo escape($user['last_name']); ?>!</h1>
         </div>
 
-    	<div id="contentLeft">
+    	<div id="content_top">
           <h2><a href="/account">My Account</a></h2><br>
     	  <h2><a href="/admin/logout">Log Out</a></h2>
     	</div>
 
-    <div id="contentRight">
+    <div id="content_bottom">
       <form method="POST" id="updateForm" action="javascript:void(null);" accept-charset="utf-8" >
       <div class="ui-form ui-600">
         <div class="ui-page">

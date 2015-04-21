@@ -3,13 +3,13 @@
 </div>
     <?php if(isset($_SESSION['Username'])) { ?>
     
-<div id="contentLeft">
+<div id="content_top">
     <h2><a href="/account/">Account</a></h2>
 </div>
      <?php }; ?>
 
      
-<div id="contentRight">
+<div id="content_bottom">
     <form method="POST" id="registrationForm" action="javascript:void(null);" >
     <div class="ui-form ui-600">
         <div class="ui-page">

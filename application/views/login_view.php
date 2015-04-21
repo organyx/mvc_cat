@@ -4,7 +4,7 @@
 <div id="PageHeading">
       <h1>Autorization page</h1>
 </div>     
-<div id="contentRight">
+<div id="content_bottom">
 	<div class="center" id="login">
 		<p>
 			<form action="" method="post">
