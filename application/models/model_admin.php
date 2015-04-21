@@ -13,7 +13,6 @@ Class Model_Admin extends Model
 				$found = $WebCatalogue->query($find_query);
 				$user = $found->fetch_assoc();
 				$total = $found->num_rows;
-				//$timestamp = "CURRENT_TIMESTAMP()";
 				if($total > 0)
 				{
 					$result = array('found' => true, 'user' => $user);

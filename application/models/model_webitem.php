@@ -21,9 +21,6 @@ class Model_Webitem extends Model
 			}
 
 			$result->data_seek(0);
-			// while($row = $result->fetch_assoc()){
-			//     echo $row['email'] . '<br>';
-			// }
 
 			return $result;
 	}

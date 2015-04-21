@@ -3,7 +3,6 @@ $(document).ready(function ()
 
     function register()
     {
-        //var msg   = $('#registrationForm').serialize();
         var formData = new FormData($('#registrationForm')[0]);
         $.ajax(
         {

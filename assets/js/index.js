@@ -247,7 +247,6 @@ $(document).ready(function(){
 
 	function create_item_table(data_item)
 	{
-		    //var content = document.getElementById("content_bottom");
             var table = document.createElement('table');
             table.border = 1;
             table.className = table.className + "width-630 table_style center width_auto";
@@ -277,7 +276,6 @@ $(document).ready(function(){
            	image.src = '../../' + data_item['preview_thumb'];
            	image.className = image.className + 'img-thumbnail';
            	image.style.width = "140px";
-           	//image.style.height = "140px";
            	image.alt = "Preview Thumb";
 
            	td2.style.width = '400px';

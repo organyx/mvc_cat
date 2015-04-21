@@ -25,13 +25,5 @@ $(document).ready(function ()
 
         return false;
     }
-
-
-    // $("#loginForm").submit(function (e)
-    // {
-    //     e.preventDefault();
-    //     login();
-    //     return false;
-    // });
 });
 // JavaScript Document 

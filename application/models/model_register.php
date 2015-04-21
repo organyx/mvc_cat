@@ -63,7 +63,6 @@ class Model_Register extends Model
 	  	}
 	  	else
 	  	{
-	  		//echo $login_check = $login_check->fetch_assoc();
 	  		$login_check->data_seek(0);
 	  		$login_found_user = $login_check->num_rows;
 	  	}

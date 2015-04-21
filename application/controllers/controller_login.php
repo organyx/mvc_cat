@@ -21,8 +21,6 @@ class Controller_Login extends Controller
 			  	$redirectLoginFailed = "/";
 
 			  	$userinfo = $this->model->get_user($loginUsername);
-			  	
-				//echo "<pre>".print_r($userinfo)."</pre>";
 
 			  	if(password_verify($password, $userinfo['password']))
 				{
@@ -43,7 +41,7 @@ class Controller_Login extends Controller
 				    }else{
 				         $_SESSION['lvl']=$loginStrGroup;
 				    }
-			  		//////
+
 			  		if (PHP_VERSION >= 5.1) {
 			  			session_regenerate_id(true);
 			  		} else {

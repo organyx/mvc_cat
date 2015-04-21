@@ -167,7 +167,6 @@ $(document).ready(function(){
         main_table.appendChild(tr3);
         user_list.appendChild(main_table);
 
-        //user_list.insertAfter(main_table, user_search);
         insertAfter(user_list, user_search);
     }
 
@@ -266,7 +265,6 @@ $(document).ready(function(){
 
     function create_page_btns(pages)
     {
-        // var divider = document.createTextNode(' | ');
         var btns = document.createElement('div');
         btns.setAttribute('id', 'btns');
         btns.appendChild(document.createElement('br'));
@@ -365,17 +363,21 @@ $(document).ready(function(){
     }
 
     //create function, it expects 2 values.
-    function insertAfter(newElement,targetElement) {
+    function insertAfter(newElement,targetElement) 
+    {
         //target is what you want it to go after. Look for this elements parent.
         var parent = targetElement.parentNode;
      
         //if the parents lastchild is the targetElement...
-        if(parent.lastchild == targetElement) {
+        if(parent.lastchild == targetElement) 
+        {
             //add the newElement after the target element.
             parent.appendChild(newElement);
-            } else {
+        } 
+        else 
+        {
             // else the target has siblings, insert the new element between the target and it's next sibling.
             parent.insertBefore(newElement, targetElement.nextSibling);
-            }
+        }
     }
 });

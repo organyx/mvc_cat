@@ -21,7 +21,6 @@ class Controller_Admin extends Controller
 
 			if(IS_AJAX)
 			{
-				//echo "<pre>".print_r($_POST)."</pre>";
 				if(isset($_POST['action']))
 				{
 					switch($_POST['action'])

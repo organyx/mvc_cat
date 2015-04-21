@@ -13,12 +13,10 @@ class Controller_Forgot_pass extends Controller
 		session_start();
 		if(IS_AJAX)
 		{
-			//echo "<pre>".print_r($_POST)."</pre>";
 			$data = $this->model->forgot_pass();
 		}
 		else
 		{
-			//$data = $this->model->forgot_pass();
 			$this->view->generate('forgot_pass_view.php', 'template_view.php');
 		}
 	}

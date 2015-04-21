@@ -23,12 +23,9 @@ class Controller_Webitem extends Controller
 			}
 			else
 			{
-				//$user_data = $this->model->get_user_data($username);
 				$selected_web_data = $this->model->item($id);
 				$data = array($user_data = "", $selected_web_data);
 			}
-			//$email = "flirts@flirts.lv";
-			//echo "<pre>".print_r($_GET)."</pre>";
 			
 			$this->view->generate('webitem_view.php', 'template_view.php',$data);
 		}

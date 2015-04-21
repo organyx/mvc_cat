@@ -34,18 +34,8 @@ $(document).ready(function ()
         return false;
     }
 
-    // $('#updateForm').submit(function (e)
-    // {
-    //     e.preventDefault();
-    //     update();
-    //     //refresh();
-    //     return false;
-    // });
-
-
     function refresh()
     {
-        //$('#Content').load('/update/index/');
         setTimeout(function(){
         //Reload
         $.ajax(
