@@ -44,7 +44,7 @@ Class Model_Admin extends Model
 	{
 	    Global $WebCatalogue;
 
-	    $query_User = sprintf("SELECT email FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
+	    $query_User = sprintf("SELECT email FROM `users` WHERE userID = %s", GetSQLValueString($id, "int"));
 	    $User = $WebCatalogue->query($query_User);
 	    if($User === false)
 	    {
@@ -151,15 +151,15 @@ Class Model_Admin extends Model
 		//******Pagination END*******
 		$result->data_seek(0);
 
-		$res = $WebCatalogue->query($sql_limit);
 		$rows = array();
-		while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$rows[] = $row;
 		}
 		array_push($rows, $pages);
 		echo json_encode($rows);
 
 		$data = array($result, $pages, json_encode($rows));
+		$result->free();
 		return $data;
 	}
 

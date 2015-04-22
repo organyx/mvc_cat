@@ -60,15 +60,15 @@ class Model_Main extends Model
 			//******Pagination END*******
 			$result->data_seek(0);
 
-			$res = $WebCatalogue->query($sql_limit);
 			$rows = array();
-			while ($row = $res->fetch_array(MYSQLI_ASSOC)) {
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 				$rows[] = $row;
 			}
 			array_push($rows, $pages);
 			echo json_encode($rows);
 
 			$data = array($result, $pages, json_encode($rows));
+			$result->free();
 			return $data;
 	}
 }

@@ -54,12 +54,13 @@ class Controller_Test extends Controller
 		// 	session_destroy();
 		// 	Route::ErrorPage404();
 		// }
+		$this->view->generate('test_view.php', 'template_view.php');
 	}
 
-	function action_logout()
-	{
-		session_start();
-		session_destroy();
-		header('Location:/');
-	}
+	// function action_logout()
+	// {
+	// 	session_start();
+	// 	session_destroy();
+	// 	header('Location:/');
+	// }
 }

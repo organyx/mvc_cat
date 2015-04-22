@@ -1,7 +1,9 @@
 <?php 
-	$user = $data[0]->fetch_assoc();
+	//$user = $data[0]->fetch_assoc();
 
 ?>
+
+<h1>TESTING SITE FOR ALL KINDS OF BS</h1>
 
 <!-- <div id="PageHeading">
 	<h1><?php echo escape($user['first_name']); ?> <?php echo escape($user['last_name']); ?></h1>
