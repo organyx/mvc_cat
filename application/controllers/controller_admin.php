@@ -34,6 +34,9 @@ class Controller_Admin extends Controller
 						case 'delete':
 							$this->model->delete_web($_POST['id']);
 							break;
+						case 'auto':
+							$this->model->auto();
+							break;
 					}
 				}
 				else
@@ -43,7 +46,7 @@ class Controller_Admin extends Controller
 			{
 				$user = $this->model->get_user_data($current_user);
 				$data = array($user);
-				$this->view->generate('test_view.php', 'template_view.php', $data);
+				$this->view->generate('admin_view.php', 'template_view.php', $data);
 			}
 		}
 		else

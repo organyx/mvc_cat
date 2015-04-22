@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$('#email').autocomplete({
 		      	source: function( request, response ) {
 		      		$.ajax({
-		      			url : '/test/index/',
+		      			url : '/admin/index/',
 		      			type: 'POST',
 		      			dataType: "json",
 						data: {
@@ -48,7 +48,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: 'POST',
-			url: '/test/index/',
+			url: '/admin/index/',
 			dataType: 'json',
 			data: data,
 			success: function(data) {
@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: 'POST',
-			url: '/test/index/',
+			url: '/admin/index/',
 			dataType: 'json',
 			data: data,
 			success: function(data) {
@@ -120,7 +120,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: 'POST',
-			url: '/test/index/',
+			url: '/admin/index/',
 			dataType: 'json',
 			data: data,
 			success: function(data) {

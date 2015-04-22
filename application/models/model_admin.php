@@ -9,7 +9,7 @@ Class Model_Admin extends Model
 		{
 			if(!empty($email))
 			{
-				$find_query = sprintf("SELECT * FROM users WHERE email = %s", GetSQLValueString($email, "text"));
+				$find_query = sprintf("SELECT userID, email, language, url, title, description, registration, approval, preview FROM users WHERE email = %s", GetSQLValueString($email, "text"));
 				$found = $WebCatalogue->query($find_query);
 				$user = $found->fetch_assoc();
 				$total = $found->num_rows;
@@ -44,7 +44,7 @@ Class Model_Admin extends Model
 	{
 	    Global $WebCatalogue;
 
-	    $query_User = sprintf("SELECT * FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
+	    $query_User = sprintf("SELECT email FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
 	    $User = $WebCatalogue->query($query_User);
 	    if($User === false)
 	    {
@@ -99,7 +99,7 @@ Class Model_Admin extends Model
 	{	
 		Global $WebCatalogue;
 		//****Pagination Setup*****
-		$currentPage = "/main/index/";
+		$currentPage = "/admin/index/";
 		if (isset($_POST['per_page']) && intval($_POST['per_page']) <= 50) {
 		  $maxRows = intval($_POST['per_page']);
 		}
@@ -116,7 +116,7 @@ Class Model_Admin extends Model
 		}
 		$startRow = $pageNum * $maxRows;		
 		//***Get values***
-		$sql="SELECT * FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
+		$sql="SELECT userID, first_name, last_name, email, language, url, title, description, registration, approval, preview_thumb FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
 		$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
 
 		$result=$WebCatalogue->query($sql_limit);
@@ -161,5 +161,30 @@ Class Model_Admin extends Model
 
 		$data = array($result, $pages, json_encode($rows));
 		return $data;
+	}
+
+	public function auto()
+	{
+		Global $WebCatalogue;
+
+		if($_POST['type'] == 'email')
+		{
+			$sql = "SELECT email FROM users where email LIKE '".strtoupper($_POST['name_startsWith'])."%'";
+			$result = $WebCatalogue->query($sql);	
+			if($result === false)
+			{
+				trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+			}
+			else
+			{	
+				$data = array();
+				while ($row = $result->fetch_array(MYSQLI_ASSOC)) 
+				{
+					array_push($data, $row['email']);	
+				}
+			}
+		}	
+		echo json_encode($data);
+
 	}
 }

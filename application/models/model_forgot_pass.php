@@ -19,7 +19,7 @@ class Model_Forgot_Pass extends Model
 			  $colname_EmailPassword = $email;
 			}
 
-			$query_find_user = sprintf("SELECT * FROM `users` WHERE email = %s", GetSQLValueString($colname_EmailPassword, "text"));
+			$query_find_user = sprintf("SELECT userID, email FROM `users` WHERE email = %s", GetSQLValueString($colname_EmailPassword, "text"));
 			$user_found = $WebCatalogue->query($query_find_user);
 			if($user_found === false)
 			{

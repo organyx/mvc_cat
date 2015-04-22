@@ -24,7 +24,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'post',
-            url: '/test/index/',
+            url: '/admin/index/',
             dataType: 'json',
             data: pages_list,
             beforeSend: function ()

@@ -1,7 +1,7 @@
 <?php
 Class Model_Test extends Model
 {
-	public function find_user($email)
+	/*public function find_user($email)
 	{
 		Global $WebCatalogue;
 
@@ -9,7 +9,7 @@ Class Model_Test extends Model
 		{
 			if(!empty($email))
 			{
-				$find_query = sprintf("SELECT * FROM users WHERE email = %s", GetSQLValueString($email, "text"));
+				$find_query = sprintf("SELECT userID, email, language, url, title, description, registration, approval, preview_thumb FROM users WHERE email = %s", GetSQLValueString($email, "text"));
 				$found = $WebCatalogue->query($find_query);
 				$user = $found->fetch_assoc();
 				$total = $found->num_rows;
@@ -69,7 +69,7 @@ Class Model_Test extends Model
 	{
 	    Global $WebCatalogue;
 
-	    $query_User = sprintf("SELECT * FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
+	    $query_User = sprintf("SELECT userID, email FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
 	    $User = $WebCatalogue->query($query_User);
 	    if($User === false)
 	    {
@@ -141,7 +141,7 @@ Class Model_Test extends Model
 		}
 		$startRow = $pageNum * $maxRows;		
 		//***Get values***
-		$sql="SELECT * FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
+		$sql="SELECT userID, first_name, last_name, email, language, url, title, description, registration, approval, preview_thumb FROM users WHERE NOT `Userlevel` = '2' ORDER BY registration DESC";
 		$sql_limit = sprintf("%s LIMIT %d, %d", $sql, GetSQLValueString($startRow, "int"), GetSQLValueString($maxRows, "int"));
 
 		$result=$WebCatalogue->query($sql_limit);
@@ -186,5 +186,5 @@ Class Model_Test extends Model
 
 		$data = array($result, $pages, json_encode($rows));
 		return $data;
-	}
+	}*/
 }

@@ -7,7 +7,7 @@ class Model_Webitem extends Model
 
 			$colname_id = $id;
 
-			$sql=sprintf("SELECT * FROM users WHERE userID = %s ORDER BY userID DESC", GetSQLValueString($colname_id, "int"));
+			$sql=sprintf("SELECT userID, email, language, url, title, description, registration, approval, preview_thumb FROM users WHERE userID = %s ORDER BY userID DESC", GetSQLValueString($colname_id, "int"));
  
 			$result=$WebCatalogue->query($sql);
 			 
