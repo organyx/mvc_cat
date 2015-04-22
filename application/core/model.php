@@ -43,12 +43,8 @@ class Model
 			else 
 			{
 			  $totalRows = $result->num_rows;
-			}
-
-			$result->data_seek(0);
-			// while($row = $result->fetch_assoc()){
-			//     echo $row['email'] . '<br>';
-			// }
-			return $result;
+			  $result->data_seek(0);
+			  return $result;
+			}		
 	}
 }

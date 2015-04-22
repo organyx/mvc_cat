@@ -13,16 +13,14 @@ class Model_Webitem extends Model
 			 
 			if($result === false) 
 			{
-			  trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+			  	trigger_error('Wrong SQL: ' . $sql . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
 			} 
 			else 
 			{
-			  $totalRows = $result->num_rows;
+				$totalRows = $result->num_rows;
+				$result->data_seek(0);
+
+				return $result;
 			}
-
-			$result->data_seek(0);
-
-			return $result;
 	}
-
 }

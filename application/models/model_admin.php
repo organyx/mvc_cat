@@ -46,8 +46,15 @@ Class Model_Admin extends Model
 
 	    $query_User = sprintf("SELECT * FROM `users` WHERE userID = %s", GetSQLValueString($id, "text"));
 	    $User = $WebCatalogue->query($query_User);
-	    $row_User = $User->fetch_assoc();
-	    return $row_User['email'];
+	    if($User === false)
+	    {
+	    	trigger_error('Wrong SQL: ' . $query_User . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+	    }
+	    else
+	    {
+	    	$row_User = $User->fetch_assoc();
+	    	return $row_User['email'];
+	    }
 	}
 
 	public function approve_web($id)

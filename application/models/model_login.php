@@ -9,7 +9,14 @@ class Model_Login extends Model
 
 		$query=sprintf("SELECT email, password, Userlevel FROM users WHERE email=%s", GetSQLValueString($email, "text")); 
 		$result = $WebCatalogue->query($query);
-		$userdata = $result->fetch_assoc(); 
-		return $userdata;
+		if($result === false)
+		{
+			trigger_error('Wrong SQL: ' . $query . ' Error: ' . $WebCatalogue->error, E_USER_ERROR);
+		}
+		else
+		{
+			$userdata = $result->fetch_assoc(); 
+			return $userdata;
+		}
 	}
 }

@@ -62,7 +62,8 @@ class Model_Forgot_Pass extends Model
 				$user_found->free();
 				if(filter_var($email, FILTER_VALIDATE_EMAIL))
 			  	{
-				    echo "Email not Found.";
+				    //echo "Email not Found.";
+			  		echo "Check your email.";
 				    return false;
 			  	}
 			  	elseif (empty($email)) 
