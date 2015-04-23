@@ -131,7 +131,7 @@ $(document).ready(function(){
 
         this_page = data[data.length-1]['pageNum'];
             
-        span_from.appendChild(document.createTextNode("Showing: " + (parseInt(data[data.length-1]['startRow'] + 1))));
+        span_from.appendChild(document.createTextNode("Showing: " + (parseInt(data[data.length-1]['startRow']) + 1)));
         span_per_page.appendChild(document.createTextNode(" - to - " + Math.min(parseInt(data[data.length-1]['startRow']) + parseInt(data[data.length-1]['maxRows']), parseInt(data[data.length-1]['totalRows']))));
         span_total.appendChild(document.createTextNode(" - of - " + parseInt( data[data.length-1]['totalRows']) + " - by - "));
 
@@ -198,7 +198,7 @@ $(document).ready(function(){
         td2.innerHTML = "Approval Date: " + data_item['approval'];
 
         td3.style.width = '300px';
-        td3.innerHTML = "User: " + data_item['first_name'] + data_item['last_name'] + " | Account: " + data_item['email'];
+        td3.innerHTML = "User: " + data_item['first_name'] + " " + data_item['last_name'] + " | Account: " + data_item['email'];
 
         td4.style.width = '300px';
         td4.innerHTML = "Status: ";

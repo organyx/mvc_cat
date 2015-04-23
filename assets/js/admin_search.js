@@ -40,7 +40,7 @@ $(document).ready(function(){
 
 	function test_this()
 	{
-		data = {
+		var data = {
                 action: 'search',
                 name: $('input.email').val()
             };
@@ -76,9 +76,9 @@ $(document).ready(function(){
 					e.preventDefault();
 				});
 			},
-			error: function (x,y,z)
+			error: function (xhr, desc, err)
 			{
-				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
+				alert("xhr: " + xhr.responseCode + ";\n desc: " + desc + ";\n err: " + err);
 			}
 
 		});
@@ -86,7 +86,7 @@ $(document).ready(function(){
 
 	function approve_web(id)
 	{
-		data = {
+		var data = {
 			action: 'approve',
 			id: id
 		};
@@ -102,16 +102,16 @@ $(document).ready(function(){
 				var return_message = document.getElementById('returnmessage');
 				return_message.innerHTML = data['function_result'];
 			},
-			error: function (x,y,z)
+			error: function (xhr, desc, err)
 			{
-				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
+				alert("xhr: " + xhr.responseCode + ";\n desc: " + desc + ";\n err: " + err);
 			}
 		});
 	}
 
 	function delete_web(id)
 	{
-		data = {
+		var data = {
 			action: 'delete',
 			id: id
 		};
@@ -127,9 +127,9 @@ $(document).ready(function(){
 				var return_message = document.getElementById('returnmessage');
 				return_message.innerHTML = data['function_result'];
 			},
-			error: function (x,y,z)
+			error: function (xhr, desc, err)
 			{
-				alert("X: " + x.responseCode + "; Y: " + y + "; Z: " + z);
+				alert("xhr: " + xhr.responseCode + ";\n desc: " + desc + ";\n err: " + err);
 			}
 		});
 	}
