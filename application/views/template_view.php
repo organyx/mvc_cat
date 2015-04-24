@@ -36,8 +36,7 @@
 		        	<ul>
 		            	<li><a href="/">Main</a></li>
 		                <li><a href="/register">Register</a></li>
-		                <li><a href="/forgot_pass">Forgot Password</a></li>
-		                
+		                <li><a href="/forgot_pass">Forgot Password</a></li>    
 		            </ul>
 		        </nav>
 		        <div id="panel">
@@ -50,16 +49,15 @@
 			        	</ul>
 			        </div>
 			        <?php } ?>
-
 			        <div class="nav login">
 			        	<ul>
 			        		<?php if(!isset($_SESSION['Username'])) { ?>
 					        <li>
-			        				<a href="/login">Login</a>
+			        			<a href="/login">Login</a>
 			        		</li>
 			        		<?php } else { ?>
 			        		<li>
-			        				<a href="/account/logout/">Logout</a>
+			        			<a href="/account/logout/">Logout</a>
 			        		</li>
 			        		<?php } ?>
 			        	</ul>

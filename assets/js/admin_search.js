@@ -202,7 +202,7 @@ $(document).ready(function(){
 						if(table)
 							table.parentNode.removeChild(table);
 						if(return_message)
-							return_message.parentNode.removeChild(table);
+							return_message.parentNode.removeChild(return_message);
 						user.value = '';
 						break;
 				}
