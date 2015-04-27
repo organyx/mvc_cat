@@ -269,7 +269,10 @@ $(document).ready(function(){
 		var td9_inner = document.createElement('td');
 
 		td1_inner.style.vAlign = 'top';
-		td1_inner.innerHTML = "Status : " + user['approval'];
+		if(user['approval'] != "0000-00-00 00:00:00")
+			td1_inner.innerHTML = "Status : Approved on " + user['approval'];
+		else
+			td1_inner.innerHTML = "Status : Awaiting Approval";
 
 		td2_inner.style.vAlign = 'top';
 		td2_inner.style.align = 'right';
@@ -288,7 +291,7 @@ $(document).ready(function(){
 		td6_inner.style.height = '150px';
 		td6_inner.rowSpan = '3';
 		td6_inner.className = td6_inner.className + "border_left";
-		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"../../" + user['preview'] + "\"><img src=\"../../" + user['preview'] + "\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\">";
+		td6_inner.innerHTML = "<a class=\"fancybox\" id=\"found_img_href\"  href=\"../../" + user['preview'] + "\"><img src=\"../../" + user['preview'] + "\" alt=\"Preview Thumb\" height=\"140px\" width=\"140px\" class=\"img-thumbnail\" id=\"found_img\"></a>";
 
         tr3_inner.appendChild(td5_inner);
         tr3_inner.appendChild(td6_inner);
