@@ -11,7 +11,7 @@ class Model
 			> методы для работы с NoSQL;
 			> и др.
 	*/
-
+	
 	// метод выборки данных
 	public function get_data()
 	{
@@ -32,7 +32,7 @@ class Model
 				$colname_User = $email;
 			}
 
-			$sql=sprintf("SELECT * FROM users WHERE email = %s", GetSQLValueString($colname_User, "text"));
+			$sql=sprintf("SELECT userID, first_name, last_name, email, language, url, title, description, registration, approval, preview_thumb FROM users WHERE email = %s", GetSQLValueString($colname_User, "text"));
  
 			$result=$WebCatalogue->query($sql);
 			 
